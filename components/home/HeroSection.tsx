@@ -26,7 +26,7 @@ const HeroSection = () => {
               </h2>
               <p className="text-lg lg:text-xl text-gray-600 leading-relaxed max-w-2xl">
                 We help you establish and upscale your business online so that
-                you don't miss any chance of serving a customer.
+                you don&apos;t miss any chance of serving a customer.
               </p>
             </div>
 

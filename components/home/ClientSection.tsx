@@ -11,7 +11,6 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { Card, CardContent } from "@/components/ui/card";
 import StaggeredAnimation from "@/components/shared/StaggeredAnimation";
 
 const clientLogos = [
@@ -130,8 +129,8 @@ export default function ClientSection() {
           <DialogHeader>
             <DialogTitle>Get in Touch</DialogTitle>
             <DialogDescription>
-              We'd love to hear from you. Send us a message and we'll respond as
-              soon as possible.
+              We&apos;d love to hear from you. Send us a message and we&apos;ll
+              respond as soon as possible.
             </DialogDescription>
           </DialogHeader>
 
