@@ -2,7 +2,7 @@
 
 :root {
   --background: #ffffff;
-  --foreground: #171717;
+  --foreground: #000000;
 }
 
 @theme inline {
@@ -12,15 +12,241 @@
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+body {
+  background: #ffffff;
+  color: #000000;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Apple-style typography and animations */
+.ps-headline-eyebrow {
+  font-size: 0.875rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #6b7280;
+}
+
+.ps-headline-elevated {
+  font-weight: 700;
+  line-height: 1.1;
+  color: #111827;
+}
+
+.ps-header-copy {
+  font-size: 1.125rem;
+  line-height: 1.6;
+  color: #4b5563;
+}
+
+/* Staggered animation classes */
+.staggered-end [data-staggered-item] {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.staggered-end [data-staggered-item]:nth-child(1) {
+  transition-delay: 0.1s;
+}
+
+.staggered-end [data-staggered-item]:nth-child(2) {
+  transition-delay: 0.2s;
+}
+
+.staggered-end [data-staggered-item]:nth-child(3) {
+  transition-delay: 0.3s;
+}
+
+.staggered-end [data-staggered-item]:nth-child(4) {
+  transition-delay: 0.4s;
+}
+
+/* Animation trigger when in viewport */
+.staggered-end.animate [data-staggered-item] {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Enhanced StaggeredAnimation keyframes */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(32px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideLeft {
+  from {
+    opacity: 0;
+    transform: translateX(32px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideRight {
+  from {
+    opacity: 0;
+    transform: translateX(-32px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes scaleUp {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes bounceIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.3);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.05);
+  }
+  70% {
+    transform: scale(0.9);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Animation classes */
+.animate-fade-in.animate {
+  animation: fadeIn ease-out forwards;
+}
+
+.animate-slide-up.animate {
+  animation: slideUp ease-out forwards;
+}
+
+.animate-slide-left.animate {
+  animation: slideLeft ease-out forwards;
+}
+
+.animate-slide-right.animate {
+  animation: slideRight ease-out forwards;
+}
+
+.animate-scale-up.animate {
+  animation: scaleUp ease-out forwards;
+}
+
+.animate-bounce-in.animate {
+  animation: bounceIn ease-out forwards;
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Enhanced button hover effects */
+.transition-all {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Media container styling */
+.design-intro-media-container img {
+  transition: transform 0.3s ease;
+}
+
+.design-intro-media-container:hover img {
+  transform: scale(1.02);
+}
+
+/* Services section styling */
+.section-services {
+  background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+}
+
+.gallery-services .card {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.gallery-services .card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+}
+
+.gallery-services .feature-card-image {
+  transition: transform 0.3s ease;
+}
+
+.gallery-services .card:hover .feature-card-image {
+  transform: scale(1.05);
+}
+
+/* Feature card typography */
+.typography-feature-card-label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #6b7280;
+}
+
+.typography-feature-card-headline {
+  font-weight: 700;
+  line-height: 1.3;
+  color: #111827;
+}
+
+.typography-feature-card-body {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #4b5563;
+}
+
+/* Scroll gallery styling */
+.scroll-container {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.scroll-container::-webkit-scrollbar {
+  display: none;
+}
+
+/* Card hover effects */
+.card-hover {
+  cursor: pointer;
+}
+
+.card-hover:hover .tile-button {
+  background-color: #f3f4f6;
+  transform: scale(1.1);
+}
+
+.tile-button {
+  transition: all 0.2s ease;
 }
