@@ -26,6 +26,9 @@ const AboutSection = () => {
   const [scrollY, setScrollY] = useState(0);
   const [hoveredCard, setHoveredCard] = useState<number | null>(null);
   const [time, setTime] = useState(0);
+  const [animatedElements, setAnimatedElements] = useState<Set<string>>(
+    new Set()
+  );
   const sectionRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -49,6 +52,34 @@ const AboutSection = () => {
       setTime(Date.now());
     };
 
+    // Intersection Observer for scroll-triggered animations
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: "0px 0px -50px 0px",
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        const elementId = entry.target.getAttribute("data-animate-id");
+        if (elementId) {
+          if (entry.isIntersecting) {
+            // Element is in view - add animation
+            setAnimatedElements((prev) => new Set([...prev, elementId]));
+          } else {
+            // Element is out of view - remove animation (for scroll up effect)
+            // Add a small delay to make scroll-up animation more visible
+            setTimeout(() => {
+              setAnimatedElements((prev) => {
+                const newSet = new Set(prev);
+                newSet.delete(elementId);
+                return newSet;
+              });
+            }, 100);
+          }
+        }
+      });
+    }, observerOptions);
+
     const section = sectionRef.current;
     if (section) {
       section.addEventListener("mousemove", handleMouseMove);
@@ -57,13 +88,25 @@ const AboutSection = () => {
       // Update time for continuous movement
       const timeInterval = setInterval(updateTime, 50);
 
+      // Observe all elements with data-animate-id
+      const animatedElements = section.querySelectorAll("[data-animate-id]");
+      animatedElements.forEach((el) => observer.observe(el));
+
       return () => {
         section.removeEventListener("mousemove", handleMouseMove);
         window.removeEventListener("scroll", handleScroll);
         clearInterval(timeInterval);
+        observer.disconnect();
       };
     }
   }, []);
+
+  // Helper function to get animation class based on scroll trigger
+  const getAnimationClass = (baseClass: string, elementId: string) => {
+    return animatedElements.has(elementId)
+      ? baseClass
+      : "scroll-animate-hidden";
+  };
 
   const features = [
     {
@@ -336,7 +379,12 @@ const AboutSection = () => {
           {/* Animated Header */}
           <div className="text-center mb-24">
             <div className="flex justify-center">
-              <div className="animate-slide-right inline-flex items-center px-4 py-2 bg-gray-100 rounded-full mb-8 border border-gray-200">
+              <div
+                data-animate-id="about-badge"
+                className={`${getAnimationClass(
+                  "animate-slide-in-right",
+                  "about-badge"
+                )} inline-flex items-center px-4 py-2 bg-gray-100 rounded-full mb-8 border border-gray-200 transition-all duration-800`}>
                 <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse mr-3"></div>
                 <span className="text-gray-700 text-sm font-medium">
                   About Codagam
@@ -346,12 +394,22 @@ const AboutSection = () => {
 
             <div className="mb-8">
               <div className="flex justify-center">
-                <h1 className="animate-slide-left text-6xl lg:text-8xl font-bold text-blue-600 text-center">
+                <h1
+                  data-animate-id="title-1"
+                  className={`${getAnimationClass(
+                    "animate-slide-in-left",
+                    "title-1"
+                  )} text-6xl lg:text-8xl font-bold text-blue-600 text-center transition-all duration-800`}>
                   Empowering
                 </h1>
               </div>
               <div className="flex justify-center">
-                <h1 className="animate-slide-right text-6xl lg:text-8xl font-bold text-blue-600 text-center">
+                <h1
+                  data-animate-id="title-2"
+                  className={`${getAnimationClass(
+                    "animate-slide-in-right",
+                    "title-2"
+                  )} text-6xl lg:text-8xl font-bold text-blue-600 text-center transition-all duration-800`}>
                   businesses
                 </h1>
               </div>
@@ -359,7 +417,12 @@ const AboutSection = () => {
 
             <div className="max-w-4xl mx-auto">
               <div className="flex justify-center">
-                <p className="animate-slide-up text-xl text-gray-600 leading-relaxed mb-16 text-center">
+                <p
+                  data-animate-id="about-description"
+                  className={`${getAnimationClass(
+                    "animate-fade-in-up",
+                    "about-description"
+                  )} text-xl text-gray-600 leading-relaxed mb-16 text-center transition-all duration-800`}>
                   At Codagam, we pride ourselves on delivering transformative
                   technology solutions. Our team of experts is dedicated to
                   driving positive change and fostering sustainable growth.
@@ -368,7 +431,12 @@ const AboutSection = () => {
 
               {/* Animated Stats */}
               <div className="flex justify-center items-center space-x-20 mb-20">
-                <div className="text-center group flex flex-col items-center animate-slide-right">
+                <div
+                  data-animate-id="stat-1"
+                  className={`${getAnimationClass(
+                    "animate-slide-in-right",
+                    "stat-1"
+                  )} text-center group flex flex-col items-center transition-all duration-800`}>
                   <div className="w-20 h-20 bg-gradient-to-r from-blue-400 to-cyan-400 rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-all duration-500 shadow-2xl">
                     <div className="text-2xl font-bold text-white leading-none">
                       500+
@@ -379,7 +447,12 @@ const AboutSection = () => {
                   </div>
                 </div>
 
-                <div className="text-center group flex flex-col items-center animate-slide-up">
+                <div
+                  data-animate-id="stat-2"
+                  className={`${getAnimationClass(
+                    "animate-fade-in-up",
+                    "stat-2"
+                  )} text-center group flex flex-col items-center transition-all duration-800`}>
                   <div className="w-20 h-20 bg-gradient-to-r from-purple-400 to-pink-400 rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-all duration-500 shadow-2xl">
                     <div className="text-2xl font-bold text-white leading-none">
                       50+
@@ -390,7 +463,12 @@ const AboutSection = () => {
                   </div>
                 </div>
 
-                <div className="text-center group flex flex-col items-center animate-slide-left">
+                <div
+                  data-animate-id="stat-3"
+                  className={`${getAnimationClass(
+                    "animate-slide-in-left",
+                    "stat-3"
+                  )} text-center group flex flex-col items-center transition-all duration-800`}>
                   <div className="w-20 h-20 bg-gradient-to-r from-green-400 to-emerald-400 rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-all duration-500 shadow-2xl">
                     <div className="text-2xl font-bold text-white leading-none">
                       4+
@@ -418,9 +496,13 @@ const AboutSection = () => {
                 <div className="flex-1 space-y-8 relative z-10">
                   <div className="space-y-6">
                     <div
-                      className={`flex items-center space-x-4 animate-slide-${
-                        index % 2 === 0 ? "right" : "left"
-                      }`}>
+                      data-animate-id={`feature-${feature.id}-header`}
+                      className={`${getAnimationClass(
+                        `animate-slide-in-${
+                          index % 2 === 0 ? "right" : "left"
+                        }`,
+                        `feature-${feature.id}-header`
+                      )} flex items-center space-x-4 transition-all duration-800`}>
                       <div
                         className={`w-16 h-16 bg-gradient-to-r ${feature.color} rounded-2xl flex items-center justify-center text-white shadow-2xl group-hover:scale-110 transition-all duration-500`}>
                         {feature.icon}
@@ -431,22 +513,33 @@ const AboutSection = () => {
                     </div>
 
                     <h2
-                      className={`text-5xl lg:text-6xl font-bold text-blue-600 leading-tight animate-slide-${
-                        index % 2 === 0 ? "left" : "right"
-                      }`}>
+                      data-animate-id={`feature-${feature.id}-title`}
+                      className={`${getAnimationClass(
+                        `animate-slide-in-${
+                          index % 2 === 0 ? "left" : "right"
+                        }`,
+                        `feature-${feature.id}-title`
+                      )} text-5xl lg:text-6xl font-bold text-blue-600 leading-tight transition-all duration-800`}>
                       {feature.title}
                     </h2>
 
-                    <p className="text-lg text-gray-600 leading-relaxed max-w-2xl animate-slide-up">
+                    <p
+                      data-animate-id={`feature-${feature.id}-description`}
+                      className={`${getAnimationClass(
+                        "animate-fade-in-up",
+                        `feature-${feature.id}-description`
+                      )} text-lg text-gray-600 leading-relaxed max-w-2xl transition-all duration-800`}>
                       {feature.description}
                     </p>
                   </div>
 
                   {/* Interactive Stats */}
                   <div
-                    className={`flex items-center space-x-8 animate-slide-${
-                      index % 2 === 0 ? "right" : "left"
-                    }`}>
+                    data-animate-id={`feature-${feature.id}-stats`}
+                    className={`${getAnimationClass(
+                      `animate-slide-in-${index % 2 === 0 ? "right" : "left"}`,
+                      `feature-${feature.id}-stats`
+                    )} flex items-center space-x-8 transition-all duration-800`}>
                     <div className="group/stat">
                       <div className="text-4xl font-bold text-gray-900 mb-2 group-hover/stat:scale-110 transition-transform duration-300">
                         {feature.stats.number}
@@ -460,9 +553,11 @@ const AboutSection = () => {
 
                 {/* Animated Image */}
                 <div
-                  className={`flex-1 relative animate-slide-${
-                    index % 2 === 0 ? "left" : "right"
-                  }`}>
+                  data-animate-id={`feature-${feature.id}-image`}
+                  className={`${getAnimationClass(
+                    `animate-slide-in-${index % 2 === 0 ? "left" : "right"}`,
+                    `feature-${feature.id}-image`
+                  )} flex-1 relative transition-all duration-800`}>
                   <div className="relative group/image">
                     <div className="relative overflow-hidden rounded-3xl">
                       <img
@@ -481,11 +576,21 @@ const AboutSection = () => {
           {/* Animated Call to Action */}
           <div className="text-center mt-32">
             <div className="max-w-3xl mx-auto">
-              <h2 className="animate-slide-up text-5xl font-bold text-blue-600 mb-8 text-center">
+              <h2
+                data-animate-id="cta-title"
+                className={`${getAnimationClass(
+                  "animate-fade-in-up",
+                  "cta-title"
+                )} text-5xl font-bold text-blue-600 mb-8 text-center transition-all duration-800`}>
                 Ready to get started?
               </h2>
 
-              <p className="animate-slide-up text-xl text-gray-600 mb-12 leading-relaxed text-center">
+              <p
+                data-animate-id="cta-description"
+                className={`${getAnimationClass(
+                  "animate-fade-in-up",
+                  "cta-description"
+                )} text-xl text-gray-600 mb-12 leading-relaxed text-center transition-all duration-800`}>
                 Join hundreds of businesses that have transformed their
                 operations with our AI-driven solutions and R&D innovations.
               </p>
@@ -494,14 +599,22 @@ const AboutSection = () => {
                 <Button
                   variant="black"
                   size="lg"
-                  className="animate-slide-right px-10 py-5 rounded-full font-medium transition-all duration-300 transform hover:scale-105 shadow-2xl">
+                  data-animate-id="cta-button-1"
+                  className={`${getAnimationClass(
+                    "animate-slide-in-right",
+                    "cta-button-1"
+                  )} px-10 py-5 rounded-full font-medium transition-all duration-300 transform hover:scale-105 shadow-2xl`}>
                   Start your project
                 </Button>
 
                 <Button
                   variant="black"
                   size="lg"
-                  className="animate-slide-left px-10 py-5 rounded-full font-medium transition-all duration-300 transform hover:scale-105">
+                  data-animate-id="cta-button-2"
+                  className={`${getAnimationClass(
+                    "animate-slide-in-left",
+                    "cta-button-2"
+                  )} px-10 py-5 rounded-full font-medium transition-all duration-300 transform hover:scale-105`}>
                   View our work
                 </Button>
               </div>
