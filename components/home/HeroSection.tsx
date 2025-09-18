@@ -40,9 +40,9 @@ const HeroSection = () => {
 
           {/* Right Side - Image */}
           <div className="relative">
-            <div className="relative rounded-3xl overflow-hidden shadow-2xl">
+            <div className="relative rounded-3xl overflow-hidden ">
               <img
-                src="/images/blog page image.jpg"
+                src="/images/Codagam services.png"
                 alt="Codagam team and technology solutions"
                 className="w-full h-[600px] object-cover"
               />
