@@ -26,7 +26,7 @@ const Navbar = () => {
             onClick={handleLogoClick}
             className="flex items-center space-x-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 rounded-md p-1">
             <span className="text-lg sm:text-xl font-bold text-blue-900">
-              Codagam Software Labs
+              Codagam
             </span>
           </button>
 
