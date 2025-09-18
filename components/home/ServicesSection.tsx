@@ -3,6 +3,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ChevronLeft, ChevronRight, ArrowRight } from "lucide-react";
 
 interface GalleryItem {
@@ -84,6 +85,10 @@ export default function ServicesSection() {
   const [currentIndex, setCurrentIndex] = useState(1);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [isScrolling, setIsScrolling] = useState(false);
+  const [animatedElements, setAnimatedElements] = useState<Set<string>>(
+    new Set()
+  );
+  const sectionRef = useRef<HTMLDivElement>(null);
 
   const scrollToItem = (index: number) => {
     if (!scrollContainerRef.current || isScrolling) return;
@@ -124,10 +129,97 @@ export default function ServicesSection() {
     }
   }, [currentIndex, isScrolling]);
 
+  // Scroll-triggered animations setup
+  useEffect(() => {
+    // Intersection Observer for scroll-triggered animations
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: "0px 0px -50px 0px",
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        const elementId = entry.target.getAttribute("data-animate-id");
+        if (elementId) {
+          if (entry.isIntersecting) {
+            // Element is in view - add animation
+            setAnimatedElements((prev) => new Set([...prev, elementId]));
+          } else {
+            // Element is out of view - remove animation (for scroll up effect)
+            // Add a small delay to make scroll-up animation more visible
+            setTimeout(() => {
+              setAnimatedElements((prev) => {
+                const newSet = new Set(prev);
+                newSet.delete(elementId);
+                return newSet;
+              });
+            }, 100);
+          }
+        }
+      });
+    }, observerOptions);
+
+    const section = sectionRef.current;
+    if (section) {
+      // Observe all elements with data-animate-id
+      const animatedElements = section.querySelectorAll("[data-animate-id]");
+      animatedElements.forEach((el) => observer.observe(el));
+
+      return () => {
+        observer.disconnect();
+      };
+    }
+  }, []);
+
+  // Additional effect to trigger animations when currentIndex changes (for horizontal scroll)
+  useEffect(() => {
+    // Trigger animations for the current visible card
+    const currentContainerId = `service-container-${currentIndex}`;
+    const currentContentId = `service-content-${currentIndex}`;
+    const currentImageId = `service-image-${currentIndex}`;
+
+    setAnimatedElements((prev) => {
+      const newSet = new Set(prev);
+      newSet.add(currentContainerId);
+      newSet.add(currentContentId);
+      newSet.add(currentImageId);
+      return newSet;
+    });
+  }, [currentIndex]);
+
+  // Initial animation for the first card
+  useEffect(() => {
+    // Trigger initial animations for the first card
+    setAnimatedElements((prev) => {
+      const newSet = new Set(prev);
+      newSet.add("services-header");
+      newSet.add("services-gallery");
+      newSet.add("services-navigation");
+      newSet.add("service-container-0");
+      newSet.add("service-content-0");
+      newSet.add("service-image-0");
+      return newSet;
+    });
+  }, []);
+
+  // Helper function to get animation class based on scroll trigger
+  const getAnimationClass = (baseClass: string, elementId: string) => {
+    return animatedElements.has(elementId)
+      ? baseClass
+      : "scroll-animate-hidden";
+  };
+
   return (
-    <section className="min-h-screen bg-white flex items-center py-20">
+    <section
+      ref={sectionRef}
+      className="min-h-screen bg-white flex items-center py-20">
       <div className="w-full">
-        <div className="animate-slide-up text-center mb-20 px-8 lg:px-16">
+        <div
+          data-animate-id="services-header"
+          className={`${getAnimationClass(
+            "animate-fade-in-up",
+            "services-header"
+          )} text-center mb-20 px-8 lg:px-16 transition-all duration-800`}>
           <h2 className="text-5xl lg:text-7xl font-bold text-gray-900 leading-tight mb-8">
             Our Services
           </h2>
@@ -136,44 +228,69 @@ export default function ServicesSection() {
           </p>
         </div>
 
-        <div className="animate-fade-in">
+        <div
+          data-animate-id="services-gallery"
+          className={`${getAnimationClass(
+            "animate-fade-in-up",
+            "services-gallery"
+          )} transition-all duration-800`}>
           <div className="relative">
             <div
               ref={scrollContainerRef}
               className="overflow-x-auto scrollbar-hide scroll-smooth"
               style={{ scrollSnapType: "x mandatory" }}>
               <div
-                className="flex gap-12 pb-6"
+                className="flex gap-8 pb-6"
                 role="list"
                 aria-label="Services Gallery">
                 {galleryItems.map((item, index) => (
                   <div
                     key={item.id}
-                    className="flex-shrink-0 w-full max-w-6xl scroll-snap-start"
+                    className="flex-shrink-0 w-full max-w-5xl scroll-snap-start"
                     role="listitem">
-                    <div className="grid lg:grid-cols-2 gap-16 items-center min-h-[700px] px-8 lg:px-16">
-                      {/* Content Section - Left Side */}
-                      <div className="space-y-8 order-2 lg:order-1">
-                        <div className="space-y-6">
-                          <h3 className="text-5xl lg:text-6xl font-bold text-gray-900 leading-tight">
-                            {item.title}.
-                          </h3>
-                          <p className="text-xl text-gray-600 leading-relaxed">
-                            {item.description}
-                          </p>
-                        </div>
+                    <div
+                      data-animate-id={`service-container-${index}`}
+                      className={`${getAnimationClass(
+                        "animate-fade-in-up",
+                        `service-container-${index}`
+                      )} grid lg:grid-cols-2 gap-8 items-stretch min-h-[600px] px-8 lg:px-16 transition-all duration-800`}>
+                      {/* Content Card - Left Side */}
+                      <div
+                        data-animate-id={`service-content-${index}`}
+                        className={`${getAnimationClass(
+                          "animate-slide-in-left",
+                          `service-content-${index}`
+                        )} order-2 lg:order-1 transition-all duration-800`}>
+                        <Card className="h-full border-0 shadow-2xl bg-gradient-to-br from-white to-gray-50 hover:shadow-3xl transition-all duration-500 hover:scale-105 rounded-3xl">
+                          <CardHeader className="pb-6">
+                            <CardTitle className="text-4xl lg:text-5xl font-bold text-gray-900 leading-tight">
+                              {item.title}.
+                            </CardTitle>
+                          </CardHeader>
+                          <CardContent className="flex-1">
+                            <p className="text-lg text-gray-600 leading-relaxed">
+                              {item.description}
+                            </p>
+                          </CardContent>
+                        </Card>
                       </div>
 
-                      {/* Image Section - Right Side */}
-                      <div className="relative order-1 lg:order-2">
-                        <div className="relative h-96 lg:h-[600px] rounded-3xl overflow-hidden bg-gray-50">
+                      {/* Image - Right Side */}
+                      <div
+                        data-animate-id={`service-image-${index}`}
+                        className={`${getAnimationClass(
+                          "animate-slide-in-right",
+                          `service-image-${index}`
+                        )} order-1 lg:order-2 transition-all duration-800`}>
+                        <div className="relative h-full min-h-[600px] rounded-3xl overflow-hidden shadow-2xl hover:shadow-3xl transition-all duration-500 hover:scale-105">
                           <Image
                             src={item.image}
                             alt={item.alt}
                             fill
-                            className="object-cover transition-transform duration-700 hover:scale-105"
+                            className="object-cover transition-transform duration-700 hover:scale-110"
                             priority={index === currentIndex}
                           />
+                          <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent"></div>
                         </div>
                       </div>
                     </div>
@@ -183,11 +300,16 @@ export default function ServicesSection() {
             </div>
 
             {/* Navigation Buttons - Bottom Right */}
-            <div className="absolute  right-8 flex gap-4 z-10">
+            <div
+              data-animate-id="services-navigation"
+              className={`${getAnimationClass(
+                "animate-slide-in-right",
+                "services-navigation"
+              )} absolute right-8 flex gap-4 z-10 transition-all duration-800`}>
               <Button
                 variant="black"
                 size="icon"
-                className="h-14 w-14 rounded-full bg-white/90 backdrop-blur-sm shadow-xl disabled:opacity-30 hover:bg-white transition-all duration-300"
+                className="h-14 w-14 rounded-2xl bg-white/90 backdrop-blur-sm shadow-xl disabled:opacity-30 hover:bg-white hover:scale-110 transition-all duration-300"
                 onClick={() => scrollToItem(Math.max(0, currentIndex - 1))}
                 disabled={currentIndex === 0}
                 aria-label="Previous services gallery">
@@ -197,7 +319,7 @@ export default function ServicesSection() {
               <Button
                 variant="black"
                 size="icon"
-                className="h-14 w-14 rounded-full bg-white/90 backdrop-blur-sm shadow-xl disabled:opacity-30 hover:bg-white transition-all duration-300"
+                className="h-14 w-14 rounded-2xl bg-white/90 backdrop-blur-sm shadow-xl disabled:opacity-30 hover:bg-white hover:scale-110 transition-all duration-300"
                 onClick={() =>
                   scrollToItem(
                     Math.min(galleryItems.length - 1, currentIndex + 1)
