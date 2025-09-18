@@ -289,13 +289,13 @@ export default function ProductsSection() {
         id="products-section"
         ref={sectionRef}
         className="min-h-screen bg-white flex items-center py-20">
-        <div className="w-full px-8 lg:px-16">
+        <div className="w-full">
           <div
             data-animate-id="products-header"
             className={`${getAnimationClass(
               "animate-fade-in-up",
               "products-header"
-            )} text-center mb-20 transition-all duration-800`}>
+            )} text-center mb-20 px-8 lg:px-16 transition-all duration-800`}>
             <h2 className="text-5xl lg:text-7xl font-bold text-gray-900 leading-tight mb-8">
               Our Products
             </h2>
@@ -316,7 +316,7 @@ export default function ProductsSection() {
                 className="overflow-x-auto scrollbar-hide scroll-smooth"
                 style={{ scrollSnapType: "x mandatory" }}>
                 <div
-                  className="flex gap-8 pb-6"
+                  className="flex gap-8 pb-6 px-8 lg:px-16"
                   role="list"
                   aria-label="Products Gallery">
                   {productItems.map((item, index) => (
@@ -382,20 +382,22 @@ export default function ProductsSection() {
                 className={`${getAnimationClass(
                   "animate-slide-in-up",
                   "products-navigation"
-                )} flex justify-center gap-4 mt-12 transition-all duration-800`}>
-                <Button
-                  variant="black"
-                  size="icon"
-                  className="h-14 w-14 rounded-2xl bg-white/90 backdrop-blur-sm shadow-xl disabled:opacity-30 hover:bg-white hover:scale-110 transition-all duration-300"
+                )} flex justify-center gap-6 mt-12 transition-all duration-800`}>
+                <button
+                  className="group h-16 w-16 rounded-full bg-white/95 backdrop-blur-sm shadow-2xl border border-gray-200/50 disabled:opacity-40 disabled:cursor-not-allowed hover:bg-white hover:scale-110 hover:shadow-3xl transition-all duration-300 flex items-center justify-center"
                   onClick={() => scrollToItem(Math.max(0, currentIndex - 1))}
                   disabled={currentIndex === 0}
                   aria-label="Previous products gallery">
-                  <ChevronLeft className="h-6 w-6 text-gray-900" />
-                </Button>
-                <Button
-                  variant="black"
-                  size="icon"
-                  className="h-14 w-14 rounded-2xl bg-white/90 backdrop-blur-sm shadow-xl disabled:opacity-30 hover:bg-white hover:scale-110 transition-all duration-300"
+                  <svg
+                    className="h-6 w-6 text-gray-700 group-hover:text-gray-900 transition-colors duration-300"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 36 36"
+                    fill="currentColor">
+                    <path d="m13.4403 16.9375 5.5076-5.5c.5854-.5854 1.5323-.5825 2.1157.0039.5835.5869.5815 1.5366-.0039 2.1211l-4.4438 4.4375 4.4438 4.4375c.5854.5845.5874 1.5342.0039 2.1211-.2922.2944-.676.4414-1.0598.4414-.3818 0-.7637-.1455-1.0559-.4375l-5.5076-5.5c-.2815-.2812-.4403-.6636-.4403-1.0625s.1588-.7812.4403-1.0625z" />
+                  </svg>
+                </button>
+                <button
+                  className="group h-16 w-16 rounded-full bg-white/95 backdrop-blur-sm shadow-2xl border border-gray-200/50 disabled:opacity-40 disabled:cursor-not-allowed hover:bg-white hover:scale-110 hover:shadow-3xl transition-all duration-300 flex items-center justify-center"
                   onClick={() =>
                     scrollToItem(
                       Math.min(productItems.length - 1, currentIndex + 1)
@@ -403,8 +405,14 @@ export default function ProductsSection() {
                   }
                   disabled={currentIndex === productItems.length - 1}
                   aria-label="Next products gallery">
-                  <ChevronRight className="h-6 w-6 text-gray-900" />
-                </Button>
+                  <svg
+                    className="h-6 w-6 text-gray-700 group-hover:text-gray-900 transition-colors duration-300"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 36 36"
+                    fill="currentColor">
+                    <path d="m22.5597 16.9375-5.5076-5.5c-.5854-.5854-1.5323-.5825-2.1157.0039-.5835.5869-.5815 1.5366.0039 2.1211l4.4438 4.4375-4.4438 4.4375c-.5854.5845-.5874 1.5342-.0039 2.1211.2922.2944.676.4414 1.0598.4414.3818 0 .7637-.1455 1.0559-.4375l5.5076-5.5c.2815-.2812.4403-.6636.4403-1.0625s-.1588-.7812-.4403-1.0625z" />
+                  </svg>
+                </button>
               </div>
             </div>
           </div>

@@ -114,7 +114,7 @@ export default function CareerSection() {
     <section
       id="career-section"
       ref={sectionRef}
-      className="min-h-screen bg-white py-32">
+      className="min-h-screen bg-gray-200 py-32">
       <div className="w-full">
         {/* Header */}
         <div
