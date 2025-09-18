@@ -126,8 +126,8 @@ export default function ServicesSection() {
 
   return (
     <section className="min-h-screen bg-white flex items-center py-20">
-      <div className="w-full px-8 lg:px-16">
-        <div className="animate-slide-up text-center mb-20">
+      <div className="w-full">
+        <div className="animate-slide-up text-center mb-20 px-8 lg:px-16">
           <h2 className="text-5xl lg:text-7xl font-bold text-gray-900 leading-tight mb-8">
             Our Services
           </h2>
@@ -143,31 +143,38 @@ export default function ServicesSection() {
               className="overflow-x-auto scrollbar-hide scroll-smooth"
               style={{ scrollSnapType: "x mandatory" }}>
               <div
-                className="flex gap-8 pb-6"
+                className="flex gap-12 pb-6"
                 role="list"
                 aria-label="Services Gallery">
                 {galleryItems.map((item, index) => (
                   <div
                     key={item.id}
-                    className="flex-shrink-0 w-80 lg:w-96 scroll-snap-start"
+                    className="flex-shrink-0 w-full max-w-6xl scroll-snap-start"
                     role="listitem">
-                    <div className="bg-white rounded-3xl p-8 shadow-lg hover:shadow-xl transition-shadow duration-300 h-full">
-                      <div className="relative h-64 overflow-hidden rounded-2xl mb-6">
-                        <Image
-                          src={item.image}
-                          alt={item.alt}
-                          fill
-                          className="object-cover transition-transform duration-300 hover:scale-105"
-                          priority={index === currentIndex}
-                        />
+                    <div className="grid lg:grid-cols-2 gap-16 items-center min-h-[700px] px-8 lg:px-16">
+                      {/* Content Section - Left Side */}
+                      <div className="space-y-8 order-2 lg:order-1">
+                        <div className="space-y-6">
+                          <h3 className="text-5xl lg:text-6xl font-bold text-gray-900 leading-tight">
+                            {item.title}.
+                          </h3>
+                          <p className="text-xl text-gray-600 leading-relaxed">
+                            {item.description}
+                          </p>
+                        </div>
                       </div>
-                      <div>
-                        <h3 className="text-2xl font-bold text-gray-900 mb-4">
-                          {item.title}
-                        </h3>
-                        <p className="text-gray-600 text-lg leading-relaxed">
-                          {item.description}
-                        </p>
+
+                      {/* Image Section - Right Side */}
+                      <div className="relative order-1 lg:order-2">
+                        <div className="relative h-96 lg:h-[600px] rounded-3xl overflow-hidden bg-gray-50">
+                          <Image
+                            src={item.image}
+                            alt={item.alt}
+                            fill
+                            className="object-cover transition-transform duration-700 hover:scale-105"
+                            priority={index === currentIndex}
+                          />
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -175,21 +182,22 @@ export default function ServicesSection() {
               </div>
             </div>
 
-            {/* Navigation Buttons */}
-            <div className="flex justify-center gap-4 mt-12">
+            {/* Navigation Buttons - Bottom Right */}
+            <div className="absolute  right-8 flex gap-4 z-10">
               <Button
                 variant="outline"
                 size="icon"
-                className="h-14 w-14 rounded-full bg-white border-gray-300 shadow-lg disabled:opacity-50"
+                className="h-14 w-14 rounded-full bg-white/90 backdrop-blur-sm border-gray-200 shadow-xl disabled:opacity-30 hover:bg-white transition-all duration-300"
                 onClick={() => scrollToItem(Math.max(0, currentIndex - 1))}
                 disabled={currentIndex === 0}
                 aria-label="Previous services gallery">
                 <ChevronLeft className="h-6 w-6 text-gray-900" />
               </Button>
+
               <Button
                 variant="outline"
                 size="icon"
-                className="h-14 w-14 rounded-full bg-white border-gray-300 shadow-lg disabled:opacity-50"
+                className="h-14 w-14 rounded-full bg-white/90 backdrop-blur-sm border-gray-200 shadow-xl disabled:opacity-30 hover:bg-white transition-all duration-300"
                 onClick={() =>
                   scrollToItem(
                     Math.min(galleryItems.length - 1, currentIndex + 1)
