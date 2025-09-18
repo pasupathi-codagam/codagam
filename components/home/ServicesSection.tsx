@@ -185,9 +185,9 @@ export default function ServicesSection() {
             {/* Navigation Buttons - Bottom Right */}
             <div className="absolute  right-8 flex gap-4 z-10">
               <Button
-                variant="outline"
+                variant="black"
                 size="icon"
-                className="h-14 w-14 rounded-full bg-white/90 backdrop-blur-sm border-gray-200 shadow-xl disabled:opacity-30 hover:bg-white transition-all duration-300"
+                className="h-14 w-14 rounded-full bg-white/90 backdrop-blur-sm shadow-xl disabled:opacity-30 hover:bg-white transition-all duration-300"
                 onClick={() => scrollToItem(Math.max(0, currentIndex - 1))}
                 disabled={currentIndex === 0}
                 aria-label="Previous services gallery">
@@ -195,9 +195,9 @@ export default function ServicesSection() {
               </Button>
 
               <Button
-                variant="outline"
+                variant="black"
                 size="icon"
-                className="h-14 w-14 rounded-full bg-white/90 backdrop-blur-sm border-gray-200 shadow-xl disabled:opacity-30 hover:bg-white transition-all duration-300"
+                className="h-14 w-14 rounded-full bg-white/90 backdrop-blur-sm shadow-xl disabled:opacity-30 hover:bg-white transition-all duration-300"
                 onClick={() =>
                   scrollToItem(
                     Math.min(galleryItems.length - 1, currentIndex + 1)

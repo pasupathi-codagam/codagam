@@ -1,4 +1,5 @@
 import React from "react";
+import { Button } from "@/components/ui/button";
 
 const HeroSection = () => {
   return (
@@ -32,9 +33,12 @@ const HeroSection = () => {
 
             {/* CTA */}
             <div className="pt-4">
-              <button className="bg-gray-900 text-white px-8 py-4 rounded-full text-lg font-medium hover:bg-gray-800 transition-colors">
+              <Button
+                variant="black"
+                size="lg"
+                className="px-8 py-4 rounded-full text-lg font-medium ">
                 Get Started
-              </button>
+              </Button>
             </div>
           </div>
 

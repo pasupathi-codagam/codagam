@@ -1,5 +1,6 @@
 "use client";
 import React, { useState, useEffect, useRef } from "react";
+import { Button } from "@/components/ui/button";
 import {
   Brain,
   Monitor,
@@ -490,13 +491,19 @@ const AboutSection = () => {
               </p>
 
               <div className="flex flex-col sm:flex-row gap-6 justify-center">
-                <button className="animate-slide-right bg-blue-600 text-white px-10 py-5 rounded-full font-medium hover:bg-blue-700 transition-all duration-300 transform hover:scale-105 shadow-2xl">
+                <Button
+                  variant="black"
+                  size="lg"
+                  className="animate-slide-right px-10 py-5 rounded-full font-medium transition-all duration-300 transform hover:scale-105 shadow-2xl">
                   Start your project
-                </button>
+                </Button>
 
-                <button className="animate-slide-left bg-gray-100 text-gray-900 px-10 py-5 rounded-full font-medium border border-gray-200 hover:bg-gray-200 transition-all duration-300 transform hover:scale-105">
+                <Button
+                  variant="black"
+                  size="lg"
+                  className="animate-slide-left px-10 py-5 rounded-full font-medium transition-all duration-300 transform hover:scale-105">
                   View our work
-                </button>
+                </Button>
               </div>
             </div>
           </div>

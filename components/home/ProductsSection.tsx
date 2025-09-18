@@ -251,9 +251,9 @@ export default function ProductsSection() {
                           {/* Action Button */}
                           <div className="flex justify-end">
                             <Button
-                              variant="outline"
+                              variant="black"
                               size="icon"
-                              className="rounded-full w-12 h-12 p-0 bg-gray-900 border-gray-900 hover:bg-gray-800 hover:border-gray-800"
+                              className="rounded-full w-12 h-12 p-0"
                               onClick={(e) => {
                                 e.stopPropagation();
                                 handleCardClick(item);
@@ -271,7 +271,7 @@ export default function ProductsSection() {
               {/* Navigation Buttons */}
               <div className="flex justify-center gap-4 mt-12">
                 <Button
-                  variant="outline"
+                  variant="black"
                   size="icon"
                   className="h-14 w-14 rounded-full bg-white border-gray-300 shadow-lg disabled:opacity-50"
                   onClick={() => scrollToItem(Math.max(0, currentIndex - 1))}
@@ -280,7 +280,7 @@ export default function ProductsSection() {
                   <ChevronLeft className="h-6 w-6 text-gray-900" />
                 </Button>
                 <Button
-                  variant="outline"
+                  variant="black"
                   size="icon"
                   className="h-14 w-14 rounded-full bg-white border-gray-300 shadow-lg disabled:opacity-50"
                   onClick={() =>

@@ -46,75 +46,107 @@ export default function CareerSection() {
   };
 
   return (
-    <section className="min-h-screen bg-white flex items-center py-20">
-      <div className="w-full px-8 lg:px-16">
-        <div className="max-w-6xl mx-auto">
-          <div className="animate-slide-up text-center mb-20">
-            <h2 className="text-5xl lg:text-7xl font-bold text-gray-900 leading-tight mb-8">
-              Join Our Team
-            </h2>
-            <p className="text-xl lg:text-2xl text-gray-600 max-w-4xl mx-auto leading-relaxed">
-              Are you ready to take your career to the next level? At Codagam
-              Software Labs, we believe in empowering our team members to
-              achieve their full potential.
-            </p>
+    <section className="min-h-screen bg-white py-32">
+      <div className="w-full">
+        {/* Header */}
+        <div className="text-center mb-24 px-8 lg:px-16">
+          <div className="inline-flex items-center px-4 py-2 bg-gray-100 rounded-full mb-8">
+            <span className="text-gray-700 text-sm font-medium">Careers</span>
           </div>
 
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
-            <div className="animate-slide-left space-y-8">
-              <h3 className="text-3xl lg:text-4xl font-bold text-gray-900">
-                Why Work With Us?
+          <h2 className="text-6xl lg:text-8xl font-bold text-gray-900 leading-tight mb-8">
+            Join our
+            <br />
+            <span className="text-blue-600">team</span>
+          </h2>
+
+          <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+            We're looking for passionate individuals who want to build the
+            future of technology. Join us in creating innovative solutions that
+            make a real impact.
+          </p>
+        </div>
+
+        <div className="px-8 lg:px-16">
+          <div className="grid lg:grid-cols-2 gap-20 items-start">
+            {/* Benefits Section */}
+            <div className="space-y-12">
+              <h3 className="text-4xl lg:text-5xl font-bold text-gray-900 leading-tight">
+                Why work with us?
               </h3>
-              <div className="space-y-6">
-                <div className="flex items-start space-x-4">
-                  <div className="w-3 h-3 bg-gray-900 rounded-full mt-2 flex-shrink-0"></div>
-                  <div>
-                    <h4 className="text-xl font-semibold text-gray-900 mb-2">
-                      Innovation First
-                    </h4>
-                    <p className="text-gray-600 text-lg">
-                      Work on cutting-edge projects that shape the future of
-                      technology.
-                    </p>
+
+              <div className="space-y-8">
+                <div className="group">
+                  <div className="flex items-start space-x-6">
+                    <div className="w-12 h-12 bg-blue-100 rounded-2xl flex items-center justify-center group-hover:bg-blue-600 transition-colors duration-300">
+                      <div className="w-6 h-6 bg-blue-600 rounded-full group-hover:bg-white transition-colors duration-300"></div>
+                    </div>
+                    <div className="flex-1">
+                      <h4 className="text-2xl font-bold text-gray-900 mb-3 group-hover:text-blue-600 transition-colors duration-300">
+                        Innovation First
+                      </h4>
+                      <p className="text-lg text-gray-600 leading-relaxed">
+                        Work on cutting-edge projects using the latest
+                        technologies. We encourage experimentation and creative
+                        problem-solving.
+                      </p>
+                    </div>
                   </div>
                 </div>
-                <div className="flex items-start space-x-4">
-                  <div className="w-3 h-3 bg-gray-900 rounded-full mt-2 flex-shrink-0"></div>
-                  <div>
-                    <h4 className="text-xl font-semibold text-gray-900 mb-2">
-                      Growth Opportunities
-                    </h4>
-                    <p className="text-gray-600 text-lg">
-                      Continuous learning and career development in a supportive
-                      environment.
-                    </p>
+
+                <div className="group">
+                  <div className="flex items-start space-x-6">
+                    <div className="w-12 h-12 bg-green-100 rounded-2xl flex items-center justify-center group-hover:bg-green-600 transition-colors duration-300">
+                      <div className="w-6 h-6 bg-green-600 rounded-full group-hover:bg-white transition-colors duration-300"></div>
+                    </div>
+                    <div className="flex-1">
+                      <h4 className="text-2xl font-bold text-gray-900 mb-3 group-hover:text-green-600 transition-colors duration-300">
+                        Growth Opportunities
+                      </h4>
+                      <p className="text-lg text-gray-600 leading-relaxed">
+                        Continuous learning with mentorship programs, conference
+                        attendance, and access to premium learning resources.
+                      </p>
+                    </div>
                   </div>
                 </div>
-                <div className="flex items-start space-x-4">
-                  <div className="w-3 h-3 bg-gray-900 rounded-full mt-2 flex-shrink-0"></div>
-                  <div>
-                    <h4 className="text-xl font-semibold text-gray-900 mb-2">
-                      Impact Matters
-                    </h4>
-                    <p className="text-gray-600 text-lg">
-                      Make a real difference in the world through meaningful
-                      technology solutions.
-                    </p>
+
+                <div className="group">
+                  <div className="flex items-start space-x-6">
+                    <div className="w-12 h-12 bg-purple-100 rounded-2xl flex items-center justify-center group-hover:bg-purple-600 transition-colors duration-300">
+                      <div className="w-6 h-6 bg-purple-600 rounded-full group-hover:bg-white transition-colors duration-300"></div>
+                    </div>
+                    <div className="flex-1">
+                      <h4 className="text-2xl font-bold text-gray-900 mb-3 group-hover:text-purple-600 transition-colors duration-300">
+                        Meaningful Impact
+                      </h4>
+                      <p className="text-lg text-gray-600 leading-relaxed">
+                        Build solutions that solve real-world problems and make
+                        a positive difference in people's lives.
+                      </p>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
 
-            <div className="animate-slide-right bg-white rounded-3xl p-8 shadow-lg">
-              <h3 className="text-2xl font-bold text-gray-900 mb-8 text-center">
-                Apply Now
-              </h3>
+            {/* Application Form */}
+            <div className="bg-gray-50 rounded-3xl p-8 lg:p-12">
+              <div className="text-center mb-8">
+                <h3 className="text-3xl font-bold text-gray-900 mb-4">
+                  Ready to join us?
+                </h3>
+                <p className="text-gray-600 text-lg">
+                  Send us your application and let's start the conversation.
+                </p>
+              </div>
+
               <form onSubmit={handleSubmit} className="space-y-6">
-                <div className="space-y-2">
+                <div className="space-y-3">
                   <Label
                     htmlFor="name"
-                    className="text-lg font-medium text-gray-900">
-                    Name
+                    className="text-base font-semibold text-gray-900">
+                    Full Name
                   </Label>
                   <Input
                     id="name"
@@ -123,16 +155,16 @@ export default function CareerSection() {
                     value={formData.name}
                     onChange={handleChange}
                     placeholder="Enter your full name"
-                    className="h-12 text-lg"
+                    className="h-14 text-base border-gray-200 focus:border-blue-500 focus:ring-blue-500"
                     required
                   />
                 </div>
 
-                <div className="space-y-2">
+                <div className="space-y-3">
                   <Label
                     htmlFor="email"
-                    className="text-lg font-medium text-gray-900">
-                    Email
+                    className="text-base font-semibold text-gray-900">
+                    Email Address
                   </Label>
                   <Input
                     id="email"
@@ -141,42 +173,45 @@ export default function CareerSection() {
                     value={formData.email}
                     onChange={handleChange}
                     placeholder="Enter your email address"
-                    className="h-12 text-lg"
+                    className="h-14 text-base border-gray-200 focus:border-blue-500 focus:ring-blue-500"
                     required
                   />
                 </div>
 
-                <div className="space-y-2">
+                <div className="space-y-3">
                   <Label
                     htmlFor="resume"
-                    className="text-lg font-medium text-gray-900">
+                    className="text-base font-semibold text-gray-900">
                     Resume
                   </Label>
-                  <Input
-                    id="resume"
-                    name="resume"
-                    type="file"
-                    accept=".pdf,.doc,.docx"
-                    onChange={handleChange}
-                    className="h-12 text-lg"
-                    required
-                  />
+                  <div className="relative">
+                    <Input
+                      id="resume"
+                      name="resume"
+                      type="file"
+                      accept=".pdf,.doc,.docx"
+                      onChange={handleChange}
+                      className="h-14 text-base border-gray-200 focus:border-blue-500 focus:ring-blue-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
+                      required
+                    />
+                  </div>
                   <p className="text-sm text-gray-500">
-                    Accepted formats: PDF, DOC, DOCX (Max 10MB)
+                    PDF, DOC, or DOCX files up to 10MB
                   </p>
                 </div>
 
                 <Button
                   type="submit"
+                  variant="black"
+                  size="lg"
                   disabled={isSubmitting}
-                  className="w-full h-12 text-lg font-medium bg-gray-900 hover:bg-gray-800"
-                  size="lg">
+                  className="w-full h-14 text-lg font-semibold rounded-full transition-all duration-300 disabled:opacity-50">
                   {isSubmitting ? "Submitting..." : "Submit Application"}
                 </Button>
 
                 {submitMessage && (
                   <div
-                    className={`p-4 rounded-lg text-lg ${
+                    className={`p-4 rounded-2xl text-base ${
                       submitMessage.includes("error")
                         ? "bg-red-50 text-red-700 border border-red-200"
                         : "bg-green-50 text-green-700 border border-green-200"
