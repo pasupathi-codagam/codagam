@@ -145,15 +145,21 @@ export default function ServicesSection() {
             // Element is in view - add animation
             setAnimatedElements((prev) => new Set([...prev, elementId]));
           } else {
-            // Element is out of view - remove animation (for scroll up effect)
-            // Add a small delay to make scroll-up animation more visible
-            setTimeout(() => {
-              setAnimatedElements((prev) => {
-                const newSet = new Set(prev);
-                newSet.delete(elementId);
-                return newSet;
-              });
-            }, 100);
+            // Only remove animation for header/gallery elements, not individual service cards
+            // This prevents cards from hiding during horizontal scrolling
+            if (
+              !elementId.includes("service-container-") &&
+              !elementId.includes("service-content-") &&
+              !elementId.includes("service-image-")
+            ) {
+              setTimeout(() => {
+                setAnimatedElements((prev) => {
+                  const newSet = new Set(prev);
+                  newSet.delete(elementId);
+                  return newSet;
+                });
+              }, 100);
+            }
           }
         }
       });
@@ -173,16 +179,25 @@ export default function ServicesSection() {
 
   // Additional effect to trigger animations when currentIndex changes (for horizontal scroll)
   useEffect(() => {
-    // Trigger animations for the current visible card
+    // Trigger animations for the current visible card and keep all previous cards visible
     const currentContainerId = `service-container-${currentIndex}`;
     const currentContentId = `service-content-${currentIndex}`;
     const currentImageId = `service-image-${currentIndex}`;
 
     setAnimatedElements((prev) => {
       const newSet = new Set(prev);
+      // Add current card animations
       newSet.add(currentContainerId);
       newSet.add(currentContentId);
       newSet.add(currentImageId);
+
+      // Keep all previous cards visible (don't remove them when scrolling horizontally)
+      for (let i = 0; i <= currentIndex; i++) {
+        newSet.add(`service-container-${i}`);
+        newSet.add(`service-content-${i}`);
+        newSet.add(`service-image-${i}`);
+      }
+
       return newSet;
     });
   }, [currentIndex]);
@@ -204,6 +219,16 @@ export default function ServicesSection() {
 
   // Helper function to get animation class based on scroll trigger
   const getAnimationClass = (baseClass: string, elementId: string) => {
+    // For service cards, always show them (don't hide during horizontal scroll)
+    if (
+      elementId.includes("service-container-") ||
+      elementId.includes("service-content-") ||
+      elementId.includes("service-image-")
+    ) {
+      return animatedElements.has(elementId) ? baseClass : "opacity-100";
+    }
+
+    // For other elements (header, gallery, navigation), use normal scroll animation
     return animatedElements.has(elementId)
       ? baseClass
       : "scroll-animate-hidden";

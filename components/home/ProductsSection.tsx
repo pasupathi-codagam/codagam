@@ -3,7 +3,14 @@
 import React, { useState, useRef, useEffect } from "react";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
-import { ChevronLeft, ChevronRight, Plus, ExternalLink } from "lucide-react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  ChevronLeft,
+  ChevronRight,
+  Plus,
+  ExternalLink,
+  ArrowRight,
+} from "lucide-react";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 
 interface ProductItem {
@@ -63,7 +70,7 @@ const productItems: ProductItem[] = [
     headline: "Build your perfect solution.",
     description:
       "We craft bespoke software solutions that address your unique business challenges. From enterprise applications to mobile apps, our team delivers scalable, secure, and efficient software.",
-    image: "/images/Codagam_Img (5).jpg",
+    image: "/images/WhatsApp Image 2025-09-18 at 14.09.42_e8607c7e.jpg",
     alt: "Custom software development solutions",
     website: "/services/custom-software",
     details:
@@ -82,7 +89,7 @@ const productItems: ProductItem[] = [
     headline: "Transform your business digitally.",
     description:
       "Empower your business with our comprehensive digital transformation services. We help you leverage emerging technologies to streamline operations and enhance customer experiences.",
-    image: "/images/Codagam_Img (1).jpg",
+    image: "/images/logo.png",
     alt: "Digital transformation services",
     website: "/services/digital-transformation",
     details:
@@ -143,6 +150,10 @@ export default function ProductsSection() {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [isScrolling, setIsScrolling] = useState(false);
+  const [animatedElements, setAnimatedElements] = useState<Set<string>>(
+    new Set()
+  );
+  const sectionRef = useRef<HTMLDivElement>(null);
 
   const scrollToItem = (index: number) => {
     if (!scrollContainerRef.current || isScrolling) return;
@@ -192,11 +203,107 @@ export default function ProductsSection() {
     }
   }, [currentIndex, isScrolling]);
 
+  // Scroll-triggered animations setup
+  useEffect(() => {
+    // Intersection Observer for scroll-triggered animations
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: "0px 0px -50px 0px",
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        const elementId = entry.target.getAttribute("data-animate-id");
+        if (elementId) {
+          if (entry.isIntersecting) {
+            // Element is in view - add animation
+            setAnimatedElements((prev) => new Set([...prev, elementId]));
+          } else {
+            // Only remove animation for header/gallery elements, not individual product cards
+            // This prevents cards from hiding during horizontal scrolling
+            if (!elementId.includes("product-card-")) {
+              setTimeout(() => {
+                setAnimatedElements((prev) => {
+                  const newSet = new Set(prev);
+                  newSet.delete(elementId);
+                  return newSet;
+                });
+              }, 100);
+            }
+          }
+        }
+      });
+    }, observerOptions);
+
+    const section = sectionRef.current;
+    if (section) {
+      // Observe all elements with data-animate-id
+      const animatedElements = section.querySelectorAll("[data-animate-id]");
+      animatedElements.forEach((el) => observer.observe(el));
+
+      return () => {
+        observer.disconnect();
+      };
+    }
+  }, []);
+
+  // Additional effect to trigger animations when currentIndex changes (for horizontal scroll)
+  useEffect(() => {
+    // Trigger animations for the current visible card and keep all previous cards visible
+    const currentCardId = `product-card-${currentIndex}`;
+
+    setAnimatedElements((prev) => {
+      const newSet = new Set(prev);
+      // Add current card animation
+      newSet.add(currentCardId);
+
+      // Keep all previous cards visible (don't remove them when scrolling horizontally)
+      for (let i = 0; i <= currentIndex; i++) {
+        newSet.add(`product-card-${i}`);
+      }
+
+      return newSet;
+    });
+  }, [currentIndex]);
+
+  // Initial animation for the first card
+  useEffect(() => {
+    // Trigger initial animations for the first card
+    setAnimatedElements((prev) => {
+      const newSet = new Set(prev);
+      newSet.add("products-header");
+      newSet.add("products-gallery");
+      newSet.add("products-navigation");
+      newSet.add("product-card-0");
+      return newSet;
+    });
+  }, []);
+
+  // Helper function to get animation class based on scroll trigger
+  const getAnimationClass = (baseClass: string, elementId: string) => {
+    // For product cards, always show them (don't hide during horizontal scroll)
+    if (elementId.includes("product-card-")) {
+      return animatedElements.has(elementId) ? baseClass : "opacity-100";
+    }
+
+    // For other elements (header, gallery, navigation), use normal scroll animation
+    return animatedElements.has(elementId)
+      ? baseClass
+      : "scroll-animate-hidden";
+  };
+
   return (
     <>
-      <section className="min-h-screen bg-white flex items-center py-20">
+      <section
+        ref={sectionRef}
+        className="min-h-screen bg-white flex items-center py-20">
         <div className="w-full px-8 lg:px-16">
-          <div className="animate-slide-up text-center mb-20">
+          <div
+            data-animate-id="products-header"
+            className={`${getAnimationClass(
+              "animate-fade-in-up",
+              "products-header"
+            )} text-center mb-20 transition-all duration-800`}>
             <h2 className="text-5xl lg:text-7xl font-bold text-gray-900 leading-tight mb-8">
               Our Products
             </h2>
@@ -205,7 +312,12 @@ export default function ProductsSection() {
             </p>
           </div>
 
-          <div className="animate-fade-in">
+          <div
+            data-animate-id="products-gallery"
+            className={`${getAnimationClass(
+              "animate-fade-in-up",
+              "products-gallery"
+            )} transition-all duration-800`}>
             <div className="relative">
               <div
                 ref={scrollContainerRef}
@@ -220,18 +332,22 @@ export default function ProductsSection() {
                       key={item.id}
                       className="flex-shrink-0 w-80 lg:w-96 scroll-snap-start"
                       role="listitem">
-                      <div
-                        className="h-full bg-white rounded-3xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden cursor-pointer"
+                      <Card
+                        data-animate-id={`product-card-${index}`}
+                        className={`${getAnimationClass(
+                          "animate-fade-in-up",
+                          `product-card-${index}`
+                        )} h-full border-0 shadow-2xl bg-gradient-to-br from-white to-gray-50 hover:shadow-3xl transition-all duration-500 hover:scale-105 rounded-3xl overflow-hidden cursor-pointer`}
                         onClick={() => handleCardClick(item)}>
-                        <div className="p-8 h-full flex flex-col">
+                        <CardContent className="p-8 h-full flex flex-col">
                           {/* Content Section */}
                           <div className="flex-1 mb-8">
                             <div className="text-sm font-medium text-gray-500 uppercase tracking-wider mb-4">
                               {item.label}
                             </div>
-                            <h3 className="text-2xl font-bold text-gray-900 mb-4 leading-tight">
+                            <CardTitle className="text-2xl font-bold text-gray-900 mb-4 leading-tight">
                               {item.headline}
-                            </h3>
+                            </CardTitle>
                             <p className="text-gray-600 text-lg leading-relaxed">
                               {item.description}
                             </p>
@@ -243,13 +359,13 @@ export default function ProductsSection() {
                               src={item.image}
                               alt={item.alt}
                               fill
-                              className="object-contain transition-transform duration-300 hover:scale-105"
+                              className="object-contain transition-transform duration-300 hover:scale-110"
                               priority={index === currentIndex}
                             />
                           </div>
 
                           {/* Action Button */}
-                          <div className="flex justify-end">
+                          <div className="flex justify-center items-center">
                             <Button
                               variant="black"
                               size="icon"
@@ -261,19 +377,24 @@ export default function ProductsSection() {
                               <Plus className="w-5 h-5 text-white" />
                             </Button>
                           </div>
-                        </div>
-                      </div>
+                        </CardContent>
+                      </Card>
                     </div>
                   ))}
                 </div>
               </div>
 
               {/* Navigation Buttons */}
-              <div className="flex justify-center gap-4 mt-12">
+              <div
+                data-animate-id="products-navigation"
+                className={`${getAnimationClass(
+                  "animate-slide-in-up",
+                  "products-navigation"
+                )} flex justify-center gap-4 mt-12 transition-all duration-800`}>
                 <Button
                   variant="black"
                   size="icon"
-                  className="h-14 w-14 rounded-full bg-white border-gray-300 shadow-lg disabled:opacity-50"
+                  className="h-14 w-14 rounded-2xl bg-white/90 backdrop-blur-sm shadow-xl disabled:opacity-30 hover:bg-white hover:scale-110 transition-all duration-300"
                   onClick={() => scrollToItem(Math.max(0, currentIndex - 1))}
                   disabled={currentIndex === 0}
                   aria-label="Previous products gallery">
@@ -282,7 +403,7 @@ export default function ProductsSection() {
                 <Button
                   variant="black"
                   size="icon"
-                  className="h-14 w-14 rounded-full bg-white border-gray-300 shadow-lg disabled:opacity-50"
+                  className="h-14 w-14 rounded-2xl bg-white/90 backdrop-blur-sm shadow-xl disabled:opacity-30 hover:bg-white hover:scale-110 transition-all duration-300"
                   onClick={() =>
                     scrollToItem(
                       Math.min(productItems.length - 1, currentIndex + 1)
@@ -300,35 +421,47 @@ export default function ProductsSection() {
 
       {/* Product Details Dialog */}
       <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-        <DialogContent className="max-w-lg p-8">
+        <DialogContent className="max-w-2xl p-8 rounded-3xl">
           {selectedProduct && (
-            <div className="space-y-6">
+            <div className="space-y-8">
               {/* Product Label */}
               <div className="text-sm font-medium text-gray-500 uppercase tracking-wider">
                 {selectedProduct.label}
               </div>
 
               {/* Product Headline */}
-              <h3 className="text-2xl font-semibold text-gray-900 leading-tight">
+              <h3 className="text-3xl font-bold text-gray-900 leading-tight">
                 {selectedProduct.headline}
               </h3>
 
               {/* Product Description */}
-              <p className="text-gray-700 leading-relaxed">
+              <p className="text-gray-700 leading-relaxed text-lg">
                 {selectedProduct.details}
               </p>
 
+              {/* Features List */}
+              <div className="space-y-4">
+                <h4 className="text-lg font-semibold text-gray-900">
+                  Key Features:
+                </h4>
+                <ul className="grid grid-cols-1 md:grid-cols-2 gap-2">
+                  {selectedProduct.features.map((feature, index) => (
+                    <li key={index} className="flex items-center text-gray-600">
+                      <div className="w-2 h-2 bg-blue-500 rounded-full mr-3 flex-shrink-0"></div>
+                      {feature}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
               {/* Learn More Link */}
-              <div className="pt-2">
+              <div className="pt-4">
                 <Button
                   variant="black"
                   onClick={() => handleVisitWebsite(selectedProduct.website)}
-                  className=" p-0 h-auto font-normal text-base inline-flex items-center gap-2">
+                  className="rounded-full px-8 py-3 text-base font-medium inline-flex items-center gap-2">
                   Learn more
                   <ExternalLink className="w-4 h-4" />
-                  <span className="text-sm text-white ml-2">
-                    ({selectedProduct.website})
-                  </span>
                 </Button>
               </div>
             </div>
