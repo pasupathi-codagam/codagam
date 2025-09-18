@@ -236,6 +236,7 @@ export default function ServicesSection() {
 
   return (
     <section
+      id="services-section"
       ref={sectionRef}
       className="min-h-screen bg-white flex items-center py-20">
       <div className="w-full">

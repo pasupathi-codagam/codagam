@@ -1,6 +1,7 @@
 "use client";
 import React, { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
+import { smoothScrollTo, sections } from "@/lib/smooth-scroll";
 import {
   Brain,
   Monitor,
@@ -150,7 +151,7 @@ const AboutSection = () => {
   return (
     <section
       ref={sectionRef}
-      id="about"
+      id="about-section"
       className="min-h-screen bg-white relative overflow-hidden">
       {/* Dynamic Animated Background */}
       <div className="absolute inset-0">
@@ -597,6 +598,7 @@ const AboutSection = () => {
 
               <div className="flex flex-col sm:flex-row gap-6 justify-center">
                 <Button
+                  onClick={() => smoothScrollTo(sections.contact, 80)}
                   variant="black"
                   size="lg"
                   data-animate-id="cta-button-1"
@@ -608,6 +610,7 @@ const AboutSection = () => {
                 </Button>
 
                 <Button
+                  onClick={() => smoothScrollTo(sections.products, 80)}
                   variant="black"
                   size="lg"
                   data-animate-id="cta-button-2"

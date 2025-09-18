@@ -286,6 +286,7 @@ export default function ProductsSection() {
   return (
     <>
       <section
+        id="products-section"
         ref={sectionRef}
         className="min-h-screen bg-white flex items-center py-20">
         <div className="w-full px-8 lg:px-16">

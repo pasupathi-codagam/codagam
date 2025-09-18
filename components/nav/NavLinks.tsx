@@ -1,25 +1,37 @@
-import React from "react";
-import Link from "next/link";
+"use client";
 
-const NavLinks = () => {
+import React from "react";
+import { smoothScrollTo, sections } from "@/lib/smooth-scroll";
+
+interface NavLinksProps {
+  onLinkClick?: () => void;
+}
+
+const NavLinks: React.FC<NavLinksProps> = ({ onLinkClick }) => {
   const navItems = [
-    { href: "/", label: "Home" },
-    { href: "/about", label: "About" },
-    { href: "/services", label: "Services" },
-    { href: "/careers", label: "Careers" },
-    { href: "/products", label: "Products" },
-    { href: "/contact", label: "Contact" },
+    { key: "home" as const, label: "Home" },
+    { key: "about" as const, label: "About" },
+    { key: "services" as const, label: "Services" },
+    { key: "products" as const, label: "Products" },
+    { key: "careers" as const, label: "Careers" },
+    { key: "contact" as const, label: "Contact" },
   ];
 
+  const handleNavClick = (sectionKey: keyof typeof sections) => {
+    const elementId = sections[sectionKey];
+    smoothScrollTo(elementId, 80);
+    onLinkClick?.(); // Close mobile menu if callback provided
+  };
+
   return (
-    <div className="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-6">
+    <div className="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-4 md:space-x-6 lg:space-x-8">
       {navItems.map((item) => (
-        <Link
-          key={item.href}
-          href={item.href}
-          className="px-3 py-2 text-sm font-medium text-gray-700 hover:text-gray-900">
+        <button
+          key={item.key}
+          onClick={() => handleNavClick(item.key)}
+          className="px-3 py-2 text-sm font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50 rounded-md transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
           {item.label}
-        </Link>
+        </button>
       ))}
     </div>
   );

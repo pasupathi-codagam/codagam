@@ -80,11 +80,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`h-screen flex flex-col bg-white ${notoSansTamil.variable} ${livvic.variable} ${geistSans.variable} ${geistMono.variable}  antialiased`}>
-        <div className="overflow-y-auto">
-          <Navbar />
-          <main className="flex-1">{children}</main>
-        </div>
+        className={`min-h-screen bg-white ${notoSansTamil.variable} ${livvic.variable} ${geistSans.variable} ${geistMono.variable} antialiased`}>
+        <Navbar />
+        <main className="flex-1">{children}</main>
         <ScrollToTopButton />
         <Footer />
       </body>

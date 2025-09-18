@@ -1,9 +1,14 @@
+"use client";
+
 import React from "react";
 import { Button } from "@/components/ui/button";
+import { smoothScrollTo, sections } from "@/lib/smooth-scroll";
 
 const HeroSection = () => {
   return (
-    <section className="min-h-screen bg-white flex items-center">
+    <section
+      id="hero-section"
+      className="min-h-screen bg-white flex items-center">
       <div className="w-full px-8 lg:px-16">
         <div className="grid lg:grid-cols-2 gap-16 items-center max-w-7xl mx-auto">
           {/* Left Side - Content */}
@@ -36,9 +41,10 @@ const HeroSection = () => {
             {/* CTA */}
             <div className="pt-4 animate-slide-in-up">
               <Button
+                onClick={() => smoothScrollTo(sections.contact, 80)}
                 variant="black"
                 size="lg"
-                className="px-8 py-4 rounded-full text-lg font-medium animate-pulse-slow hover:animate-bounce">
+                className="px-8 py-4 rounded-full text-lg font-medium animate-pulse-slow hover:animate-bounce transition-all duration-300 hover:scale-105">
                 Get Started
               </Button>
             </div>
