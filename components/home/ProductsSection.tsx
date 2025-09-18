@@ -5,7 +5,6 @@ import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { ChevronLeft, ChevronRight, Plus, ExternalLink } from "lucide-react";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
-import StaggeredAnimation from "@/components/shared/StaggeredAnimation";
 
 interface ProductItem {
   id: string;
@@ -195,20 +194,18 @@ export default function ProductsSection() {
 
   return (
     <>
-      <section className="min-h-screen bg-gray-200 flex items-center py-20">
+      <section className="min-h-screen bg-white flex items-center py-20">
         <div className="w-full px-8 lg:px-16">
-          <StaggeredAnimation animationType="slideUp" delay={100}>
-            <div className="text-center mb-20">
-              <h2 className="text-5xl lg:text-7xl font-bold text-gray-900 leading-tight mb-8">
-                Our Products
-              </h2>
-              <p className="text-xl lg:text-2xl text-gray-600 max-w-4xl mx-auto">
-                Solutions that drive results and transform businesses
-              </p>
-            </div>
-          </StaggeredAnimation>
+          <div className="animate-slide-up text-center mb-20">
+            <h2 className="text-5xl lg:text-7xl font-bold text-gray-900 leading-tight mb-8">
+              Our Products
+            </h2>
+            <p className="text-xl lg:text-2xl text-gray-600 max-w-4xl mx-auto">
+              Solutions that drive results and transform businesses
+            </p>
+          </div>
 
-          <StaggeredAnimation animationType="fade" delay={200}>
+          <div className="animate-fade-in">
             <div className="relative">
               <div
                 ref={scrollContainerRef}
@@ -297,21 +294,8 @@ export default function ProductsSection() {
                 </Button>
               </div>
             </div>
-          </StaggeredAnimation>
+          </div>
         </div>
-
-        <style jsx global>{`
-          .scrollbar-hide {
-            -ms-overflow-style: none;
-            scrollbar-width: none;
-          }
-          .scrollbar-hide::-webkit-scrollbar {
-            display: none;
-          }
-          .scroll-snap-start {
-            scroll-snap-align: start;
-          }
-        `}</style>
       </section>
 
       {/* Product Details Dialog */}

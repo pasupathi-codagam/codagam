@@ -2,14 +2,14 @@ import React from "react";
 
 const HeroSection = () => {
   return (
-    <section className="min-h-screen bg-gray-200 flex items-center">
+    <section className="min-h-screen bg-white flex items-center">
       <div className="w-full px-8 lg:px-16">
         <div className="grid lg:grid-cols-2 gap-16 items-center max-w-7xl mx-auto">
           {/* Left Side - Content */}
           <div className="space-y-12">
             {/* Brand */}
             <div className="space-y-4">
-              <h1 className="text-6xl lg:text-8xl font-bold text-gray-900 leading-none">
+              <h1 className="text-6xl lg:text-8xl font-bold text-blue-600 leading-none">
                 Codagam
               </h1>
               <p className="text-xl lg:text-2xl text-gray-600 font-medium">

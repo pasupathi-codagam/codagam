@@ -7,13 +7,13 @@ import CareerSection from "@/components/home/CareerSection";
 
 export default function Home() {
   return (
-    <>
+    <div className="bg-white">
       <HeroSection />
       <AboutSection />
       <ServicesSection />
       <ProductsSection />
       <ClientSection />
       <CareerSection />
-    </>
+    </div>
   );
 }

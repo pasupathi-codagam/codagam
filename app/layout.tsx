@@ -80,7 +80,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`h-screen flex flex-col bg-theme-base ${notoSansTamil.variable} ${livvic.variable} ${geistSans.variable} ${geistMono.variable}  antialiased`}>
+        className={`h-screen flex flex-col bg-white ${notoSansTamil.variable} ${livvic.variable} ${geistSans.variable} ${geistMono.variable}  antialiased`}>
         <div className="overflow-y-auto">
           <Navbar />
           <main className="flex-1">{children}</main>
