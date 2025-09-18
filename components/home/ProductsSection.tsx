@@ -203,12 +203,11 @@ export default function ProductsSection() {
     }
   }, [currentIndex, isScrolling]);
 
-  // Scroll-triggered animations setup
+  // Modern scroll-triggered animations setup
   useEffect(() => {
-    // Intersection Observer for scroll-triggered animations
     const observerOptions = {
-      threshold: 0.1,
-      rootMargin: "0px 0px -50px 0px",
+      threshold: 0.2,
+      rootMargin: "0px 0px -100px 0px",
     };
 
     const observer = new IntersectionObserver((entries) => {
@@ -216,20 +215,10 @@ export default function ProductsSection() {
         const elementId = entry.target.getAttribute("data-animate-id");
         if (elementId) {
           if (entry.isIntersecting) {
-            // Element is in view - add animation
-            setAnimatedElements((prev) => new Set([...prev, elementId]));
-          } else {
-            // Only remove animation for header/gallery elements, not individual product cards
-            // This prevents cards from hiding during horizontal scrolling
-            if (!elementId.includes("product-card-")) {
-              setTimeout(() => {
-                setAnimatedElements((prev) => {
-                  const newSet = new Set(prev);
-                  newSet.delete(elementId);
-                  return newSet;
-                });
-              }, 100);
-            }
+            // Add animation with a slight delay for smooth effect
+            setTimeout(() => {
+              setAnimatedElements((prev) => new Set([...prev, elementId]));
+            }, 50);
           }
         }
       });
@@ -237,59 +226,61 @@ export default function ProductsSection() {
 
     const section = sectionRef.current;
     if (section) {
-      // Observe all elements with data-animate-id
-      const animatedElements = section.querySelectorAll("[data-animate-id]");
-      animatedElements.forEach((el) => observer.observe(el));
+      const elementsToObserve = section.querySelectorAll("[data-animate-id]");
+      elementsToObserve.forEach((el) => observer.observe(el));
 
-      return () => {
-        observer.disconnect();
-      };
+      return () => observer.disconnect();
     }
   }, []);
 
-  // Additional effect to trigger animations when currentIndex changes (for horizontal scroll)
+  // Enhanced horizontal scroll animations
   useEffect(() => {
-    // Trigger animations for the current visible card and keep all previous cards visible
     const currentCardId = `product-card-${currentIndex}`;
 
+    // Add current card with smooth transition
     setAnimatedElements((prev) => {
       const newSet = new Set(prev);
-      // Add current card animation
       newSet.add(currentCardId);
-
-      // Keep all previous cards visible (don't remove them when scrolling horizontally)
-      for (let i = 0; i <= currentIndex; i++) {
-        newSet.add(`product-card-${i}`);
-      }
-
       return newSet;
     });
+
+    // Add a subtle bounce effect for the current card
+    const currentCard = document.querySelector(
+      `[data-animate-id="${currentCardId}"]`
+    );
+    if (currentCard) {
+      currentCard.classList.add("animate-bounce-slow");
+      setTimeout(() => {
+        currentCard.classList.remove("animate-bounce-slow");
+      }, 1000);
+    }
   }, [currentIndex]);
 
-  // Initial animation for the first card
+  // Enhanced initial animations with staggered entrance
   useEffect(() => {
-    // Trigger initial animations for the first card
-    setAnimatedElements((prev) => {
-      const newSet = new Set(prev);
-      newSet.add("products-header");
-      newSet.add("products-gallery");
-      newSet.add("products-navigation");
-      newSet.add("product-card-0");
-      return newSet;
+    const initialElements = [
+      "products-header",
+      "products-gallery",
+      "products-navigation",
+      "product-card-0",
+    ];
+
+    // Staggered entrance for smooth visual flow
+    initialElements.forEach((elementId, index) => {
+      setTimeout(() => {
+        setAnimatedElements((prev) => new Set([...prev, elementId]));
+      }, index * 150);
     });
   }, []);
 
-  // Helper function to get animation class based on scroll trigger
+  // Modern animation class helper with enhanced effects
   const getAnimationClass = (baseClass: string, elementId: string) => {
-    // For product cards, always show them (don't hide during horizontal scroll)
-    if (elementId.includes("product-card-")) {
-      return animatedElements.has(elementId) ? baseClass : "opacity-100";
+    if (animatedElements.has(elementId)) {
+      return baseClass;
     }
 
-    // For other elements (header, gallery, navigation), use normal scroll animation
-    return animatedElements.has(elementId)
-      ? baseClass
-      : "scroll-animate-hidden";
+    // Enhanced hidden state with modern CSS
+    return "opacity-0 translate-y-6 scale-95 transition-all duration-700 ease-out";
   };
 
   return (
@@ -337,7 +328,7 @@ export default function ProductsSection() {
                         className={`${getAnimationClass(
                           "animate-fade-in-up",
                           `product-card-${index}`
-                        )} h-full border-0 shadow-2xl bg-gradient-to-br from-white to-gray-50 hover:shadow-3xl transition-all duration-500 hover:scale-105 rounded-3xl overflow-hidden cursor-pointer`}
+                        )} h-full border-0 shadow-2xl bg-gradient-to-br from-white to-gray-50 hover:shadow-3xl transition-all duration-700 ease-out hover:scale-105 hover:-translate-y-2 rounded-3xl overflow-hidden cursor-pointer group`}
                         onClick={() => handleCardClick(item)}>
                         <CardContent className="p-8 h-full flex flex-col">
                           {/* Content Section */}
@@ -354,12 +345,12 @@ export default function ProductsSection() {
                           </div>
 
                           {/* Image Section */}
-                          <div className="relative h-48 rounded-2xl overflow-hidden mb-8 bg-gray-50">
+                          <div className="relative h-48 rounded-2xl overflow-hidden mb-8 bg-gray-50 group-hover:bg-gray-100 transition-colors duration-500">
                             <Image
                               src={item.image}
                               alt={item.alt}
                               fill
-                              className="object-contain transition-transform duration-300 hover:scale-110"
+                              className="object-contain transition-all duration-500 group-hover:scale-110 group-hover:rotate-2"
                               priority={index === currentIndex}
                             />
                           </div>
@@ -369,12 +360,12 @@ export default function ProductsSection() {
                             <Button
                               variant="black"
                               size="icon"
-                              className="rounded-full w-12 h-12 p-0"
+                              className="rounded-full w-12 h-12 p-0 group-hover:scale-110 group-hover:rotate-90 transition-all duration-500 ease-out"
                               onClick={(e) => {
                                 e.stopPropagation();
                                 handleCardClick(item);
                               }}>
-                              <Plus className="w-5 h-5 text-white" />
+                              <Plus className="w-5 h-5 text-white transition-transform duration-300" />
                             </Button>
                           </div>
                         </CardContent>
