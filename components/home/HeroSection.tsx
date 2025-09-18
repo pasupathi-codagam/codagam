@@ -54,7 +54,7 @@ const HeroSection = () => {
             {/* Right Side - Video */}
             <div className="relative">
               <video
-                src="/images/codagam.mp4"
+                src="/images/codagam hero section.mp4"
                 autoPlay
                 loop
                 muted
