@@ -1,25 +1,140 @@
 "use client";
 
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useCallback, useMemo, memo } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  FormData as FormDataType,
+  BenefitCard as BenefitCardType,
+  BenefitCardProps,
+  FormFieldProps,
+  AnimationClassFunction,
+  FormSubmitEvent,
+  FormChangeEvent,
+} from "@/models/interfaces";
+
+// Memoized benefit card component
+const BenefitCard = memo(({ 
+  benefit, 
+  getAnimationClass 
+}: BenefitCardProps) => (
+  <Card
+    data-animate-id={benefit.elementId}
+    className={`${getAnimationClass(
+      "animate-scale-in",
+      benefit.elementId
+    )} group border-0 shadow-lg hover:shadow-2xl transition-all duration-700 hover:scale-105 bg-gradient-to-br from-white to-${benefit.bgColor} hover:from-${benefit.color}-50 hover:to-white`}>
+    <CardContent className="p-8">
+      <div className="flex items-start space-x-6">
+        <div className={`w-12 h-12 bg-${benefit.color}-100 rounded-2xl flex items-center justify-center group-hover:bg-${benefit.color}-600 transition-all duration-500 group-hover:scale-110`}>
+          <div className={`w-6 h-6 bg-${benefit.color}-600 rounded-full group-hover:bg-white transition-all duration-500`}></div>
+        </div>
+        <div className="flex-1">
+          <CardTitle className={`text-2xl font-bold text-gray-900 mb-3 group-hover:text-${benefit.color}-600 transition-all duration-500`}>
+            {benefit.title}
+          </CardTitle>
+          <p className="text-lg text-gray-600 leading-relaxed group-hover:text-gray-700 transition-colors duration-300">
+            {benefit.description}
+          </p>
+        </div>
+      </div>
+    </CardContent>
+  </Card>
+));
+
+BenefitCard.displayName = "BenefitCard";
+
+// Memoized form field component
+const FormField = memo(({ 
+  id, 
+  name, 
+  type, 
+  value, 
+  onChange, 
+  placeholder, 
+  required, 
+  accept, 
+  elementId, 
+  getAnimationClass, 
+  children 
+}: FormFieldProps) => (
+  <div
+    data-animate-id={elementId}
+    className={`${getAnimationClass(
+      "animate-fade-in-up",
+      elementId
+    )} space-y-3 transition-all duration-800`}>
+    <Label
+      htmlFor={id}
+      className="text-base font-semibold text-gray-900">
+      {name}
+    </Label>
+    <div className="relative">
+      <Input
+        id={id}
+        name={id}
+        type={type}
+        value={typeof value === 'string' ? value : ''}
+        onChange={onChange}
+        placeholder={placeholder}
+        className={`h-14 text-base border-gray-200 focus:border-blue-500 focus:ring-blue-500 transition-all duration-300 hover:border-blue-300 ${
+          type === 'file' 
+            ? 'file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100' 
+            : ''
+        }`}
+        accept={accept}
+        required={required}
+      />
+    </div>
+    {children}
+  </div>
+));
+
+FormField.displayName = "FormField";
 
 export default function CareerSection() {
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<FormDataType>({
     name: "",
     email: "",
-    resume: null as File | null,
+    resume: null,
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitMessage, setSubmitMessage] = useState("");
-  const [animatedElements, setAnimatedElements] = useState<Set<string>>(
-    new Set()
-  );
+  const [animatedElements, setAnimatedElements] = useState<Set<string>>(new Set());
   const sectionRef = useRef<HTMLDivElement>(null);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  // Memoized benefits data
+  const benefits = useMemo((): BenefitCardType[] => [
+    {
+      id: "innovation",
+      title: "Innovation First",
+      description: "Work on cutting-edge projects using the latest technologies. We encourage experimentation and creative problem-solving.",
+      color: "blue",
+      bgColor: "blue-50/30",
+      elementId: "benefit-1",
+    },
+    {
+      id: "growth",
+      title: "Growth Opportunities",
+      description: "Continuous learning with mentorship programs, conference attendance, and access to premium learning resources.",
+      color: "green",
+      bgColor: "green-50/30",
+      elementId: "benefit-2",
+    },
+    {
+      id: "impact",
+      title: "Meaningful Impact",
+      description: "Build solutions that solve real-world problems and make a positive difference in people&apos;s lives.",
+      color: "purple",
+      bgColor: "purple-50/30",
+      elementId: "benefit-3",
+    },
+  ], []);
+
+  // Optimized event handlers with useCallback
+  const handleChange: FormChangeEvent = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, files } = e.target;
 
     if (name === "resume" && files) {
@@ -27,9 +142,9 @@ export default function CareerSection() {
     } else {
       setFormData((prev) => ({ ...prev, [name]: value }));
     }
-  };
+  }, []);
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit: FormSubmitEvent = useCallback(async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
 
@@ -40,14 +155,22 @@ export default function CareerSection() {
         "Thank you for your application! We'll review your resume and get back to you soon."
       );
       setFormData({ name: "", email: "", resume: null });
-    } catch (error) {
+    } catch {
       setSubmitMessage(
         "There was an error submitting your application. Please try again."
       );
     } finally {
       setIsSubmitting(false);
     }
-  };
+  }, []);
+
+  // Modern animation class helper with enhanced effects
+  const getAnimationClass: AnimationClassFunction = useCallback((baseClass: string, elementId: string) => {
+    if (animatedElements.has(elementId)) {
+      return baseClass;
+    }
+    return "opacity-0 translate-y-6 scale-95 transition-all duration-700 ease-out";
+  }, [animatedElements]);
 
   // Modern scroll-triggered animations setup
   useEffect(() => {
@@ -61,12 +184,10 @@ export default function CareerSection() {
         const elementId = entry.target.getAttribute("data-animate-id");
         if (elementId) {
           if (entry.isIntersecting) {
-            // Add animation with a slight delay for smooth effect
             setTimeout(() => {
               setAnimatedElements((prev) => new Set([...prev, elementId]));
             }, 50);
           } else {
-            // Element is out of view - remove animation (for scroll up effect)
             setTimeout(() => {
               setAnimatedElements((prev) => {
                 const newSet = new Set(prev);
@@ -100,21 +221,13 @@ export default function CareerSection() {
     });
   }, []);
 
-  // Modern animation class helper with enhanced effects
-  const getAnimationClass = (baseClass: string, elementId: string) => {
-    if (animatedElements.has(elementId)) {
-      return baseClass;
-    }
-
-    // Enhanced hidden state with modern CSS
-    return "opacity-0 translate-y-6 scale-95 transition-all duration-700 ease-out";
-  };
-
   return (
     <section
       id="career-section"
       ref={sectionRef}
-      className="min-h-screen bg-gray-200 py-32">
+      className="min-h-screen bg-gray-200 py-32"
+      role="main"
+      aria-label="Career opportunities section">
       <div className="w-full">
         {/* Header */}
         <div
@@ -158,7 +271,7 @@ export default function CareerSection() {
               "animate-slide-in-left",
               "career-description"
             )} text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed transition-all duration-800`}>
-            We're looking for passionate individuals who want to build the
+            We&apos;re looking for passionate individuals who want to build the
             future of technology. Join us in creating innovative solutions that
             make a real impact.
           </p>
@@ -183,79 +296,13 @@ export default function CareerSection() {
               </h3>
 
               <div className="space-y-8">
-                <Card
-                  data-animate-id="benefit-1"
-                  className={`${getAnimationClass(
-                    "animate-scale-in",
-                    "benefit-1"
-                  )} group border-0 shadow-lg hover:shadow-2xl transition-all duration-700 hover:scale-105 bg-gradient-to-br from-white to-blue-50/30 hover:from-blue-50 hover:to-white`}>
-                  <CardContent className="p-8">
-                    <div className="flex items-start space-x-6">
-                      <div className="w-12 h-12 bg-blue-100 rounded-2xl flex items-center justify-center group-hover:bg-blue-600 transition-all duration-500 group-hover:scale-110">
-                        <div className="w-6 h-6 bg-blue-600 rounded-full group-hover:bg-white transition-all duration-500"></div>
-                      </div>
-                      <div className="flex-1">
-                        <CardTitle className="text-2xl font-bold text-gray-900 mb-3 group-hover:text-blue-600 transition-all duration-500">
-                          Innovation First
-                        </CardTitle>
-                        <p className="text-lg text-gray-600 leading-relaxed group-hover:text-gray-700 transition-colors duration-300">
-                          Work on cutting-edge projects using the latest
-                          technologies. We encourage experimentation and
-                          creative problem-solving.
-                        </p>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-
-                <Card
-                  data-animate-id="benefit-2"
-                  className={`${getAnimationClass(
-                    "animate-fade-in-up",
-                    "benefit-2"
-                  )} group border-0 shadow-lg hover:shadow-2xl transition-all duration-700 hover:scale-105 bg-gradient-to-br from-white to-green-50/30 hover:from-green-50 hover:to-white`}>
-                  <CardContent className="p-8">
-                    <div className="flex items-start space-x-6">
-                      <div className="w-12 h-12 bg-green-100 rounded-2xl flex items-center justify-center group-hover:bg-green-600 transition-all duration-500 group-hover:scale-110">
-                        <div className="w-6 h-6 bg-green-600 rounded-full group-hover:bg-white transition-all duration-500"></div>
-                      </div>
-                      <div className="flex-1">
-                        <CardTitle className="text-2xl font-bold text-gray-900 mb-3 group-hover:text-green-600 transition-all duration-500">
-                          Growth Opportunities
-                        </CardTitle>
-                        <p className="text-lg text-gray-600 leading-relaxed group-hover:text-gray-700 transition-colors duration-300">
-                          Continuous learning with mentorship programs,
-                          conference attendance, and access to premium learning
-                          resources.
-                        </p>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-
-                <Card
-                  data-animate-id="benefit-3"
-                  className={`${getAnimationClass(
-                    "animate-slide-in-right",
-                    "benefit-3"
-                  )} group border-0 shadow-lg hover:shadow-2xl transition-all duration-700 hover:scale-105 bg-gradient-to-br from-white to-purple-50/30 hover:from-purple-50 hover:to-white`}>
-                  <CardContent className="p-8">
-                    <div className="flex items-start space-x-6">
-                      <div className="w-12 h-12 bg-purple-100 rounded-2xl flex items-center justify-center group-hover:bg-purple-600 transition-all duration-500 group-hover:scale-110">
-                        <div className="w-6 h-6 bg-purple-600 rounded-full group-hover:bg-white transition-all duration-500"></div>
-                      </div>
-                      <div className="flex-1">
-                        <CardTitle className="text-2xl font-bold text-gray-900 mb-3 group-hover:text-purple-600 transition-all duration-500">
-                          Meaningful Impact
-                        </CardTitle>
-                        <p className="text-lg text-gray-600 leading-relaxed group-hover:text-gray-700 transition-colors duration-300">
-                          Build solutions that solve real-world problems and
-                          make a positive difference in people's lives.
-                        </p>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
+                {benefits.map((benefit) => (
+                  <BenefitCard
+                    key={benefit.id}
+                    benefit={benefit}
+                    getAnimationClass={getAnimationClass}
+                  />
+                ))}
               </div>
             </div>
 
@@ -282,83 +329,51 @@ export default function CareerSection() {
                       "animate-slide-in-left",
                       "form-description"
                     )} text-gray-600 text-lg transition-all duration-800`}>
-                    Send us your application and let's start the conversation.
+                    Send us your application and let&apos;s start the
+                    conversation.
                   </p>
                 </CardHeader>
 
                 <form onSubmit={handleSubmit} className="space-y-6">
-                  <div
-                    data-animate-id="form-field-1"
-                    className={`${getAnimationClass(
-                      "animate-fade-in-up",
-                      "form-field-1"
-                    )} space-y-3 transition-all duration-800`}>
-                    <Label
-                      htmlFor="name"
-                      className="text-base font-semibold text-gray-900">
-                      Full Name
-                    </Label>
-                    <Input
-                      id="name"
-                      name="name"
-                      type="text"
-                      value={formData.name}
-                      onChange={handleChange}
-                      placeholder="Enter your full name"
-                      className="h-14 text-base border-gray-200 focus:border-blue-500 focus:ring-blue-500 transition-all duration-300 hover:border-blue-300"
-                      required
-                    />
-                  </div>
+                  <FormField
+                    id="name"
+                    name="Full Name"
+                    type="text"
+                    value={formData.name}
+                    onChange={handleChange}
+                    placeholder="Enter your full name"
+                    required
+                    elementId="form-field-1"
+                    getAnimationClass={getAnimationClass}
+                  />
 
-                  <div
-                    data-animate-id="form-field-2"
-                    className={`${getAnimationClass(
-                      "animate-fade-in-up",
-                      "form-field-2"
-                    )} space-y-3 transition-all duration-800`}>
-                    <Label
-                      htmlFor="email"
-                      className="text-base font-semibold text-gray-900">
-                      Email Address
-                    </Label>
-                    <Input
-                      id="email"
-                      name="email"
-                      type="email"
-                      value={formData.email}
-                      onChange={handleChange}
-                      placeholder="Enter your email address"
-                      className="h-14 text-base border-gray-200 focus:border-blue-500 focus:ring-blue-500 transition-all duration-300 hover:border-blue-300"
-                      required
-                    />
-                  </div>
+                  <FormField
+                    id="email"
+                    name="Email Address"
+                    type="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    placeholder="Enter your email address"
+                    required
+                    elementId="form-field-2"
+                    getAnimationClass={getAnimationClass}
+                  />
 
-                  <div
-                    data-animate-id="form-field-3"
-                    className={`${getAnimationClass(
-                      "animate-fade-in-up",
-                      "form-field-3"
-                    )} space-y-3 transition-all duration-800`}>
-                    <Label
-                      htmlFor="resume"
-                      className="text-base font-semibold text-gray-900">
-                      Resume
-                    </Label>
-                    <div className="relative">
-                      <Input
-                        id="resume"
-                        name="resume"
-                        type="file"
-                        accept=".pdf,.doc,.docx"
-                        onChange={handleChange}
-                        className="h-14 text-base border-gray-200 focus:border-blue-500 focus:ring-blue-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 transition-all duration-300 hover:border-blue-300"
-                        required
-                      />
-                    </div>
+                  <FormField
+                    id="resume"
+                    name="Resume"
+                    type="file"
+                    value={formData.resume}
+                    onChange={handleChange}
+                    placeholder=""
+                    accept=".pdf,.doc,.docx"
+                    required
+                    elementId="form-field-3"
+                    getAnimationClass={getAnimationClass}>
                     <p className="text-sm text-gray-500">
                       PDF, DOC, or DOCX files up to 10MB
                     </p>
-                  </div>
+                  </FormField>
 
                   <Button
                     data-animate-id="form-submit"
@@ -369,7 +384,8 @@ export default function CareerSection() {
                     type="submit"
                     variant="black"
                     size="lg"
-                    disabled={isSubmitting}>
+                    disabled={isSubmitting}
+                    aria-label={isSubmitting ? "Submitting application" : "Submit application"}>
                     {isSubmitting ? "Submitting..." : "Submit Application"}
                   </Button>
 

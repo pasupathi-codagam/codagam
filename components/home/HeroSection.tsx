@@ -1,18 +1,25 @@
 "use client";
 
-import React from "react";
+import React, { memo, useCallback } from "react";
 import { Button } from "@/components/ui/button";
 import { smoothScrollTo, sections } from "@/lib/smooth-scroll";
+import { HeroSectionProps, ButtonClickHandler } from "@/models/interfaces";
 
-const HeroSection = () => {
+const HeroSection: React.FC<HeroSectionProps> = memo(() => {
+  const handleGetStarted: ButtonClickHandler = useCallback(() => {
+    smoothScrollTo(sections.contact, 80);
+  }, []);
+
   return (
     <section
       id="hero-section"
-      className="min-h-screen bg-white flex items-center">
+      className="min-h-screen bg-white flex items-center"
+      role="banner"
+      aria-label="Hero section">
       <div className="w-full">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
-            {/* Left Side - Content - Full Width */}
+            {/* Left Side - Content */}
             <div className="px-8 lg:px-16 space-y-8 animate-fade-in-up">
               {/* Brand */}
               <div className="space-y-3 animate-slide-in-left">
@@ -42,10 +49,11 @@ const HeroSection = () => {
               {/* CTA */}
               <div className="pt-2 animate-slide-in-up">
                 <Button
-                  onClick={() => smoothScrollTo(sections.contact, 80)}
+                  onClick={handleGetStarted}
                   variant="black"
                   size="lg"
-                  className="px-8 py-4 rounded-full text-lg font-medium animate-pulse-slow hover:animate-bounce transition-all duration-300 hover:scale-105">
+                  className="px-8 py-4 rounded-full text-lg font-medium animate-pulse-slow hover:animate-bounce transition-all duration-300 hover:scale-105"
+                  aria-label="Get started with Codagam services">
                   Get Started
                 </Button>
               </div>
@@ -59,9 +67,11 @@ const HeroSection = () => {
                 loop
                 muted
                 playsInline
-                className="w-full h-[700px] object-cover"
+                className="w-full h-[700px] object-cover rounded-2xl shadow-2xl"
                 aria-label="Codagam team and technology solutions"
-                preload="metadata">
+                preload="metadata"
+                poster="/images/hero-poster.jpg">
+                <track kind="captions" />
                 Your browser does not support the video tag.
               </video>
             </div>
@@ -70,6 +80,8 @@ const HeroSection = () => {
       </div>
     </section>
   );
-};
+});
+
+HeroSection.displayName = "HeroSection";
 
 export default HeroSection;

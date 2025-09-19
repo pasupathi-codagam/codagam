@@ -1,6 +1,13 @@
 "use client";
 
-import React, { useState, useRef, useEffect } from "react";
+import React, {
+  useState,
+  useRef,
+  useEffect,
+  useCallback,
+  useMemo,
+  memo,
+} from "react";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -12,39 +19,116 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import {
+  ClientLogo as ClientLogoType,
+  ClientLogoCardProps,
+  StatsCardProps,
+  ContactFormDialogProps,
+  AnimationClassFunction,
+  ButtonClickHandler,
+} from "@/models/interfaces";
 
-const clientLogos = [
-  {
-    name: "Facebook",
-    logo: "https://d3vkpydtgsc252.cloudfront.net/uploads/2021/02/facebook.png",
-    alt: "logo of facebook",
-  },
-  {
-    name: "Google",
-    logo: "https://d3vkpydtgsc252.cloudfront.net/uploads/2021/02/google.png",
-    alt: "logo of google",
-  },
-  {
-    name: "GoodFirms",
-    logo: "https://d3vkpydtgsc252.cloudfront.net/uploads/2021/02/goodfirms.png",
-    alt: "logo of goodfirms",
-  },
-  {
-    name: "Clutch",
-    logo: "https://d3vkpydtgsc252.cloudfront.net/uploads/2021/02/clutch.png",
-    alt: "logo of clutch",
-  },
-  {
-    name: "Upwork",
-    logo: "https://d3vkpydtgsc252.cloudfront.net/uploads/2021/02/upwork.png",
-    alt: "logo of upwork",
-  },
-  {
-    name: "Codeable",
-    logo: "https://d3vkpydtgsc252.cloudfront.net/uploads/2021/02/codeable.png",
-    alt: "logo of codeable",
-  },
-];
+// Memoized client logo card component
+const ClientLogoCard = memo(
+  ({
+    client,
+    index,
+    getAnimationClass,
+  }: ClientLogoCardProps) => (
+    <Card
+      key={index}
+      data-animate-id={`logo-${index}`}
+      className={`${getAnimationClass(
+        "animate-scale-in",
+        `logo-${index}`
+      )} group border-0 shadow-lg hover:shadow-2xl transition-all duration-700 hover:scale-105 bg-white/90 backdrop-blur-sm hover:bg-white relative overflow-hidden`}>
+      <CardContent className="p-8 lg:p-10 text-center">
+        {/* Logo Image */}
+        <div className="relative h-16 lg:h-20 flex items-center justify-center mb-4">
+          <Image
+            src={client.logo}
+            alt={client.alt}
+            width={160}
+            height={60}
+            className="h-12 lg:h-16 w-auto object-contain opacity-60 group-hover:opacity-100 transition-all duration-500 group-hover:scale-110 filter grayscale group-hover:grayscale-0"
+            sizes="(max-width: 768px) 120px, 160px"
+          />
+        </div>
+
+        {/* Company Name */}
+        <CardTitle className="text-sm font-medium text-gray-500 group-hover:text-gray-700 transition-colors duration-300">
+          {client.name}
+        </CardTitle>
+
+        {/* Subtle Glow Effect */}
+        <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-blue-500/0 via-transparent to-indigo-500/0 group-hover:from-blue-500/5 group-hover:to-indigo-500/5 transition-all duration-500"></div>
+      </CardContent>
+    </Card>
+  )
+);
+
+ClientLogoCard.displayName = "ClientLogoCard";
+
+// Memoized stats card component
+const StatsCard = memo(
+  ({
+    number,
+    label,
+    color,
+    elementId,
+    getAnimationClass,
+  }: StatsCardProps) => (
+    <Card
+      data-animate-id={elementId}
+      className={`${getAnimationClass(
+        "animate-slide-in-left",
+        elementId
+      )} text-center group border-0 shadow-lg hover:shadow-2xl transition-all duration-700 hover:scale-105 bg-gradient-to-br from-white to-${color}-50/30 hover:from-${color}-50 hover:to-white`}>
+      <CardContent className="p-8">
+        <div
+          className={`text-4xl lg:text-5xl font-bold text-gray-900 mb-3 group-hover:text-${color}-600 transition-all duration-500 group-hover:scale-110`}>
+          {number}
+        </div>
+        <div className="text-gray-600 text-lg group-hover:text-gray-800 transition-colors duration-300 font-medium">
+          {label}
+        </div>
+      </CardContent>
+    </Card>
+  )
+);
+
+StatsCard.displayName = "StatsCard";
+
+// Memoized contact form dialog
+const ContactFormDialog = memo(
+  ({
+    isOpen,
+    onClose,
+    onSuccess,
+  }: ContactFormDialogProps) => (
+    <Dialog open={isOpen} onOpenChange={onClose}>
+      <DialogContent className="max-w-lg">
+        <DialogHeader>
+          <DialogTitle>Get in Touch</DialogTitle>
+          <DialogDescription>
+            We&apos;d love to hear from you. Send us a message and we&apos;ll
+            respond as soon as possible.
+          </DialogDescription>
+        </DialogHeader>
+
+        <div className="mt-6">
+          <ContactForm
+            showTitle={false}
+            onSuccess={onSuccess}
+            className="w-full"
+          />
+        </div>
+      </DialogContent>
+    </Dialog>
+  )
+);
+
+ContactFormDialog.displayName = "ContactFormDialog";
 
 export default function ClientSection() {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -53,13 +137,97 @@ export default function ClientSection() {
   );
   const sectionRef = useRef<HTMLDivElement>(null);
 
-  const handleRequestCallback = () => {
-    setIsDialogOpen(true);
-  };
+  // Memoized client logos data
+  const clientLogos = useMemo(
+    (): ClientLogoType[] => [
+      {
+        name: "Facebook",
+        logo: "https://d3vkpydtgsc252.cloudfront.net/uploads/2021/02/facebook.png",
+        alt: "logo of facebook",
+      },
+      {
+        name: "Google",
+        logo: "https://d3vkpydtgsc252.cloudfront.net/uploads/2021/02/google.png",
+        alt: "logo of google",
+      },
+      {
+        name: "GoodFirms",
+        logo: "https://d3vkpydtgsc252.cloudfront.net/uploads/2021/02/goodfirms.png",
+        alt: "logo of goodfirms",
+      },
+      {
+        name: "Clutch",
+        logo: "https://d3vkpydtgsc252.cloudfront.net/uploads/2021/02/clutch.png",
+        alt: "logo of clutch",
+      },
+      {
+        name: "Upwork",
+        logo: "https://d3vkpydtgsc252.cloudfront.net/uploads/2021/02/upwork.png",
+        alt: "logo of upwork",
+      },
+      {
+        name: "Codeable",
+        logo: "https://d3vkpydtgsc252.cloudfront.net/uploads/2021/02/codeable.png",
+        alt: "logo of codeable",
+      },
+    ],
+    []
+  );
 
-  const handleFormSuccess = () => {
+  // Memoized stats data
+  const statsData = useMemo(
+    () => [
+      {
+        number: "500+",
+        label: "Projects Delivered",
+        color: "blue",
+        elementId: "stat-1",
+      },
+      {
+        number: "50+",
+        label: "Happy Clients",
+        color: "green",
+        elementId: "stat-2",
+      },
+      {
+        number: "4+",
+        label: "Years Experience",
+        color: "purple",
+        elementId: "stat-3",
+      },
+      {
+        number: "99%",
+        label: "Success Rate",
+        color: "orange",
+        elementId: "stat-4",
+      },
+    ],
+    []
+  );
+
+  // Optimized event handlers with useCallback
+  const handleRequestCallback: ButtonClickHandler = useCallback(() => {
+    setIsDialogOpen(true);
+  }, []);
+
+  const handleFormSuccess: ButtonClickHandler = useCallback(() => {
     setIsDialogOpen(false);
-  };
+  }, []);
+
+  const handleDialogClose: ButtonClickHandler = useCallback(() => {
+    setIsDialogOpen(false);
+  }, []);
+
+  // Modern animation class helper with enhanced effects
+  const getAnimationClass: AnimationClassFunction = useCallback(
+    (baseClass: string, elementId: string) => {
+      if (animatedElements.has(elementId)) {
+        return baseClass;
+      }
+      return "opacity-0 translate-y-6 scale-95 transition-all duration-700 ease-out";
+    },
+    [animatedElements]
+  );
 
   // Modern scroll-triggered animations setup
   useEffect(() => {
@@ -73,12 +241,10 @@ export default function ClientSection() {
         const elementId = entry.target.getAttribute("data-animate-id");
         if (elementId) {
           if (entry.isIntersecting) {
-            // Add animation with a slight delay for smooth effect
             setTimeout(() => {
               setAnimatedElements((prev) => new Set([...prev, elementId]));
             }, 50);
           } else {
-            // Element is out of view - remove animation (for scroll up effect)
             setTimeout(() => {
               setAnimatedElements((prev) => {
                 const newSet = new Set(prev);
@@ -117,22 +283,14 @@ export default function ClientSection() {
     });
   }, []);
 
-  // Modern animation class helper with enhanced effects
-  const getAnimationClass = (baseClass: string, elementId: string) => {
-    if (animatedElements.has(elementId)) {
-      return baseClass;
-    }
-
-    // Enhanced hidden state with modern CSS
-    return "opacity-0 translate-y-6 scale-95 transition-all duration-700 ease-out";
-  };
-
   return (
     <>
       <section
         id="client-section"
         ref={sectionRef}
-        className="min-h-screen bg-white py-32">
+        className="min-h-screen bg-white py-32"
+        role="main"
+        aria-label="Client testimonials and partners section">
         <div className="w-full">
           {/* Header */}
           <div
@@ -189,69 +347,16 @@ export default function ClientSection() {
               "client-stats"
             )} px-8 lg:px-16 mb-20 transition-all duration-800`}>
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
-              <Card
-                data-animate-id="stat-1"
-                className={`${getAnimationClass(
-                  "animate-slide-in-left",
-                  "stat-1"
-                )} text-center group border-0 shadow-lg hover:shadow-2xl transition-all duration-700 hover:scale-105 bg-gradient-to-br from-white to-blue-50/30 hover:from-blue-50 hover:to-white`}>
-                <CardContent className="p-8">
-                  <div className="text-4xl lg:text-5xl font-bold text-gray-900 mb-3 group-hover:text-blue-600 transition-all duration-500 group-hover:scale-110">
-                    500+
-                  </div>
-                  <div className="text-gray-600 text-lg group-hover:text-gray-800 transition-colors duration-300 font-medium">
-                    Projects Delivered
-                  </div>
-                </CardContent>
-              </Card>
-
-              <Card
-                data-animate-id="stat-2"
-                className={`${getAnimationClass(
-                  "animate-fade-in-up",
-                  "stat-2"
-                )} text-center group border-0 shadow-lg hover:shadow-2xl transition-all duration-700 hover:scale-105 bg-gradient-to-br from-white to-green-50/30 hover:from-green-50 hover:to-white`}>
-                <CardContent className="p-8">
-                  <div className="text-4xl lg:text-5xl font-bold text-gray-900 mb-3 group-hover:text-green-600 transition-all duration-500 group-hover:scale-110">
-                    50+
-                  </div>
-                  <div className="text-gray-600 text-lg group-hover:text-gray-800 transition-colors duration-300 font-medium">
-                    Happy Clients
-                  </div>
-                </CardContent>
-              </Card>
-
-              <Card
-                data-animate-id="stat-3"
-                className={`${getAnimationClass(
-                  "animate-fade-in-up",
-                  "stat-3"
-                )} text-center group border-0 shadow-lg hover:shadow-2xl transition-all duration-700 hover:scale-105 bg-gradient-to-br from-white to-purple-50/30 hover:from-purple-50 hover:to-white`}>
-                <CardContent className="p-8">
-                  <div className="text-4xl lg:text-5xl font-bold text-gray-900 mb-3 group-hover:text-purple-600 transition-all duration-500 group-hover:scale-110">
-                    4+
-                  </div>
-                  <div className="text-gray-600 text-lg group-hover:text-gray-800 transition-colors duration-300 font-medium">
-                    Years Experience
-                  </div>
-                </CardContent>
-              </Card>
-
-              <Card
-                data-animate-id="stat-4"
-                className={`${getAnimationClass(
-                  "animate-slide-in-right",
-                  "stat-4"
-                )} text-center group border-0 shadow-lg hover:shadow-2xl transition-all duration-700 hover:scale-105 bg-gradient-to-br from-white to-orange-50/30 hover:from-orange-50 hover:to-white`}>
-                <CardContent className="p-8">
-                  <div className="text-4xl lg:text-5xl font-bold text-gray-900 mb-3 group-hover:text-orange-600 transition-all duration-500 group-hover:scale-110">
-                    99%
-                  </div>
-                  <div className="text-gray-600 text-lg group-hover:text-gray-800 transition-colors duration-300 font-medium">
-                    Success Rate
-                  </div>
-                </CardContent>
-              </Card>
+              {statsData.map((stat) => (
+                <StatsCard
+                  key={stat.elementId}
+                  number={stat.number}
+                  label={stat.label}
+                  color={stat.color}
+                  elementId={stat.elementId}
+                  getAnimationClass={getAnimationClass}
+                />
+              ))}
             </div>
           </div>
 
@@ -278,8 +383,8 @@ export default function ClientSection() {
                 Our Partners
               </h3>
               <p className="text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed">
-                We're proud to work with these industry-leading companies that
-                trust us to deliver exceptional results
+                We&apos;re proud to work with these industry-leading companies
+                that trust us to deliver exceptional results
               </p>
             </div>
 
@@ -294,34 +399,12 @@ export default function ClientSection() {
                 <CardContent className="p-12 lg:p-20">
                   <div className="grid grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-16 items-center">
                     {clientLogos.map((client, index) => (
-                      <Card
+                      <ClientLogoCard
                         key={index}
-                        data-animate-id={`logo-${index}`}
-                        className={`${getAnimationClass(
-                          "animate-scale-in",
-                          `logo-${index}`
-                        )} group border-0 shadow-lg hover:shadow-2xl transition-all duration-700 hover:scale-105 bg-white/90 backdrop-blur-sm hover:bg-white relative overflow-hidden`}>
-                        <CardContent className="p-8 lg:p-10 text-center">
-                          {/* Logo Image */}
-                          <div className="relative h-16 lg:h-20 flex items-center justify-center mb-4">
-                            <Image
-                              src={client.logo}
-                              alt={client.alt}
-                              width={160}
-                              height={60}
-                              className="h-12 lg:h-16 w-auto object-contain opacity-60 group-hover:opacity-100 transition-all duration-500 group-hover:scale-110 filter grayscale group-hover:grayscale-0"
-                            />
-                          </div>
-
-                          {/* Company Name */}
-                          <CardTitle className="text-sm font-medium text-gray-500 group-hover:text-gray-700 transition-colors duration-300">
-                            {client.name}
-                          </CardTitle>
-
-                          {/* Subtle Glow Effect */}
-                          <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-blue-500/0 via-transparent to-indigo-500/0 group-hover:from-blue-500/5 group-hover:to-indigo-500/5 transition-all duration-500"></div>
-                        </CardContent>
-                      </Card>
+                        client={client}
+                        index={index}
+                        getAnimationClass={getAnimationClass}
+                      />
                     ))}
                   </div>
 
@@ -361,7 +444,7 @@ export default function ClientSection() {
                       "animate-slide-in-right",
                       "cta-description"
                     )} text-lg text-gray-600 mb-8 max-w-2xl mx-auto leading-relaxed transition-all duration-800`}>
-                    Let's discuss how we can help your business achieve its
+                    Let&apos;s discuss how we can help your business achieve its
                     goals with innovative technology solutions.
                   </p>
 
@@ -373,7 +456,8 @@ export default function ClientSection() {
                     )} px-12 py-4 text-lg font-semibold rounded-full transition-all duration-500 hover:scale-110 hover:shadow-2xl`}
                     onClick={handleRequestCallback}
                     variant="black"
-                    size="lg">
+                    size="lg"
+                    aria-label="Start your project with Codagam">
                     Start Your Project
                   </Button>
                 </CardContent>
@@ -384,25 +468,11 @@ export default function ClientSection() {
       </section>
 
       {/* Contact Form Dialog */}
-      <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-        <DialogContent className="max-w-lg">
-          <DialogHeader>
-            <DialogTitle>Get in Touch</DialogTitle>
-            <DialogDescription>
-              We&apos;d love to hear from you. Send us a message and we&apos;ll
-              respond as soon as possible.
-            </DialogDescription>
-          </DialogHeader>
-
-          <div className="mt-6">
-            <ContactForm
-              showTitle={false}
-              onSuccess={handleFormSuccess}
-              className="w-full"
-            />
-          </div>
-        </DialogContent>
-      </Dialog>
+      <ContactFormDialog
+        isOpen={isDialogOpen}
+        onClose={handleDialogClose}
+        onSuccess={handleFormSuccess}
+      />
     </>
   );
 }

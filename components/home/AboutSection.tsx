@@ -1,5 +1,14 @@
 "use client";
-import React, { useState, useEffect, useRef } from "react";
+
+import React, {
+  useState,
+  useEffect,
+  useRef,
+  useCallback,
+  useMemo,
+  memo,
+} from "react";
+import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { smoothScrollTo, sections } from "@/lib/smooth-scroll";
 import {
@@ -14,45 +23,290 @@ import {
   Star,
   Shield,
   BarChart3,
-  Zap,
-  Terminal,
-  FileCode,
-  Container,
 } from "lucide-react";
+import {
+  Feature as FeatureType,
+  FloatingIcon as FloatingIconType,
+  AnimationClassFunction,
+  ButtonClickHandler,
+} from "@/models/interfaces";
 
-const AboutSection = () => {
-  const [activeCard, setActiveCard] = useState(0);
+// Memoized floating icon component for better performance
+const FloatingIcon = memo(
+  ({
+    Icon,
+    color,
+    position,
+    time,
+    animationDelay = "0s",
+  }: FloatingIconType & { time: number }) => {
+    const style = useMemo(
+      () => ({
+        left: `${position.left + Math.sin(time * 0.001) * 8}%`,
+        top: `${position.top + Math.cos(time * 0.0008) * 8}%`,
+        transition: "all 0.1s linear",
+        animationDelay,
+      }),
+      [position.left, position.top, time, animationDelay]
+    );
+
+    return (
+      <div
+        className="absolute w-12 h-12 bg-white/80 backdrop-blur-sm rounded-xl flex items-center justify-center animate-float shadow-lg"
+        style={style}>
+        <Icon className={`w-6 h-6 ${color}`} />
+      </div>
+    );
+  }
+);
+
+FloatingIcon.displayName = "FloatingIcon";
+
+
+// Memoized feature card component
+const FeatureCard = memo(
+  ({
+    feature,
+    index,
+    getAnimationClass,
+  }: {
+    feature: FeatureType;
+    index: number;
+    getAnimationClass: AnimationClassFunction;
+  }) => (
+    <div
+      key={feature.id}
+      className={`group relative ${
+        index % 2 === 0 ? "lg:flex-row" : "lg:flex-row-reverse"
+      } flex flex-col lg:flex items-center gap-16`}>
+      {/* Content */}
+      <div className="flex-1 space-y-8 relative z-10">
+        <div className="space-y-6">
+          <div
+            data-animate-id={`feature-${feature.id}-header`}
+            className={`${getAnimationClass(
+              `animate-slide-in-${index % 2 === 0 ? "right" : "left"}`,
+              `feature-${feature.id}-header`
+            )} flex items-center space-x-4 transition-all duration-800`}>
+            <div
+              className={`w-16 h-16 bg-gradient-to-r ${feature.color} rounded-2xl flex items-center justify-center text-white shadow-2xl group-hover:scale-110 transition-all duration-500`}>
+              {feature.icon}
+            </div>
+            <span className="text-sm font-medium text-gray-500 uppercase tracking-wider bg-gray-100 px-3 py-1 rounded-full">
+              {feature.subtitle}
+            </span>
+          </div>
+
+          <h2
+            data-animate-id={`feature-${feature.id}-title`}
+            className={`${getAnimationClass(
+              `animate-slide-in-${index % 2 === 0 ? "left" : "right"}`,
+              `feature-${feature.id}-title`
+            )} text-5xl lg:text-6xl font-bold text-blue-600 leading-tight transition-all duration-800`}>
+            {feature.title}
+          </h2>
+
+          <p
+            data-animate-id={`feature-${feature.id}-description`}
+            className={`${getAnimationClass(
+              "animate-fade-in-up",
+              `feature-${feature.id}-description`
+            )} text-lg text-gray-600 leading-relaxed max-w-2xl transition-all duration-800`}>
+            {feature.description}
+          </p>
+        </div>
+
+        {/* Interactive Stats */}
+        <div
+          data-animate-id={`feature-${feature.id}-stats`}
+          className={`${getAnimationClass(
+            `animate-slide-in-${index % 2 === 0 ? "right" : "left"}`,
+            `feature-${feature.id}-stats`
+          )} flex items-center space-x-8 transition-all duration-800`}>
+          <div className="group/stat">
+            <div className="text-4xl font-bold text-gray-900 mb-2 group-hover/stat:scale-110 transition-transform duration-300">
+              {feature.stats.number}
+            </div>
+            <div className="text-sm text-gray-500 font-medium">
+              {feature.stats.label}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Animated Image */}
+      <div
+        data-animate-id={`feature-${feature.id}-image`}
+        className={`${getAnimationClass(
+          `animate-slide-in-${index % 2 === 0 ? "left" : "right"}`,
+          `feature-${feature.id}-image`
+        )} flex-1 relative transition-all duration-800`}>
+        <div className="relative group/image">
+          <div className="relative overflow-hidden rounded-3xl">
+            <Image
+              src={feature.image}
+              alt={feature.title}
+              width={800}
+              height={500}
+              className="w-full h-[500px] object-cover transition-all duration-700 group-hover/image:scale-110 group-hover/image:rotate-1"
+              priority={index === 0}
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+);
+
+FeatureCard.displayName = "FeatureCard";
+
+const AboutSection = memo(() => {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-  const [isVisible, setIsVisible] = useState(false);
   const [scrollY, setScrollY] = useState(0);
-  const [hoveredCard, setHoveredCard] = useState<number | null>(null);
   const [time, setTime] = useState(0);
   const [animatedElements, setAnimatedElements] = useState<Set<string>>(
     new Set()
   );
   const sectionRef = useRef<HTMLDivElement>(null);
+  const timeIntervalRef = useRef<NodeJS.Timeout | null>(null);
+
+  // Memoized features data
+  const features = useMemo(
+    (): FeatureType[] => [
+      {
+        id: 1,
+        title: "AI-Driven Solutions",
+        subtitle: "Intelligent Automation",
+        description:
+          "Our AI-driven solutions are designed for sustained best practices, ensuring ethical standards while delivering pragmatic results. From predictive analytics to intelligent automation, we empower businesses with cutting-edge AI capabilities.",
+        image: "/images/Codagam_Img (1).jpg",
+        icon: <Brain className="w-8 h-8" />,
+        color: "from-blue-500 to-blue-600",
+        bgColor: "from-blue-50 to-cyan-50",
+        stats: { number: "500+", label: "AI Solutions" },
+      },
+      {
+        id: 2,
+        title: "R&D Innovation",
+        subtitle: "Future-Ready Technology",
+        description:
+          "Our R&D team is at the forefront of technological innovation, constantly exploring new ways to solve pressing challenges. We invest in cutting-edge research to develop products that anticipate future demands.",
+        image: "/images/Codagam_Img (3).jpg",
+        icon: <Monitor className="w-8 h-8" />,
+        color: "from-purple-500 to-purple-600",
+        bgColor: "from-purple-50 to-pink-50",
+        stats: { number: "50+", label: "Innovations" },
+      },
+      {
+        id: 3,
+        title: "Partnership",
+        subtitle: "Long-term Growth",
+        description:
+          "We don't just work for you; we work with you. Your success is our success, and we're committed to being a long-term partner in your growth journey, delivering transformative technology solutions.",
+        image: "/images/Codagam_Img (4).jpg",
+        icon: <Smartphone className="w-8 h-8" />,
+        color: "from-green-500 to-green-600",
+        bgColor: "from-green-50 to-emerald-50",
+        stats: { number: "4+", label: "Years Partnership" },
+      },
+    ],
+    []
+  );
+
+  // Memoized floating icons configuration
+  const floatingIcons = useMemo(
+    () => [
+      {
+        Icon: Smartphone,
+        color: "text-blue-500",
+        position: { left: 5, top: 20 },
+      },
+      {
+        Icon: Database,
+        color: "text-purple-500",
+        position: { left: 85, top: 20 },
+      },
+      { Icon: Brain, color: "text-green-500", position: { left: 10, top: 35 } },
+      { Icon: Code, color: "text-cyan-500", position: { left: 90, top: 35 } },
+      {
+        Icon: Server,
+        color: "text-indigo-500",
+        position: { left: 8, top: 50 },
+        animationDelay: "1s",
+      },
+      {
+        Icon: Cloud,
+        color: "text-pink-500",
+        position: { left: 92, top: 50 },
+        animationDelay: "2s",
+      },
+      {
+        Icon: Globe,
+        color: "text-orange-500",
+        position: { left: 12, top: 65 },
+        animationDelay: "4s",
+      },
+      {
+        Icon: Star,
+        color: "text-teal-500",
+        position: { left: 88, top: 65 },
+        animationDelay: "3s",
+      },
+      {
+        Icon: Shield,
+        color: "text-red-500",
+        position: { left: 15, top: 80 },
+        animationDelay: "5s",
+      },
+      {
+        Icon: BarChart3,
+        color: "text-yellow-500",
+        position: { left: 85, top: 80 },
+        animationDelay: "6s",
+      },
+    ],
+    []
+  );
+
+  // Optimized event handlers with useCallback
+  const handleMouseMove = useCallback((e: MouseEvent) => {
+    if (sectionRef.current) {
+      const rect = sectionRef.current.getBoundingClientRect();
+      setMousePosition({
+        x: e.clientX - rect.left,
+        y: e.clientY - rect.top,
+      });
+    }
+  }, []);
+
+  const handleScroll = useCallback(() => {
+    setScrollY(window.scrollY);
+  }, []);
+
+  const updateTime = useCallback(() => {
+    setTime(Date.now());
+  }, []);
+
+  const handleContactClick: ButtonClickHandler = useCallback(() => {
+    smoothScrollTo(sections.contact, 80);
+  }, []);
+
+  const handleProductsClick: ButtonClickHandler = useCallback(() => {
+    smoothScrollTo(sections.products, 80);
+  }, []);
+
+  // Helper function to get animation class based on scroll trigger
+  const getAnimationClass: AnimationClassFunction = useCallback(
+    (baseClass: string, elementId: string) => {
+      return animatedElements.has(elementId)
+        ? baseClass
+        : "scroll-animate-hidden";
+    },
+    [animatedElements]
+  );
 
   useEffect(() => {
-    setIsVisible(true);
-
-    const handleMouseMove = (e: MouseEvent) => {
-      if (sectionRef.current) {
-        const rect = sectionRef.current.getBoundingClientRect();
-        setMousePosition({
-          x: e.clientX - rect.left,
-          y: e.clientY - rect.top,
-        });
-      }
-    };
-
-    const handleScroll = () => {
-      setScrollY(window.scrollY);
-    };
-
-    const updateTime = () => {
-      setTime(Date.now());
-    };
-
     // Intersection Observer for scroll-triggered animations
     const observerOptions = {
       threshold: 0.1,
@@ -64,11 +318,8 @@ const AboutSection = () => {
         const elementId = entry.target.getAttribute("data-animate-id");
         if (elementId) {
           if (entry.isIntersecting) {
-            // Element is in view - add animation
             setAnimatedElements((prev) => new Set([...prev, elementId]));
           } else {
-            // Element is out of view - remove animation (for scroll up effect)
-            // Add a small delay to make scroll-up animation more visible
             setTimeout(() => {
               setAnimatedElements((prev) => {
                 const newSet = new Set(prev);
@@ -86,8 +337,8 @@ const AboutSection = () => {
       section.addEventListener("mousemove", handleMouseMove);
       window.addEventListener("scroll", handleScroll);
 
-      // Update time for continuous movement
-      const timeInterval = setInterval(updateTime, 50);
+      // Update time for continuous movement with throttling
+      timeIntervalRef.current = setInterval(updateTime, 100);
 
       // Observe all elements with data-animate-id
       const animatedElements = section.querySelectorAll("[data-animate-id]");
@@ -96,63 +347,21 @@ const AboutSection = () => {
       return () => {
         section.removeEventListener("mousemove", handleMouseMove);
         window.removeEventListener("scroll", handleScroll);
-        clearInterval(timeInterval);
+        if (timeIntervalRef.current) {
+          clearInterval(timeIntervalRef.current);
+        }
         observer.disconnect();
       };
     }
-  }, []);
-
-  // Helper function to get animation class based on scroll trigger
-  const getAnimationClass = (baseClass: string, elementId: string) => {
-    return animatedElements.has(elementId)
-      ? baseClass
-      : "scroll-animate-hidden";
-  };
-
-  const features = [
-    {
-      id: 1,
-      title: "AI-Driven Solutions",
-      subtitle: "Intelligent Automation",
-      description:
-        "Our AI-driven solutions are designed for sustained best practices, ensuring ethical standards while delivering pragmatic results. From predictive analytics to intelligent automation, we empower businesses with cutting-edge AI capabilities.",
-      image: "/images/Codagam_Img (1).jpg",
-      icon: <Brain className="w-8 h-8" />,
-      color: "from-blue-500 to-blue-600",
-      bgColor: "from-blue-50 to-cyan-50",
-      stats: { number: "500+", label: "AI Solutions" },
-    },
-    {
-      id: 2,
-      title: "R&D Innovation",
-      subtitle: "Future-Ready Technology",
-      description:
-        "Our R&D team is at the forefront of technological innovation, constantly exploring new ways to solve pressing challenges. We invest in cutting-edge research to develop products that anticipate future demands.",
-      image: "/images/Codagam_Img (3).jpg",
-      icon: <Monitor className="w-8 h-8" />,
-      color: "from-purple-500 to-purple-600",
-      bgColor: "from-purple-50 to-pink-50",
-      stats: { number: "50+", label: "Innovations" },
-    },
-    {
-      id: 3,
-      title: "Partnership",
-      subtitle: "Long-term Growth",
-      description:
-        "We don't just work for you; we work with you. Your success is our success, and we're committed to being a long-term partner in your growth journey, delivering transformative technology solutions.",
-      image: "/images/Codagam_Img (4).jpg",
-      icon: <Smartphone className="w-8 h-8" />,
-      color: "from-green-500 to-green-600",
-      bgColor: "from-green-50 to-emerald-50",
-      stats: { number: "4+", label: "Years Partnership" },
-    },
-  ];
+  }, [handleMouseMove, handleScroll, updateTime]);
 
   return (
     <section
       ref={sectionRef}
       id="about-section"
-      className="min-h-screen bg-white relative overflow-hidden">
+      className="min-h-screen bg-white relative overflow-hidden"
+      role="main"
+      aria-label="About Codagam section">
       {/* Dynamic Animated Background */}
       <div className="absolute inset-0">
         {/* Animated Grid */}
@@ -206,173 +415,17 @@ const AboutSection = () => {
           }}
         />
 
-        {/* Animated Tech Icons Background - Distributed Throughout Full Section */}
-
-        {/* TOP ROW */}
-        {/* 1. Mobile App Icon - Moving */}
-        <div
-          className="absolute w-12 h-12 bg-white/80 backdrop-blur-sm rounded-xl flex items-center justify-center animate-spin-slow shadow-lg"
-          style={{
-            left: `${5 + Math.sin(time * 0.001) * 8}%`,
-            top: `${20 + Math.cos(time * 0.0008) * 8}%`,
-            transition: "all 0.1s linear",
-          }}>
-          <Smartphone className="w-6 h-6 text-blue-500" />
-        </div>
-
-        {/* 2. Database Icon - Moving */}
-        <div
-          className="absolute w-12 h-12 bg-white/80 backdrop-blur-sm rounded-xl flex items-center justify-center animate-pulse shadow-lg"
-          style={{
-            left: `${85 + Math.sin(time * 0.0012) * 5}%`,
-            top: `${20 + Math.cos(time * 0.0009) * 6}%`,
-            transition: "all 0.1s linear",
-          }}>
-          <Database className="w-6 h-6 text-purple-500" />
-        </div>
-
-        {/* 3. AI/Brain Icon - Moving */}
-        <div
-          className="absolute w-12 h-12 bg-white/80 backdrop-blur-sm rounded-xl flex items-center justify-center animate-bounce-slow shadow-lg"
-          style={{
-            left: `${10 + Math.sin(time * 0.0008) * 6}%`,
-            top: `${35 + Math.cos(time * 0.0011) * 8}%`,
-            transition: "all 0.1s linear",
-          }}>
-          <Brain className="w-6 h-6 text-green-500" />
-        </div>
-
-        {/* 4. Code/Programming Icon - Moving */}
-        <div
-          className="absolute w-12 h-12 bg-white/80 backdrop-blur-sm rounded-xl flex items-center justify-center animate-float shadow-lg"
-          style={{
-            left: `${90 + Math.sin(time * 0.0013) * 6}%`,
-            top: `${35 + Math.cos(time * 0.0007) * 8}%`,
-            transition: "all 0.1s linear",
-          }}>
-          <Code className="w-6 h-6 text-cyan-500" />
-        </div>
-
-        {/* 5. Server Icon - Moving */}
-        <div
-          className="absolute w-12 h-12 bg-white/80 backdrop-blur-sm rounded-xl flex items-center justify-center animate-float shadow-lg"
-          style={{
-            left: `${8 + Math.sin(time * 0.0009) * 8}%`,
-            top: `${50 + Math.cos(time * 0.0012) * 10}%`,
-            transition: "all 0.1s linear",
-            animationDelay: "1s",
-          }}>
-          <Server className="w-6 h-6 text-indigo-500" />
-        </div>
-
-        {/* 6. Cloud Computing Icon - Moving */}
-        <div
-          className="absolute w-12 h-12 bg-white/80 backdrop-blur-sm rounded-xl flex items-center justify-center animate-float shadow-lg"
-          style={{
-            left: `${92 + Math.sin(time * 0.0011) * 6}%`,
-            top: `${50 + Math.cos(time * 0.0008) * 8}%`,
-            transition: "all 0.1s linear",
-            animationDelay: "2s",
-          }}>
-          <Cloud className="w-6 h-6 text-pink-500" />
-        </div>
-
-        {/* 7. Web Development Icon - Moving */}
-        <div
-          className="absolute w-12 h-12 bg-white/80 backdrop-blur-sm rounded-xl flex items-center justify-center animate-float shadow-lg"
-          style={{
-            left: `${12 + Math.sin(time * 0.0014) * 8}%`,
-            top: `${65 + Math.cos(time * 0.001) * 6}%`,
-            transition: "all 0.1s linear",
-            animationDelay: "4s",
-          }}>
-          <Globe className="w-6 h-6 text-orange-500" />
-        </div>
-
-        {/* 8. API Icon - Moving */}
-        <div
-          className="absolute w-12 h-12 bg-white/80 backdrop-blur-sm rounded-xl flex items-center justify-center animate-float shadow-lg"
-          style={{
-            left: `${88 + Math.sin(time * 0.0006) * 8}%`,
-            top: `${65 + Math.cos(time * 0.0013) * 6}%`,
-            transition: "all 0.1s linear",
-            animationDelay: "3s",
-          }}>
-          <Star className="w-6 h-6 text-teal-500" />
-        </div>
-
-        {/* 9. Security Icon - Moving */}
-        <div
-          className="absolute w-12 h-12 bg-white/80 backdrop-blur-sm rounded-xl flex items-center justify-center animate-float shadow-lg"
-          style={{
-            left: `${15 + Math.sin(time * 0.0015) * 8}%`,
-            top: `${80 + Math.cos(time * 0.0009) * 8}%`,
-            transition: "all 0.1s linear",
-            animationDelay: "5s",
-          }}>
-          <Shield className="w-6 h-6 text-red-500" />
-        </div>
-
-        {/* 10. Analytics Icon - Moving */}
-        <div
-          className="absolute w-12 h-12 bg-white/80 backdrop-blur-sm rounded-xl flex items-center justify-center animate-float shadow-lg"
-          style={{
-            left: `${85 + Math.sin(time * 0.0007) * 8}%`,
-            top: `${80 + Math.cos(time * 0.0014) * 6}%`,
-            transition: "all 0.1s linear",
-            animationDelay: "6s",
-          }}>
-          <BarChart3 className="w-6 h-6 text-yellow-500" />
-        </div>
-
-        {/* HEADER SECTION ICONS - 4 Additional Icons */}
-        {/* 11. React Icon - Header Left */}
-        <div
-          className="absolute w-10 h-10 bg-white/80 backdrop-blur-sm rounded-lg flex items-center justify-center animate-float shadow-lg"
-          style={{
-            left: `${8 + Math.sin(time * 0.0016) * 6}%`,
-            top: `${12 + Math.cos(time * 0.0017) * 4}%`,
-            transition: "all 0.1s linear",
-            animationDelay: "7s",
-          }}>
-          <Zap className="w-5 h-5 text-cyan-400" />
-        </div>
-
-        {/* 12. Node.js Icon - Header Right */}
-        <div
-          className="absolute w-10 h-10 bg-white/80 backdrop-blur-sm rounded-lg flex items-center justify-center animate-float shadow-lg"
-          style={{
-            left: `${92 + Math.sin(time * 0.0018) * 6}%`,
-            top: `${12 + Math.cos(time * 0.0019) * 4}%`,
-            transition: "all 0.1s linear",
-            animationDelay: "8s",
-          }}>
-          <Terminal className="w-5 h-5 text-green-400" />
-        </div>
-
-        {/* 13. Python Icon - Stats Left */}
-        <div
-          className="absolute w-10 h-10 bg-white/80 backdrop-blur-sm rounded-lg flex items-center justify-center animate-float shadow-lg"
-          style={{
-            left: `${6 + Math.sin(time * 0.002) * 8}%`,
-            top: `${28 + Math.cos(time * 0.0021) * 5}%`,
-            transition: "all 0.1s linear",
-            animationDelay: "9s",
-          }}>
-          <FileCode className="w-5 h-5 text-yellow-400" />
-        </div>
-
-        {/* 14. Docker Icon - Stats Right */}
-        <div
-          className="absolute w-10 h-10 bg-white/80 backdrop-blur-sm rounded-lg flex items-center justify-center animate-float shadow-lg"
-          style={{
-            left: `${94 + Math.sin(time * 0.0022) * 6}%`,
-            top: `${28 + Math.cos(time * 0.0023) * 5}%`,
-            transition: "all 0.1s linear",
-            animationDelay: "10s",
-          }}>
-          <Container className="w-5 h-5 text-blue-400" />
-        </div>
+        {/* Animated Tech Icons Background */}
+        {floatingIcons.map((icon, index) => (
+          <FloatingIcon
+            key={index}
+            Icon={icon.Icon}
+            color={icon.color}
+            position={icon.position}
+            time={time}
+            animationDelay={icon.animationDelay}
+          />
+        ))}
       </div>
 
       <div className="relative z-10 w-full px-6 lg:px-16 py-24">
@@ -486,91 +539,12 @@ const AboutSection = () => {
           {/* Interactive Feature Cards */}
           <div className="space-y-32">
             {features.map((feature, index) => (
-              <div
+              <FeatureCard
                 key={feature.id}
-                className={`group relative ${
-                  index % 2 === 0 ? "lg:flex-row" : "lg:flex-row-reverse"
-                } flex flex-col lg:flex items-center gap-16`}
-                onMouseEnter={() => setHoveredCard(feature.id)}
-                onMouseLeave={() => setHoveredCard(null)}>
-                {/* Content */}
-                <div className="flex-1 space-y-8 relative z-10">
-                  <div className="space-y-6">
-                    <div
-                      data-animate-id={`feature-${feature.id}-header`}
-                      className={`${getAnimationClass(
-                        `animate-slide-in-${
-                          index % 2 === 0 ? "right" : "left"
-                        }`,
-                        `feature-${feature.id}-header`
-                      )} flex items-center space-x-4 transition-all duration-800`}>
-                      <div
-                        className={`w-16 h-16 bg-gradient-to-r ${feature.color} rounded-2xl flex items-center justify-center text-white shadow-2xl group-hover:scale-110 transition-all duration-500`}>
-                        {feature.icon}
-                      </div>
-                      <span className="text-sm font-medium text-gray-500 uppercase tracking-wider bg-gray-100 px-3 py-1 rounded-full">
-                        {feature.subtitle}
-                      </span>
-                    </div>
-
-                    <h2
-                      data-animate-id={`feature-${feature.id}-title`}
-                      className={`${getAnimationClass(
-                        `animate-slide-in-${
-                          index % 2 === 0 ? "left" : "right"
-                        }`,
-                        `feature-${feature.id}-title`
-                      )} text-5xl lg:text-6xl font-bold text-blue-600 leading-tight transition-all duration-800`}>
-                      {feature.title}
-                    </h2>
-
-                    <p
-                      data-animate-id={`feature-${feature.id}-description`}
-                      className={`${getAnimationClass(
-                        "animate-fade-in-up",
-                        `feature-${feature.id}-description`
-                      )} text-lg text-gray-600 leading-relaxed max-w-2xl transition-all duration-800`}>
-                      {feature.description}
-                    </p>
-                  </div>
-
-                  {/* Interactive Stats */}
-                  <div
-                    data-animate-id={`feature-${feature.id}-stats`}
-                    className={`${getAnimationClass(
-                      `animate-slide-in-${index % 2 === 0 ? "right" : "left"}`,
-                      `feature-${feature.id}-stats`
-                    )} flex items-center space-x-8 transition-all duration-800`}>
-                    <div className="group/stat">
-                      <div className="text-4xl font-bold text-gray-900 mb-2 group-hover/stat:scale-110 transition-transform duration-300">
-                        {feature.stats.number}
-                      </div>
-                      <div className="text-sm text-gray-500 font-medium">
-                        {feature.stats.label}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Animated Image */}
-                <div
-                  data-animate-id={`feature-${feature.id}-image`}
-                  className={`${getAnimationClass(
-                    `animate-slide-in-${index % 2 === 0 ? "left" : "right"}`,
-                    `feature-${feature.id}-image`
-                  )} flex-1 relative transition-all duration-800`}>
-                  <div className="relative group/image">
-                    <div className="relative overflow-hidden rounded-3xl">
-                      <img
-                        src={feature.image}
-                        alt={feature.title}
-                        className="w-full h-[500px] object-cover transition-all duration-700 group-hover/image:scale-110 group-hover/image:rotate-1"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent"></div>
-                    </div>
-                  </div>
-                </div>
-              </div>
+                feature={feature}
+                index={index}
+                getAnimationClass={getAnimationClass}
+              />
             ))}
           </div>
 
@@ -598,26 +572,28 @@ const AboutSection = () => {
 
               <div className="flex flex-col sm:flex-row gap-6 justify-center">
                 <Button
-                  onClick={() => smoothScrollTo(sections.contact, 80)}
+                  onClick={handleContactClick}
                   variant="black"
                   size="lg"
                   data-animate-id="cta-button-1"
                   className={`${getAnimationClass(
                     "animate-slide-in-right",
                     "cta-button-1"
-                  )} px-10 py-5 rounded-full font-medium transition-all duration-300 transform hover:scale-105 shadow-2xl`}>
+                  )} px-10 py-5 rounded-full font-medium transition-all duration-300 transform hover:scale-105 shadow-2xl`}
+                  aria-label="Start your project with Codagam">
                   Start your project
                 </Button>
 
                 <Button
-                  onClick={() => smoothScrollTo(sections.products, 80)}
+                  onClick={handleProductsClick}
                   variant="black"
                   size="lg"
                   data-animate-id="cta-button-2"
                   className={`${getAnimationClass(
                     "animate-slide-in-left",
                     "cta-button-2"
-                  )} px-10 py-5 rounded-full font-medium transition-all duration-300 transform hover:scale-105`}>
+                  )} px-10 py-5 rounded-full font-medium transition-all duration-300 transform hover:scale-105`}
+                  aria-label="View our work and products">
                   View our work
                 </Button>
               </div>
@@ -627,6 +603,8 @@ const AboutSection = () => {
       </div>
     </section>
   );
-};
+});
+
+AboutSection.displayName = "AboutSection";
 
 export default AboutSection;
