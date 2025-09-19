@@ -10,7 +10,14 @@ import React, {
 } from "react";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
-import { smoothScrollTo, sections } from "@/lib/smooth-scroll";
+import { ContactForm } from "@/components/shared/ContactForm";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import {
   Brain,
   Monitor,
@@ -27,9 +34,10 @@ import {
 import {
   Feature as FeatureType,
   FloatingIcon as FloatingIconType,
-  AnimationClassFunction,
+  ContactFormDialogProps,
   ButtonClickHandler,
 } from "@/models/interfaces";
+import { SectionWrapper } from "@/components/shared";
 
 // Memoized floating icon component for better performance
 const FloatingIcon = memo(
@@ -64,15 +72,7 @@ FloatingIcon.displayName = "FloatingIcon";
 
 // Memoized feature card component
 const FeatureCard = memo(
-  ({
-    feature,
-    index,
-    getAnimationClass,
-  }: {
-    feature: FeatureType;
-    index: number;
-    getAnimationClass: AnimationClassFunction;
-  }) => (
+  ({ feature, index }: { feature: FeatureType; index: number }) => (
     <div
       key={feature.id}
       className={`group relative ${
@@ -81,12 +81,7 @@ const FeatureCard = memo(
       {/* Content */}
       <div className="flex-1 space-y-8 relative z-10">
         <div className="space-y-6">
-          <div
-            data-animate-id={`feature-${feature.id}-header`}
-            className={`${getAnimationClass(
-              `animate-slide-in-${index % 2 === 0 ? "right" : "left"}`,
-              `feature-${feature.id}-header`
-            )} flex items-center space-x-4 transition-all duration-800`}>
+          <div className="flex items-center space-x-4">
             <div
               className={`w-16 h-16 bg-gradient-to-r ${feature.color} rounded-2xl flex items-center justify-center text-white shadow-2xl group-hover:scale-110 transition-all duration-500`}>
               {feature.icon}
@@ -96,32 +91,17 @@ const FeatureCard = memo(
             </span>
           </div>
 
-          <h2
-            data-animate-id={`feature-${feature.id}-title`}
-            className={`${getAnimationClass(
-              `animate-slide-in-${index % 2 === 0 ? "left" : "right"}`,
-              `feature-${feature.id}-title`
-            )} text-5xl lg:text-6xl font-bold text-blue-600 leading-tight transition-all duration-800`}>
+          <h2 className="text-5xl lg:text-6xl font-bold text-gray-900 leading-tight">
             {feature.title}
           </h2>
 
-          <p
-            data-animate-id={`feature-${feature.id}-description`}
-            className={`${getAnimationClass(
-              "animate-fade-in-up",
-              `feature-${feature.id}-description`
-            )} text-lg text-gray-600 leading-relaxed max-w-2xl transition-all duration-800`}>
+          <p className="text-lg text-gray-600 leading-relaxed max-w-2xl">
             {feature.description}
           </p>
         </div>
 
         {/* Interactive Stats */}
-        <div
-          data-animate-id={`feature-${feature.id}-stats`}
-          className={`${getAnimationClass(
-            `animate-slide-in-${index % 2 === 0 ? "right" : "left"}`,
-            `feature-${feature.id}-stats`
-          )} flex items-center space-x-8 transition-all duration-800`}>
+        <div className="flex items-center space-x-8">
           <div className="group/stat">
             <div className="text-4xl font-bold text-gray-900 mb-2 group-hover/stat:scale-110 transition-transform duration-300">
               {feature.stats.number}
@@ -133,13 +113,8 @@ const FeatureCard = memo(
         </div>
       </div>
 
-      {/* Animated Image */}
-      <div
-        data-animate-id={`feature-${feature.id}-image`}
-        className={`${getAnimationClass(
-          `animate-slide-in-${index % 2 === 0 ? "left" : "right"}`,
-          `feature-${feature.id}-image`
-        )} flex-1 relative transition-all duration-800`}>
+      {/* Image */}
+      <div className="flex-1 relative">
         <div className="relative group/image">
           <div className="relative overflow-hidden rounded-3xl">
             <Image
@@ -160,15 +135,42 @@ const FeatureCard = memo(
 
 FeatureCard.displayName = "FeatureCard";
 
+// Memoized contact form dialog
+const ContactFormDialog = memo(
+  ({ isOpen, onClose, onSuccess }: ContactFormDialogProps) => (
+    <Dialog open={isOpen} onOpenChange={onClose}>
+      <DialogContent className="max-w-lg">
+        <DialogHeader>
+          <DialogTitle>Get in Touch</DialogTitle>
+          <DialogDescription>
+            We&apos;d love to hear from you. Send us a message and we&apos;ll
+            respond as soon as possible.
+          </DialogDescription>
+        </DialogHeader>
+
+        <div className="mt-6">
+          <ContactForm
+            showTitle={false}
+            onSuccess={onSuccess}
+            className="w-full"
+          />
+        </div>
+      </DialogContent>
+    </Dialog>
+  )
+);
+
+ContactFormDialog.displayName = "ContactFormDialog";
+
 const AboutSection = memo(() => {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [scrollY, setScrollY] = useState(0);
   const [time, setTime] = useState(0);
-  const [animatedElements, setAnimatedElements] = useState<Set<string>>(
-    new Set()
-  );
-  const sectionRef = useRef<HTMLDivElement>(null);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
   const timeIntervalRef = useRef<NodeJS.Timeout | null>(null);
+
+  // Remove animation manager - no animations needed
+  const sectionRef = useRef<HTMLDivElement>(null);
 
   // Memoized features data
   const features = useMemo(
@@ -268,7 +270,7 @@ const AboutSection = memo(() => {
     []
   );
 
-  // Optimized event handlers with useCallback
+  // Optimized event handlers with useCallback and throttling
   const handleMouseMove = useCallback((e: MouseEvent) => {
     if (sectionRef.current) {
       const rect = sectionRef.current.getBoundingClientRect();
@@ -288,319 +290,253 @@ const AboutSection = memo(() => {
   }, []);
 
   const handleContactClick: ButtonClickHandler = useCallback(() => {
-    smoothScrollTo(sections.contact, 80);
+    setIsDialogOpen(true);
   }, []);
 
   const handleProductsClick: ButtonClickHandler = useCallback(() => {
-    smoothScrollTo(sections.products, 80);
+    setIsDialogOpen(true);
   }, []);
 
-  // Helper function to get animation class based on scroll trigger
-  const getAnimationClass: AnimationClassFunction = useCallback(
-    (baseClass: string, elementId: string) => {
-      return animatedElements.has(elementId)
-        ? baseClass
-        : "scroll-animate-hidden";
-    },
-    [animatedElements]
-  );
+  const handleFormSuccess: ButtonClickHandler = useCallback(() => {
+    setIsDialogOpen(false);
+  }, []);
+
+  const handleDialogClose: ButtonClickHandler = useCallback(() => {
+    setIsDialogOpen(false);
+  }, []);
+
+  // Throttled scroll handler for better performance
+  const throttledScrollHandler = useCallback(() => {
+    let ticking = false;
+    return () => {
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          handleScroll();
+          ticking = false;
+        });
+        ticking = true;
+      }
+    };
+  }, [handleScroll]);
 
   useEffect(() => {
-    // Intersection Observer for scroll-triggered animations
-    const observerOptions = {
-      threshold: 0.1,
-      rootMargin: "0px 0px -50px 0px",
-    };
-
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        const elementId = entry.target.getAttribute("data-animate-id");
-        if (elementId) {
-          if (entry.isIntersecting) {
-            setAnimatedElements((prev) => new Set([...prev, elementId]));
-          } else {
-            setTimeout(() => {
-              setAnimatedElements((prev) => {
-                const newSet = new Set(prev);
-                newSet.delete(elementId);
-                return newSet;
-              });
-            }, 100);
-          }
-        }
-      });
-    }, observerOptions);
-
     const section = sectionRef.current;
     if (section) {
-      section.addEventListener("mousemove", handleMouseMove);
-      window.addEventListener("scroll", handleScroll);
+      section.addEventListener("mousemove", handleMouseMove, { passive: true });
+      window.addEventListener("scroll", throttledScrollHandler, {
+        passive: true,
+      });
 
       // Update time for continuous movement with throttling
-      timeIntervalRef.current = setInterval(updateTime, 100);
-
-      // Observe all elements with data-animate-id
-      const animatedElements = section.querySelectorAll("[data-animate-id]");
-      animatedElements.forEach((el) => observer.observe(el));
+      timeIntervalRef.current = setInterval(updateTime, 200); // Reduced frequency
 
       return () => {
         section.removeEventListener("mousemove", handleMouseMove);
-        window.removeEventListener("scroll", handleScroll);
+        window.removeEventListener("scroll", throttledScrollHandler);
         if (timeIntervalRef.current) {
           clearInterval(timeIntervalRef.current);
         }
-        observer.disconnect();
       };
     }
-  }, [handleMouseMove, handleScroll, updateTime]);
+  }, [handleMouseMove, throttledScrollHandler, updateTime]);
 
   return (
-    <section
-      ref={sectionRef}
-      id="about-section"
-      className="min-h-screen bg-white relative overflow-hidden"
-      role="main"
-      aria-label="About Codagam section">
-      {/* Dynamic Animated Background */}
-      <div className="absolute inset-0">
-        {/* Animated Grid */}
-        <div
-          className="absolute inset-0 opacity-5"
-          style={{
-            backgroundImage: `
+    <>
+      <SectionWrapper
+        id="about-section"
+        className="min-h-screen relative overflow-hidden"
+        role="main"
+        aria-label="About Codagam section">
+        {/* Dynamic Animated Background */}
+        <div className="absolute inset-0">
+          {/* Animated Grid */}
+          <div
+            className="absolute inset-0 opacity-5"
+            style={{
+              backgroundImage: `
               linear-gradient(rgba(59, 130, 246, 0.1) 1px, transparent 1px),
               linear-gradient(90deg, rgba(59, 130, 246, 0.1) 1px, transparent 1px)
             `,
-            backgroundSize: "60px 60px",
-            transform: `translate(${scrollY * 0.2}px, ${scrollY * 0.1}px)`,
-            animation: "gridMove 20s linear infinite",
-          }}
-        />
-
-        {/* Floating Orbs */}
-        <div
-          className="absolute w-72 h-72 bg-gradient-to-r from-blue-100 to-purple-100 rounded-full opacity-30 blur-3xl animate-float"
-          style={{
-            left: mousePosition.x * 0.1,
-            top: mousePosition.y * 0.1,
-            transform: `translate3d(${mousePosition.x * 0.05}px, ${
-              mousePosition.y * 0.05
-            }px, 0)`,
-            transition: "all 0.6s cubic-bezier(0.23, 1, 0.32, 1)",
-          }}
-        />
-        <div
-          className="absolute w-96 h-96 bg-gradient-to-r from-purple-100 to-pink-100 rounded-full opacity-25 blur-3xl animate-float"
-          style={{
-            right: mousePosition.x * 0.08,
-            bottom: mousePosition.y * 0.08,
-            transform: `translate3d(${mousePosition.x * -0.03}px, ${
-              mousePosition.y * -0.03
-            }px, 0)`,
-            transition: "all 0.6s cubic-bezier(0.23, 1, 0.32, 1)",
-            animationDelay: "2s",
-          }}
-        />
-        <div
-          className="absolute w-64 h-64 bg-gradient-to-r from-cyan-100 to-blue-100 rounded-full opacity-35 blur-2xl animate-float"
-          style={{
-            left: mousePosition.x * 0.06,
-            bottom: mousePosition.y * 0.12,
-            transform: `translate3d(${mousePosition.x * 0.04}px, ${
-              mousePosition.y * 0.04
-            }px, 0)`,
-            transition: "all 0.6s cubic-bezier(0.23, 1, 0.32, 1)",
-            animationDelay: "4s",
-          }}
-        />
-
-        {/* Animated Tech Icons Background */}
-        {floatingIcons.map((icon, index) => (
-          <FloatingIcon
-            key={index}
-            Icon={icon.Icon}
-            color={icon.color}
-            position={icon.position}
-            time={time}
-            animationDelay={icon.animationDelay}
+              backgroundSize: "60px 60px",
+              transform: `translate(${scrollY * 0.2}px, ${scrollY * 0.1}px)`,
+              animation: "gridMove 20s linear infinite",
+            }}
           />
-        ))}
-      </div>
 
-      <div className="relative z-10 w-full px-6 lg:px-16 py-24">
-        <div className="max-w-7xl mx-auto">
-          {/* Animated Header */}
-          <div className="text-center mb-24">
-            <div className="flex justify-center">
-              <div
-                data-animate-id="about-badge"
-                className={`${getAnimationClass(
-                  "animate-slide-in-right",
-                  "about-badge"
-                )} inline-flex items-center px-4 py-2 bg-gray-100 rounded-full mb-8 border border-gray-200 transition-all duration-800`}>
-                <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse mr-3"></div>
-                <span className="text-gray-700 text-sm font-medium">
-                  About Codagam
-                </span>
+          {/* Floating Orbs */}
+          <div
+            className="absolute w-72 h-72 bg-gradient-to-r from-blue-100 to-purple-100 rounded-full opacity-30 blur-3xl animate-float"
+            style={{
+              left: mousePosition.x * 0.1,
+              top: mousePosition.y * 0.1,
+              transform: `translate3d(${mousePosition.x * 0.05}px, ${
+                mousePosition.y * 0.05
+              }px, 0)`,
+              transition: "all 0.6s cubic-bezier(0.23, 1, 0.32, 1)",
+            }}
+          />
+          <div
+            className="absolute w-96 h-96 bg-gradient-to-r from-purple-100 to-pink-100 rounded-full opacity-25 blur-3xl animate-float"
+            style={{
+              right: mousePosition.x * 0.08,
+              bottom: mousePosition.y * 0.08,
+              transform: `translate3d(${mousePosition.x * -0.03}px, ${
+                mousePosition.y * -0.03
+              }px, 0)`,
+              transition: "all 0.6s cubic-bezier(0.23, 1, 0.32, 1)",
+              animationDelay: "2s",
+            }}
+          />
+          <div
+            className="absolute w-64 h-64 bg-gradient-to-r from-cyan-100 to-blue-100 rounded-full opacity-35 blur-2xl animate-float"
+            style={{
+              left: mousePosition.x * 0.06,
+              bottom: mousePosition.y * 0.12,
+              transform: `translate3d(${mousePosition.x * 0.04}px, ${
+                mousePosition.y * 0.04
+              }px, 0)`,
+              transition: "all 0.6s cubic-bezier(0.23, 1, 0.32, 1)",
+              animationDelay: "4s",
+            }}
+          />
+
+          {/* Animated Tech Icons Background */}
+          {floatingIcons.map((icon, index) => (
+            <FloatingIcon
+              key={index}
+              Icon={icon.Icon}
+              color={icon.color}
+              position={icon.position}
+              time={time}
+              animationDelay={icon.animationDelay}
+            />
+          ))}
+        </div>
+
+        <div className="relative z-10 w-full px-6 lg:px-16 py-24">
+          <div className="max-w-7xl mx-auto">
+            {/* Header */}
+            <div className="text-center mb-24">
+              <div className="flex justify-center">
+                <div className="inline-flex items-center px-4 py-2 bg-gray-100 rounded-full mb-8 border border-gray-200">
+                  <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse mr-3"></div>
+                  <span className="text-gray-700 text-sm font-medium">
+                    About Codagam
+                  </span>
+                </div>
+              </div>
+
+              <div className="mb-8">
+                <div className="flex justify-center">
+                  <h1 className="text-6xl lg:text-8xl font-bold text-gray-900 text-center">
+                    Empowering
+                  </h1>
+                </div>
+                <div className="flex justify-center">
+                  <h1 className="text-6xl lg:text-8xl font-bold text-blue-600 text-center">
+                    businesses
+                  </h1>
+                </div>
+              </div>
+
+              <div className="max-w-4xl mx-auto">
+                <div className="flex justify-center">
+                  <p className="text-xl text-gray-600 leading-relaxed mb-16 text-center">
+                    At Codagam, we pride ourselves on delivering transformative
+                    technology solutions. Our team of experts is dedicated to
+                    driving positive change and fostering sustainable growth.
+                  </p>
+                </div>
+
+                {/* Stats */}
+                <div className="flex justify-center items-center space-x-20 mb-20">
+                  <div className="text-center group flex flex-col items-center">
+                    <div className="w-20 h-20 bg-gradient-to-r from-blue-400 to-cyan-400 rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-all duration-500 shadow-2xl">
+                      <div className="text-2xl font-bold text-white leading-none">
+                        500+
+                      </div>
+                    </div>
+                    <div className="text-sm text-gray-600 font-medium text-center">
+                      AI Solutions
+                    </div>
+                  </div>
+
+                  <div className="text-center group flex flex-col items-center">
+                    <div className="w-20 h-20 bg-gradient-to-r from-purple-400 to-pink-400 rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-all duration-500 shadow-2xl">
+                      <div className="text-2xl font-bold text-white leading-none">
+                        50+
+                      </div>
+                    </div>
+                    <div className="text-sm text-gray-600 font-medium text-center">
+                      Innovations
+                    </div>
+                  </div>
+
+                  <div className="text-center group flex flex-col items-center">
+                    <div className="w-20 h-20 bg-gradient-to-r from-green-400 to-emerald-400 rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-all duration-500 shadow-2xl">
+                      <div className="text-2xl font-bold text-white leading-none">
+                        4+
+                      </div>
+                    </div>
+                    <div className="text-sm text-gray-600 font-medium text-center">
+                      Years Partnership
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
 
-            <div className="mb-8">
-              <div className="flex justify-center">
-                <h1
-                  data-animate-id="title-1"
-                  className={`${getAnimationClass(
-                    "animate-slide-in-left",
-                    "title-1"
-                  )} text-6xl lg:text-8xl font-bold text-blue-600 text-center transition-all duration-800`}>
-                  Empowering
-                </h1>
-              </div>
-              <div className="flex justify-center">
-                <h1
-                  data-animate-id="title-2"
-                  className={`${getAnimationClass(
-                    "animate-slide-in-right",
-                    "title-2"
-                  )} text-6xl lg:text-8xl font-bold text-blue-600 text-center transition-all duration-800`}>
-                  businesses
-                </h1>
-              </div>
+            {/* Feature Cards */}
+            <div className="space-y-32">
+              {features.map((feature, index) => (
+                <FeatureCard key={feature.id} feature={feature} index={index} />
+              ))}
             </div>
 
-            <div className="max-w-4xl mx-auto">
-              <div className="flex justify-center">
-                <p
-                  data-animate-id="about-description"
-                  className={`${getAnimationClass(
-                    "animate-fade-in-up",
-                    "about-description"
-                  )} text-xl text-gray-600 leading-relaxed mb-16 text-center transition-all duration-800`}>
-                  At Codagam, we pride ourselves on delivering transformative
-                  technology solutions. Our team of experts is dedicated to
-                  driving positive change and fostering sustainable growth.
+            {/* Call to Action */}
+            <div className="text-center mt-32">
+              <div className="max-w-3xl mx-auto">
+                <h2 className="text-5xl font-bold text-gray-900 mb-8 text-center">
+                  Ready to get started?
+                </h2>
+
+                <p className="text-xl text-gray-600 mb-12 leading-relaxed text-center">
+                  Join hundreds of businesses that have transformed their
+                  operations with our AI-driven solutions and R&D innovations.
                 </p>
-              </div>
 
-              {/* Animated Stats */}
-              <div className="flex justify-center items-center space-x-20 mb-20">
-                <div
-                  data-animate-id="stat-1"
-                  className={`${getAnimationClass(
-                    "animate-slide-in-right",
-                    "stat-1"
-                  )} text-center group flex flex-col items-center transition-all duration-800`}>
-                  <div className="w-20 h-20 bg-gradient-to-r from-blue-400 to-cyan-400 rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-all duration-500 shadow-2xl">
-                    <div className="text-2xl font-bold text-white leading-none">
-                      500+
-                    </div>
-                  </div>
-                  <div className="text-sm text-gray-600 font-medium text-center">
-                    AI Solutions
-                  </div>
+                <div className="flex flex-col sm:flex-row gap-6 justify-center">
+                  <Button
+                    onClick={handleContactClick}
+                    variant="black"
+                    size="lg"
+                    className="px-10 py-5 rounded-full font-medium transition-all duration-300 transform hover:scale-105 shadow-2xl"
+                    aria-label="Start your project with Codagam">
+                    Start your project
+                  </Button>
+
+                  <Button
+                    onClick={handleProductsClick}
+                    variant="black"
+                    size="lg"
+                    className="px-10 py-5 rounded-full font-medium transition-all duration-300 transform hover:scale-105"
+                    aria-label="View our work and products">
+                    View our work
+                  </Button>
                 </div>
-
-                <div
-                  data-animate-id="stat-2"
-                  className={`${getAnimationClass(
-                    "animate-fade-in-up",
-                    "stat-2"
-                  )} text-center group flex flex-col items-center transition-all duration-800`}>
-                  <div className="w-20 h-20 bg-gradient-to-r from-purple-400 to-pink-400 rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-all duration-500 shadow-2xl">
-                    <div className="text-2xl font-bold text-white leading-none">
-                      50+
-                    </div>
-                  </div>
-                  <div className="text-sm text-gray-600 font-medium text-center">
-                    Innovations
-                  </div>
-                </div>
-
-                <div
-                  data-animate-id="stat-3"
-                  className={`${getAnimationClass(
-                    "animate-slide-in-left",
-                    "stat-3"
-                  )} text-center group flex flex-col items-center transition-all duration-800`}>
-                  <div className="w-20 h-20 bg-gradient-to-r from-green-400 to-emerald-400 rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-all duration-500 shadow-2xl">
-                    <div className="text-2xl font-bold text-white leading-none">
-                      4+
-                    </div>
-                  </div>
-                  <div className="text-sm text-gray-600 font-medium text-center">
-                    Years Partnership
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Interactive Feature Cards */}
-          <div className="space-y-32">
-            {features.map((feature, index) => (
-              <FeatureCard
-                key={feature.id}
-                feature={feature}
-                index={index}
-                getAnimationClass={getAnimationClass}
-              />
-            ))}
-          </div>
-
-          {/* Animated Call to Action */}
-          <div className="text-center mt-32">
-            <div className="max-w-3xl mx-auto">
-              <h2
-                data-animate-id="cta-title"
-                className={`${getAnimationClass(
-                  "animate-fade-in-up",
-                  "cta-title"
-                )} text-5xl font-bold text-blue-600 mb-8 text-center transition-all duration-800`}>
-                Ready to get started?
-              </h2>
-
-              <p
-                data-animate-id="cta-description"
-                className={`${getAnimationClass(
-                  "animate-fade-in-up",
-                  "cta-description"
-                )} text-xl text-gray-600 mb-12 leading-relaxed text-center transition-all duration-800`}>
-                Join hundreds of businesses that have transformed their
-                operations with our AI-driven solutions and R&D innovations.
-              </p>
-
-              <div className="flex flex-col sm:flex-row gap-6 justify-center">
-                <Button
-                  onClick={handleContactClick}
-                  variant="black"
-                  size="lg"
-                  data-animate-id="cta-button-1"
-                  className={`${getAnimationClass(
-                    "animate-slide-in-right",
-                    "cta-button-1"
-                  )} px-10 py-5 rounded-full font-medium transition-all duration-300 transform hover:scale-105 shadow-2xl`}
-                  aria-label="Start your project with Codagam">
-                  Start your project
-                </Button>
-
-                <Button
-                  onClick={handleProductsClick}
-                  variant="black"
-                  size="lg"
-                  data-animate-id="cta-button-2"
-                  className={`${getAnimationClass(
-                    "animate-slide-in-left",
-                    "cta-button-2"
-                  )} px-10 py-5 rounded-full font-medium transition-all duration-300 transform hover:scale-105`}
-                  aria-label="View our work and products">
-                  View our work
-                </Button>
               </div>
             </div>
           </div>
         </div>
-      </div>
-    </section>
+      </SectionWrapper>
+
+      {/* Contact Form Dialog */}
+      <ContactFormDialog
+        isOpen={isDialogOpen}
+        onClose={handleDialogClose}
+        onSuccess={handleFormSuccess}
+      />
+    </>
   );
 });
 

@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState } from "react";
-import { smoothScrollTo, sections } from "@/lib/smooth-scroll";
 import { Menu, X } from "lucide-react";
 import NavLinks from "./NavLinks";
 
@@ -9,7 +8,10 @@ const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const handleLogoClick = () => {
-    smoothScrollTo(sections.home, 80);
+    const element = document.getElementById("hero-section");
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth" });
+    }
     setIsMobileMenuOpen(false);
   };
 

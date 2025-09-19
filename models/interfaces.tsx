@@ -74,7 +74,6 @@ export interface ProductCardProps {
   item: ProductItem;
   index: number;
   currentIndex: number;
-  getAnimationClass: (baseClass: string, elementId: string) => string;
   onCardClick: (product: ProductItem) => void;
 }
 
@@ -116,7 +115,6 @@ export interface ServiceCardProps {
   item: GalleryItem;
   index: number;
   currentIndex: number;
-  getAnimationClass: (baseClass: string, elementId: string) => string;
 }
 
 export interface ServicesSectionState {
@@ -146,7 +144,6 @@ export interface StatsCardProps {
   label: string;
   color: string;
   elementId: string;
-  getAnimationClass: (baseClass: string, elementId: string) => string;
 }
 
 export interface ContactFormDialogProps {

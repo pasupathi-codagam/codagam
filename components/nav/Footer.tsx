@@ -1,9 +1,11 @@
 "use client";
-import { smoothScrollTo, sections } from "@/lib/smooth-scroll";
 
 export function Footer() {
   const handleContactClick = () => {
-    smoothScrollTo(sections.contact, 80);
+    const element = document.getElementById("client-section");
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth" });
+    }
   };
 
   return (

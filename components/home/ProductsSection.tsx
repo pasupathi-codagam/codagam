@@ -1,342 +1,291 @@
 "use client";
 
-import React, { useState, useRef, useEffect, useCallback, useMemo, memo } from "react";
+import React, { useState, useEffect, useCallback, useMemo, memo } from "react";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardTitle } from "@/components/ui/card";
+import { Card, CardTitle } from "@/components/ui/card";
 import { Plus, ExternalLink } from "lucide-react";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import {
   ProductItem as ProductItemType,
   ProductCardProps,
-  NavigationButtonProps,
   ProductDetailsDialogProps,
-  AnimationClassFunction,
   ButtonWithUrlHandler,
-  ScrollToItemFunction,
-  HandleScrollFunction,
 } from "@/models/interfaces";
+import {
+  SectionWrapper,
+  NavigationButton,
+  useScrollContainer,
+} from "@/components/shared";
 
 // Memoized product card component
-const ProductCard = memo(({ 
-  item, 
-  index, 
-  currentIndex, 
-  getAnimationClass, 
-  onCardClick 
-}: ProductCardProps) => (
-  <div
-    key={item.id}
-    className="flex-shrink-0 w-80 lg:w-96 scroll-snap-start"
-    role="listitem">
-    <Card
-      data-animate-id={`product-card-${index}`}
-      className={`${getAnimationClass(
-        "animate-fade-in-up",
-        `product-card-${index}`
-      )} h-full border-0 shadow-2xl bg-gradient-to-br from-white to-gray-50 hover:shadow-3xl transition-all duration-700 ease-out hover:scale-105 hover:-translate-y-2 rounded-3xl overflow-hidden cursor-pointer group`}
-      onClick={() => onCardClick(item)}>
-      <CardContent className="p-8 h-full flex flex-col">
-        {/* Content Section */}
-        <div className="flex-1 mb-8">
-          <div className="text-sm font-medium text-gray-500 uppercase tracking-wider mb-4">
-            {item.label}
+const ProductCard = memo(
+  ({ item, index, currentIndex, onCardClick }: ProductCardProps) => (
+    <div
+      key={item.id}
+      className="flex-shrink-0 w-full max-w-5xl scroll-snap-start"
+      role="listitem">
+      <div className="px-8 lg:px-16">
+        <Card
+          className="h-full border-0 shadow-2xl bg-gradient-to-br from-white to-gray-50 hover:shadow-3xl transition-all duration-500 hover:scale-105 rounded-3xl overflow-hidden cursor-pointer group"
+          onClick={() => onCardClick(item)}>
+          <div className="grid lg:grid-cols-2 gap-0 items-stretch min-h-[600px]">
+            {/* Content Section - Left Side */}
+            <div className="order-2 lg:order-1 p-8 lg:p-12 flex flex-col justify-center">
+              <div className="flex-1 flex flex-col justify-center">
+                <div className="text-sm font-medium text-gray-500 uppercase tracking-wider mb-4">
+                  {item.label}
+                </div>
+                <CardTitle className="text-4xl lg:text-5xl font-bold text-gray-900 mb-6 leading-tight">
+                  {item.headline}.
+                </CardTitle>
+                <p className="text-gray-600 text-lg leading-relaxed mb-8">
+                  {item.description}
+                </p>
+
+                {/* Action Button */}
+                <div className="flex justify-start items-center">
+                  <Button
+                    variant="black"
+                    size="icon"
+                    className="rounded-full w-12 h-12 p-0 group-hover:scale-110 group-hover:rotate-90 transition-all duration-500 ease-out"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      onCardClick(item);
+                    }}
+                    aria-label={`Learn more about ${item.label}`}>
+                    <Plus className="w-5 h-5 text-white transition-transform duration-300" />
+                  </Button>
+                </div>
+              </div>
+            </div>
+
+            {/* Image Section - Right Side */}
+            <div className="order-1 lg:order-2 relative h-full min-h-[600px] flex items-center justify-center p-8">
+              <div className="relative w-3/4 h-3/4 rounded-2xl overflow-hidden ">
+                <Image
+                  src={item.image}
+                  alt={item.alt}
+                  fill
+                  className="object-contain "
+                  priority={index === currentIndex}
+                  sizes="(max-width: 1024px) 100vw, 50vw"
+                />
+              </div>
+              <div className="absolute inset-0 bg-gradient-to-l from-transparent via-transparent to-white/10 lg:bg-gradient-to-l lg:from-transparent lg:via-transparent lg:to-white/20"></div>
+            </div>
           </div>
-          <CardTitle className="text-2xl font-bold text-gray-900 mb-4 leading-tight">
-            {item.headline}
-          </CardTitle>
-          <p className="text-gray-600 text-lg leading-relaxed">
-            {item.description}
-          </p>
-        </div>
-
-        {/* Image Section */}
-        <div className="relative h-48 rounded-2xl overflow-hidden mb-8 bg-gray-50 group-hover:bg-gray-100 transition-colors duration-500">
-          <Image
-            src={item.image}
-            alt={item.alt}
-            fill
-            className="object-contain transition-all duration-500 group-hover:scale-110 group-hover:rotate-2"
-            priority={index === currentIndex}
-            sizes="(max-width: 768px) 320px, 384px"
-          />
-        </div>
-
-        {/* Action Button */}
-        <div className="flex justify-center items-center">
-          <Button
-            variant="black"
-            size="icon"
-            className="rounded-full w-12 h-12 p-0 group-hover:scale-110 group-hover:rotate-90 transition-all duration-500 ease-out"
-            onClick={(e) => {
-              e.stopPropagation();
-              onCardClick(item);
-            }}
-            aria-label={`Learn more about ${item.label}`}>
-            <Plus className="w-5 h-5 text-white transition-transform duration-300" />
-          </Button>
-        </div>
-      </CardContent>
-    </Card>
-  </div>
-));
+        </Card>
+      </div>
+    </div>
+  )
+);
 
 ProductCard.displayName = "ProductCard";
 
-// Memoized navigation button component
-const NavigationButton = memo(({ 
-  direction, 
-  onClick, 
-  disabled, 
-  ariaLabel 
-}: NavigationButtonProps) => (
-  <button
-    className="group h-16 w-16 rounded-full bg-white/95 backdrop-blur-sm shadow-2xl border border-gray-200/50 disabled:opacity-40 disabled:cursor-not-allowed hover:bg-white hover:scale-110 hover:shadow-3xl transition-all duration-300 flex items-center justify-center"
-    onClick={onClick}
-    disabled={disabled}
-    aria-label={ariaLabel}>
-    <svg
-      className="h-6 w-6 text-gray-700 group-hover:text-gray-900 transition-colors duration-300"
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 36 36"
-      fill="currentColor">
-      <path d={direction === "prev" 
-        ? "m13.4403 16.9375 5.5076-5.5c.5854-.5854 1.5323-.5825 2.1157.0039.5835.5869.5815 1.5366-.0039 2.1211l-4.4438 4.4375 4.4438 4.4375c.5854.5845.5874 1.5342.0039 2.1211-.2922.2944-.676.4414-1.0598.4414-.3818 0-.7637-.1455-1.0559-.4375l-5.5076-5.5c-.2815-.2812-.4403-.6636-.4403-1.0625s.1588-.7812.4403-1.0625z"
-        : "m22.5597 16.9375-5.5076-5.5c-.5854-.5854-1.5323-.5825-2.1157.0039-.5835.5869-.5815 1.5366.0039 2.1211l4.4438 4.4375-4.4438 4.4375c-.5854.5845-.5874 1.5342-.0039 2.1211.2922.2944.676.4414 1.0598.4414.3818 0 .7637-.1455 1.0559-.4375l5.5076-5.5c.2815-.2812.4403-.6636.4403-1.0625s-.1588-.7812-.4403-1.0625z"
-      } />
-    </svg>
-  </button>
-));
-
-NavigationButton.displayName = "NavigationButton";
-
 // Memoized product details dialog
-const ProductDetailsDialog = memo(({ 
-  selectedProduct, 
-  isOpen, 
-  onClose, 
-  onVisitWebsite 
-}: ProductDetailsDialogProps) => (
-  <Dialog open={isOpen} onOpenChange={onClose}>
-    <DialogContent className="max-w-2xl p-8 rounded-3xl">
-      {selectedProduct && (
-        <div className="space-y-8">
-          {/* Product Label */}
-          <div className="text-sm font-medium text-gray-500 uppercase tracking-wider">
-            {selectedProduct.label}
+const ProductDetailsDialog = memo(
+  ({
+    selectedProduct,
+    isOpen,
+    onClose,
+    onVisitWebsite,
+  }: ProductDetailsDialogProps) => (
+    <Dialog open={isOpen} onOpenChange={onClose}>
+      <DialogContent className="max-w-2xl p-8 rounded-3xl">
+        {selectedProduct && (
+          <div className="space-y-8">
+            {/* Product Label */}
+            <div className="text-sm font-medium text-gray-500 uppercase tracking-wider">
+              {selectedProduct.label}
+            </div>
+
+            {/* Product Headline */}
+            <h3 className="text-3xl font-bold text-gray-900 leading-tight">
+              {selectedProduct.headline}
+            </h3>
+
+            {/* Product Description */}
+            <p className="text-gray-700 leading-relaxed text-lg">
+              {selectedProduct.details}
+            </p>
+
+            {/* Features List */}
+            <div className="space-y-4">
+              <h4 className="text-lg font-semibold text-gray-900">
+                Key Features:
+              </h4>
+              <ul className="grid grid-cols-1 md:grid-cols-2 gap-2">
+                {selectedProduct.features.map((feature, index) => (
+                  <li key={index} className="flex items-center text-gray-600">
+                    <div className="w-2 h-2 bg-blue-500 rounded-full mr-3 flex-shrink-0"></div>
+                    {feature}
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Learn More Link */}
+            <div className="pt-4">
+              <Button
+                variant="black"
+                onClick={() => onVisitWebsite(selectedProduct.website)}
+                className="rounded-full px-8 py-3 text-base font-medium inline-flex items-center gap-2"
+                aria-label={`Visit ${selectedProduct.label} website`}>
+                Learn more
+                <ExternalLink className="w-4 h-4" />
+              </Button>
+            </div>
           </div>
-
-          {/* Product Headline */}
-          <h3 className="text-3xl font-bold text-gray-900 leading-tight">
-            {selectedProduct.headline}
-          </h3>
-
-          {/* Product Description */}
-          <p className="text-gray-700 leading-relaxed text-lg">
-            {selectedProduct.details}
-          </p>
-
-          {/* Features List */}
-          <div className="space-y-4">
-            <h4 className="text-lg font-semibold text-gray-900">
-              Key Features:
-            </h4>
-            <ul className="grid grid-cols-1 md:grid-cols-2 gap-2">
-              {selectedProduct.features.map((feature, index) => (
-                <li key={index} className="flex items-center text-gray-600">
-                  <div className="w-2 h-2 bg-blue-500 rounded-full mr-3 flex-shrink-0"></div>
-                  {feature}
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Learn More Link */}
-          <div className="pt-4">
-            <Button
-              variant="black"
-              onClick={() => onVisitWebsite(selectedProduct.website)}
-              className="rounded-full px-8 py-3 text-base font-medium inline-flex items-center gap-2"
-              aria-label={`Visit ${selectedProduct.label} website`}>
-              Learn more
-              <ExternalLink className="w-4 h-4" />
-            </Button>
-          </div>
-        </div>
-      )}
-    </DialogContent>
-  </Dialog>
-));
+        )}
+      </DialogContent>
+    </Dialog>
+  )
+);
 
 ProductDetailsDialog.displayName = "ProductDetailsDialog";
 
 export default function ProductsSection() {
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [selectedProduct, setSelectedProduct] = useState<ProductItemType | null>(null);
+  const [selectedProduct, setSelectedProduct] =
+    useState<ProductItemType | null>(null);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
-  const scrollContainerRef = useRef<HTMLDivElement>(null);
-  const [isScrolling, setIsScrolling] = useState(false);
-  const [animatedElements, setAnimatedElements] = useState<Set<string>>(new Set());
-  const sectionRef = useRef<HTMLDivElement>(null);
+
+  // Use the reusable scroll container
+  const { currentIndex, scrollContainerRef, scrollToItem, handleScroll } =
+    useScrollContainer(800);
 
   // Memoized product items data
-  const productItems = useMemo((): ProductItemType[] => [
-    {
-      id: "gobitoday",
-      label: "GobiToday",
-      headline: "Your digital marketplace platform.",
-      description:
-        "A comprehensive digital marketplace connecting buyers and sellers with seamless transactions and user-friendly interface.",
-      image: "/images/gt_logo_bg_trans.png",
-      alt: "GobiToday marketplace platform",
-      website: "https://gobitoday.com/",
-      details:
-        "GobiToday is a modern digital marketplace platform that facilitates seamless transactions between buyers and sellers. Built with cutting-edge technology, it provides a secure and user-friendly environment for online commerce.",
-      features: [
-        "Secure payment processing",
-        "User-friendly interface",
-        "Mobile responsive design",
-        "Real-time notifications",
-        "Multi-vendor support",
-      ],
-    },
-    {
-      id: "aava-foundation",
-      label: "AAVA Foundation",
-      headline: "Empowering communities for change.",
-      description:
-        "A non-profit organization dedicated to healthcare, education, and environmental sustainability initiatives for underprivileged communities.",
-      image: "/images/AAVA_Foundation_Logo.png",
-      alt: "AAVA Foundation community initiatives",
-      website: "https://www.aavafoundation.com/",
-      details:
-        "AAVA Foundation is committed to making a positive impact through healthcare, education, and environmental sustainability. We work tirelessly to create a more equitable and sustainable world for all communities.",
-      features: [
-        "Preventive Healthcare programs",
-        "Educational Support initiatives",
-        "Environmental Sustainability projects",
-        "Community collaboration",
-        "Volunteer engagement",
-      ],
-    },
-    {
-      id: "custom-software",
-      label: "Custom Software",
-      headline: "Build your perfect solution.",
-      description:
-        "We craft bespoke software solutions that address your unique business challenges. From enterprise applications to mobile apps, our team delivers scalable, secure, and efficient software.",
-      image: "/images/WhatsApp Image 2025-09-18 at 14.09.42_e8607c7e.jpg",
-      alt: "Custom software development solutions",
-      website: "/services/custom-software",
-      details:
-        "Our custom software development services are tailored to meet your specific business requirements. We create scalable, secure, and efficient solutions that drive growth and innovation.",
-      features: [
-        "Enterprise applications",
-        "Mobile app development",
-        "Web applications",
-        "API development",
-        "Database design",
-      ],
-    },
-    {
-      id: "digital-transformation",
-      label: "Digital Transformation",
-      headline: "Transform your business digitally.",
-      description:
-        "Empower your business with our comprehensive digital transformation services. We help you leverage emerging technologies to streamline operations and enhance customer experiences.",
-      image: "/images/logo.png",
-      alt: "Digital transformation services",
-      website: "/services/digital-transformation",
-      details:
-        "Transform your business with our comprehensive digital transformation services. We help organizations leverage emerging technologies to streamline operations and enhance customer experiences.",
-      features: [
-        "Process automation",
-        "Cloud migration",
-        "Data analytics",
-        "Customer experience optimization",
-        "Technology integration",
-      ],
-    },
-    {
-      id: "ai-solutions",
-      label: "AI Solutions",
-      headline: "Harness the power of AI.",
-      description:
-        "Revolutionize your business with our AI-driven solutions. From predictive analytics to intelligent automation, we help you boost efficiency and customer engagement.",
-      image: "/images/Codagam_Img (7).jpg",
-      alt: "AI-powered business solutions",
-      website: "/services/ai-solutions",
-      details:
-        "Leverage the power of artificial intelligence to transform your business operations. Our AI solutions help you make data-driven decisions and automate complex processes.",
-      features: [
-        "Predictive analytics",
-        "Intelligent automation",
-        "Machine learning models",
-        "Natural language processing",
-        "Computer vision",
-      ],
-    },
-    {
-      id: "cloud-services",
-      label: "Cloud Services",
-      headline: "Scale with cloud technology.",
-      description:
-        "Leverage our cloud infrastructure and migration services. We provide scalable solutions that grow with your business and ensure optimal performance.",
-      image: "/images/Codagam_Img (8).jpg",
-      alt: "Cloud computing and infrastructure",
-      website: "/services/cloud-services",
-      details:
-        "Scale your business with our comprehensive cloud services. We provide secure, scalable, and cost-effective cloud solutions that grow with your business needs.",
-      features: [
-        "Cloud migration",
-        "Infrastructure as a Service",
-        "Platform as a Service",
-        "Cloud security",
-        "Performance optimization",
-      ],
-    },
-  ], []);
-
-  // Optimized scroll functions with useCallback
-  const scrollToItem: ScrollToItemFunction = useCallback((index: number) => {
-    if (!scrollContainerRef.current || isScrolling) return;
-
-    setIsScrolling(true);
-    const container = scrollContainerRef.current;
-    const itemWidth = container.offsetWidth;
-    const scrollLeft = index * itemWidth;
-
-    container.scrollTo({
-      left: scrollLeft,
-      behavior: "smooth",
-    });
-
-    setCurrentIndex(index);
-
-    setTimeout(() => setIsScrolling(false), 500);
-  }, [isScrolling]);
-
-  const handleScroll: HandleScrollFunction = useCallback(() => {
-    if (!scrollContainerRef.current || isScrolling) return;
-
-    const container = scrollContainerRef.current;
-    const itemWidth = container.offsetWidth;
-    const scrollLeft = container.scrollLeft;
-    const newIndex = Math.round(scrollLeft / itemWidth);
-
-    if (newIndex !== currentIndex) {
-      setCurrentIndex(newIndex);
-    }
-  }, [currentIndex, isScrolling]);
+  const productItems = useMemo(
+    (): ProductItemType[] => [
+      {
+        id: "gobitoday",
+        label: "GobiToday",
+        headline: "Your digital marketplace platform.",
+        description:
+          "A comprehensive digital marketplace connecting buyers and sellers with seamless transactions and user-friendly interface.",
+        image: "/images/gt_logo_bg_trans.png",
+        alt: "GobiToday marketplace platform",
+        website: "https://gobitoday.com/",
+        details:
+          "GobiToday is a modern digital marketplace platform that facilitates seamless transactions between buyers and sellers. Built with cutting-edge technology, it provides a secure and user-friendly environment for online commerce.",
+        features: [
+          "Secure payment processing",
+          "User-friendly interface",
+          "Mobile responsive design",
+          "Real-time notifications",
+          "Multi-vendor support",
+        ],
+      },
+      {
+        id: "aava-foundation",
+        label: "AAVA Foundation",
+        headline: "Empowering communities for change.",
+        description:
+          "A non-profit organization dedicated to healthcare, education, and environmental sustainability initiatives for underprivileged communities.",
+        image: "/images/AAVA_Foundation_Logo.png",
+        alt: "AAVA Foundation community initiatives",
+        website: "https://www.aavafoundation.com/",
+        details:
+          "AAVA Foundation is committed to making a positive impact through healthcare, education, and environmental sustainability. We work tirelessly to create a more equitable and sustainable world for all communities.",
+        features: [
+          "Preventive Healthcare programs",
+          "Educational Support initiatives",
+          "Environmental Sustainability projects",
+          "Community collaboration",
+          "Volunteer engagement",
+        ],
+      },
+      {
+        id: "custom-software",
+        label: "Custom Software",
+        headline: "Build your perfect solution.",
+        description:
+          "We craft bespoke software solutions that address your unique business challenges. From enterprise applications to mobile apps, our team delivers scalable, secure, and efficient software.",
+        image: "/images/WhatsApp Image 2025-09-18 at 14.09.42_e8607c7e.jpg",
+        alt: "Custom software development solutions",
+        website: "/services/custom-software",
+        details:
+          "Our custom software development services are tailored to meet your specific business requirements. We create scalable, secure, and efficient solutions that drive growth and innovation.",
+        features: [
+          "Enterprise applications",
+          "Mobile app development",
+          "Web applications",
+          "API development",
+          "Database design",
+        ],
+      },
+      {
+        id: "digital-transformation",
+        label: "Digital Transformation",
+        headline: "Transform your business digitally.",
+        description:
+          "Empower your business with our comprehensive digital transformation services. We help you leverage emerging technologies to streamline operations and enhance customer experiences.",
+        image: "/images/logo.png",
+        alt: "Digital transformation services",
+        website: "/services/digital-transformation",
+        details:
+          "Transform your business with our comprehensive digital transformation services. We help organizations leverage emerging technologies to streamline operations and enhance customer experiences.",
+        features: [
+          "Process automation",
+          "Cloud migration",
+          "Data analytics",
+          "Customer experience optimization",
+          "Technology integration",
+        ],
+      },
+      {
+        id: "ai-solutions",
+        label: "AI Solutions",
+        headline: "Harness the power of AI.",
+        description:
+          "Revolutionize your business with our AI-driven solutions. From predictive analytics to intelligent automation, we help you boost efficiency and customer engagement.",
+        image: "/images/Codagam_Img (7).jpg",
+        alt: "AI-powered business solutions",
+        website: "/services/ai-solutions",
+        details:
+          "Leverage the power of artificial intelligence to transform your business operations. Our AI solutions help you make data-driven decisions and automate complex processes.",
+        features: [
+          "Predictive analytics",
+          "Intelligent automation",
+          "Machine learning models",
+          "Natural language processing",
+          "Computer vision",
+        ],
+      },
+      {
+        id: "cloud-services",
+        label: "Cloud Services",
+        headline: "Scale with cloud technology.",
+        description:
+          "Leverage our cloud infrastructure and migration services. We provide scalable solutions that grow with your business and ensure optimal performance.",
+        image: "/images/Codagam_Img (8).jpg",
+        alt: "Cloud computing and infrastructure",
+        website: "/services/cloud-services",
+        details:
+          "Scale your business with our comprehensive cloud services. We provide secure, scalable, and cost-effective cloud solutions that grow with your business needs.",
+        features: [
+          "Cloud migration",
+          "Infrastructure as a Service",
+          "Platform as a Service",
+          "Cloud security",
+          "Performance optimization",
+        ],
+      },
+    ],
+    []
+  );
 
   const handleCardClick = useCallback((product: ProductItemType) => {
     setSelectedProduct(product);
     setIsDialogOpen(true);
   }, []);
 
-  const handleVisitWebsite: ButtonWithUrlHandler = useCallback((url: string) => {
-    window.open(url, "_blank", "noopener,noreferrer");
-  }, []);
+  const handleVisitWebsite: ButtonWithUrlHandler = useCallback(
+    (url: string) => {
+      window.open(url, "_blank", "noopener,noreferrer");
+    },
+    []
+  );
 
   const handleDialogClose = useCallback(() => {
     setIsDialogOpen(false);
@@ -351,99 +300,27 @@ export default function ProductsSection() {
     scrollToItem(Math.min(productItems.length - 1, currentIndex + 1));
   }, [scrollToItem, currentIndex, productItems.length]);
 
-  // Modern animation class helper with enhanced effects
-  const getAnimationClass: AnimationClassFunction = useCallback((baseClass: string, elementId: string) => {
-    if (animatedElements.has(elementId)) {
-      return baseClass;
-    }
-    return "opacity-0 translate-y-6 scale-95 transition-all duration-700 ease-out";
-  }, [animatedElements]);
-
   useEffect(() => {
     const container = scrollContainerRef.current;
     if (container) {
       container.addEventListener("scroll", handleScroll);
       return () => container.removeEventListener("scroll", handleScroll);
     }
-  }, [handleScroll]);
+  }, [handleScroll, scrollContainerRef]);
 
-  // Modern scroll-triggered animations setup
-  useEffect(() => {
-    const observerOptions = {
-      threshold: 0.2,
-      rootMargin: "0px 0px -100px 0px",
-    };
+  // No animations needed - removed animation setup
 
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        const elementId = entry.target.getAttribute("data-animate-id");
-        if (elementId && entry.isIntersecting) {
-          setTimeout(() => {
-            setAnimatedElements((prev) => new Set([...prev, elementId]));
-          }, 50);
-        }
-      });
-    }, observerOptions);
-
-    const section = sectionRef.current;
-    if (section) {
-      const elementsToObserve = section.querySelectorAll("[data-animate-id]");
-      elementsToObserve.forEach((el) => observer.observe(el));
-
-      return () => observer.disconnect();
-    }
-  }, []);
-
-  // Enhanced horizontal scroll animations
-  useEffect(() => {
-    const currentCardId = `product-card-${currentIndex}`;
-    setAnimatedElements((prev) => {
-      const newSet = new Set(prev);
-      newSet.add(currentCardId);
-      return newSet;
-    });
-
-    // Add a subtle bounce effect for the current card
-    const currentCard = document.querySelector(`[data-animate-id="${currentCardId}"]`);
-    if (currentCard) {
-      currentCard.classList.add("animate-bounce-slow");
-      setTimeout(() => {
-        currentCard.classList.remove("animate-bounce-slow");
-      }, 1000);
-    }
-  }, [currentIndex]);
-
-  // Enhanced initial animations with staggered entrance
-  useEffect(() => {
-    const initialElements = [
-      "products-header",
-      "products-gallery",
-      "products-navigation",
-      "product-card-0",
-    ];
-
-    initialElements.forEach((elementId, index) => {
-      setTimeout(() => {
-        setAnimatedElements((prev) => new Set([...prev, elementId]));
-      }, index * 150);
-    });
-  }, []);
+  // No animations needed - removed animation effects
 
   return (
     <>
-      <section
+      <SectionWrapper
         id="products-section"
-        ref={sectionRef}
-        className="min-h-screen bg-white flex items-center py-20"
+        className="min-h-screen flex items-center"
         role="main"
         aria-label="Products section">
         <div className="w-full">
-          <div
-            data-animate-id="products-header"
-            className={`${getAnimationClass(
-              "animate-fade-in-up",
-              "products-header"
-            )} text-center mb-20 px-8 lg:px-16 transition-all duration-800`}>
+          <div className="text-center mb-20 px-8 lg:px-16">
             <h2 className="text-5xl lg:text-7xl font-bold text-gray-900 leading-tight mb-8">
               Our Products
             </h2>
@@ -452,12 +329,7 @@ export default function ProductsSection() {
             </p>
           </div>
 
-          <div
-            data-animate-id="products-gallery"
-            className={`${getAnimationClass(
-              "animate-fade-in-up",
-              "products-gallery"
-            )} transition-all duration-800`}>
+          <div>
             <div className="relative">
               <div
                 ref={scrollContainerRef}
@@ -466,7 +338,7 @@ export default function ProductsSection() {
                 role="region"
                 aria-label="Products gallery">
                 <div
-                  className="flex gap-8 pb-6 px-8 lg:px-16"
+                  className="flex gap-8 pb-6"
                   role="list"
                   aria-label="Products Gallery">
                   {productItems.map((item, index) => (
@@ -475,20 +347,14 @@ export default function ProductsSection() {
                       item={item}
                       index={index}
                       currentIndex={currentIndex}
-                      getAnimationClass={getAnimationClass}
                       onCardClick={handleCardClick}
                     />
                   ))}
                 </div>
               </div>
 
-              {/* Navigation Buttons */}
-              <div
-                data-animate-id="products-navigation"
-                className={`${getAnimationClass(
-                  "animate-slide-in-up",
-                  "products-navigation"
-                )} flex justify-center gap-6 mt-12 transition-all duration-800`}>
+              {/* Navigation Buttons - Bottom Right */}
+              <div className="absolute right-8 flex gap-6 z-10">
                 <NavigationButton
                   direction="prev"
                   onClick={handlePrevClick}
@@ -505,7 +371,7 @@ export default function ProductsSection() {
             </div>
           </div>
         </div>
-      </section>
+      </SectionWrapper>
 
       {/* Product Details Dialog */}
       <ProductDetailsDialog

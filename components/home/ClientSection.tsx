@@ -1,13 +1,6 @@
 "use client";
 
-import React, {
-  useState,
-  useRef,
-  useEffect,
-  useCallback,
-  useMemo,
-  memo,
-} from "react";
+import React, { useState, useCallback, useMemo, memo } from "react";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -21,27 +14,17 @@ import {
 } from "@/components/ui/dialog";
 import {
   ClientLogo as ClientLogoType,
-  ClientLogoCardProps,
-  StatsCardProps,
   ContactFormDialogProps,
-  AnimationClassFunction,
   ButtonClickHandler,
 } from "@/models/interfaces";
+import { SectionWrapper, StatsCard } from "@/components/shared";
 
 // Memoized client logo card component
 const ClientLogoCard = memo(
-  ({
-    client,
-    index,
-    getAnimationClass,
-  }: ClientLogoCardProps) => (
+  ({ client, index }: { client: ClientLogoType; index: number }) => (
     <Card
       key={index}
-      data-animate-id={`logo-${index}`}
-      className={`${getAnimationClass(
-        "animate-scale-in",
-        `logo-${index}`
-      )} group border-0 shadow-lg hover:shadow-2xl transition-all duration-700 hover:scale-105 bg-white/90 backdrop-blur-sm hover:bg-white relative overflow-hidden`}>
+      className="group border-0 shadow-lg hover:shadow-2xl transition-all duration-700 hover:scale-105 bg-white/90 backdrop-blur-sm hover:bg-white relative overflow-hidden">
       <CardContent className="p-8 lg:p-10 text-center">
         {/* Logo Image */}
         <div className="relative h-16 lg:h-20 flex items-center justify-center mb-4">
@@ -69,43 +52,9 @@ const ClientLogoCard = memo(
 
 ClientLogoCard.displayName = "ClientLogoCard";
 
-// Memoized stats card component
-const StatsCard = memo(
-  ({
-    number,
-    label,
-    color,
-    elementId,
-    getAnimationClass,
-  }: StatsCardProps) => (
-    <Card
-      data-animate-id={elementId}
-      className={`${getAnimationClass(
-        "animate-slide-in-left",
-        elementId
-      )} text-center group border-0 shadow-lg hover:shadow-2xl transition-all duration-700 hover:scale-105 bg-gradient-to-br from-white to-${color}-50/30 hover:from-${color}-50 hover:to-white`}>
-      <CardContent className="p-8">
-        <div
-          className={`text-4xl lg:text-5xl font-bold text-gray-900 mb-3 group-hover:text-${color}-600 transition-all duration-500 group-hover:scale-110`}>
-          {number}
-        </div>
-        <div className="text-gray-600 text-lg group-hover:text-gray-800 transition-colors duration-300 font-medium">
-          {label}
-        </div>
-      </CardContent>
-    </Card>
-  )
-);
-
-StatsCard.displayName = "StatsCard";
-
 // Memoized contact form dialog
 const ContactFormDialog = memo(
-  ({
-    isOpen,
-    onClose,
-    onSuccess,
-  }: ContactFormDialogProps) => (
+  ({ isOpen, onClose, onSuccess }: ContactFormDialogProps) => (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="max-w-lg">
         <DialogHeader>
@@ -132,10 +81,6 @@ ContactFormDialog.displayName = "ContactFormDialog";
 
 export default function ClientSection() {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
-  const [animatedElements, setAnimatedElements] = useState<Set<string>>(
-    new Set()
-  );
-  const sectionRef = useRef<HTMLDivElement>(null);
 
   // Memoized client logos data
   const clientLogos = useMemo(
@@ -218,134 +163,40 @@ export default function ClientSection() {
     setIsDialogOpen(false);
   }, []);
 
-  // Modern animation class helper with enhanced effects
-  const getAnimationClass: AnimationClassFunction = useCallback(
-    (baseClass: string, elementId: string) => {
-      if (animatedElements.has(elementId)) {
-        return baseClass;
-      }
-      return "opacity-0 translate-y-6 scale-95 transition-all duration-700 ease-out";
-    },
-    [animatedElements]
-  );
+  // No animations needed - removed animation setup
 
-  // Modern scroll-triggered animations setup
-  useEffect(() => {
-    const observerOptions = {
-      threshold: 0.2,
-      rootMargin: "0px 0px -100px 0px",
-    };
-
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        const elementId = entry.target.getAttribute("data-animate-id");
-        if (elementId) {
-          if (entry.isIntersecting) {
-            setTimeout(() => {
-              setAnimatedElements((prev) => new Set([...prev, elementId]));
-            }, 50);
-          } else {
-            setTimeout(() => {
-              setAnimatedElements((prev) => {
-                const newSet = new Set(prev);
-                newSet.delete(elementId);
-                return newSet;
-              });
-            }, 100);
-          }
-        }
-      });
-    }, observerOptions);
-
-    const section = sectionRef.current;
-    if (section) {
-      const elementsToObserve = section.querySelectorAll("[data-animate-id]");
-      elementsToObserve.forEach((el) => observer.observe(el));
-
-      return () => observer.disconnect();
-    }
-  }, []);
-
-  // Enhanced initial animations with staggered entrance
-  useEffect(() => {
-    const initialElements = [
-      "client-header",
-      "client-stats",
-      "client-logos",
-      "client-cta",
-    ];
-
-    // Staggered entrance for smooth visual flow
-    initialElements.forEach((elementId, index) => {
-      setTimeout(() => {
-        setAnimatedElements((prev) => new Set([...prev, elementId]));
-      }, index * 200);
-    });
-  }, []);
+  // No animations needed - removed animation effects
 
   return (
     <>
-      <section
+      <SectionWrapper
         id="client-section"
-        ref={sectionRef}
-        className="min-h-screen bg-white py-32"
+        className="min-h-screen"
         role="main"
         aria-label="Client testimonials and partners section">
         <div className="w-full">
           {/* Header */}
-          <div
-            data-animate-id="client-header"
-            className={`${getAnimationClass(
-              "animate-fade-in-up",
-              "client-header"
-            )} text-center mb-24 px-8 lg:px-16 transition-all duration-800`}>
-            <div
-              data-animate-id="client-badge"
-              className={`${getAnimationClass(
-                "animate-slide-in-right",
-                "client-badge"
-              )} inline-flex items-center px-4 py-2 bg-gray-100 rounded-full mb-8 border border-gray-200 transition-all duration-800`}>
+          <div className="text-center mb-24 px-8 lg:px-16">
+            <div className="inline-flex items-center px-4 py-2 bg-gray-100 rounded-full mb-8 border border-gray-200">
               <span className="text-gray-700 text-sm font-medium">
                 Trusted Partners
               </span>
             </div>
 
-            <h2
-              data-animate-id="client-title"
-              className={`${getAnimationClass(
-                "animate-fade-in-up",
-                "client-title"
-              )} text-6xl lg:text-8xl font-bold text-gray-900 leading-tight mb-8 transition-all duration-800`}>
+            <h2 className="text-6xl lg:text-8xl font-bold text-gray-900 leading-tight mb-8">
               Trusted by
               <br />
-              <span
-                data-animate-id="client-title-highlight"
-                className={`${getAnimationClass(
-                  "animate-bounce-slow",
-                  "client-title-highlight"
-                )} text-blue-600 transition-all duration-800`}>
-                industry leaders
-              </span>
+              <span className="text-blue-600">industry leaders</span>
             </h2>
 
-            <p
-              data-animate-id="client-description"
-              className={`${getAnimationClass(
-                "animate-slide-in-left",
-                "client-description"
-              )} text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed transition-all duration-800`}>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
               We partner with forward-thinking companies to deliver innovative
               solutions that drive growth and transform businesses.
             </p>
           </div>
 
           {/* Stats Section */}
-          <div
-            data-animate-id="client-stats"
-            className={`${getAnimationClass(
-              "animate-fade-in-up",
-              "client-stats"
-            )} px-8 lg:px-16 mb-20 transition-all duration-800`}>
+          <div className="px-8 lg:px-16 mb-20">
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
               {statsData.map((stat) => (
                 <StatsCard
@@ -354,26 +205,15 @@ export default function ClientSection() {
                   label={stat.label}
                   color={stat.color}
                   elementId={stat.elementId}
-                  getAnimationClass={getAnimationClass}
                 />
               ))}
             </div>
           </div>
 
           {/* Client Logos - Apple-style Design */}
-          <div
-            data-animate-id="client-logos"
-            className={`${getAnimationClass(
-              "animate-fade-in-up",
-              "client-logos"
-            )} px-8 lg:px-16 mb-20 transition-all duration-800`}>
+          <div className="px-8 lg:px-16 mb-20">
             {/* Header Section */}
-            <div
-              data-animate-id="logos-header"
-              className={`${getAnimationClass(
-                "animate-slide-in-up",
-                "logos-header"
-              )} text-center mb-16 transition-all duration-800`}>
+            <div className="text-center mb-16">
               <div className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-full mb-8 border border-blue-100">
                 <span className="text-blue-700 text-sm font-semibold uppercase tracking-wider">
                   Trusted Partners
@@ -403,7 +243,6 @@ export default function ClientSection() {
                         key={index}
                         client={client}
                         index={index}
-                        getAnimationClass={getAnimationClass}
                       />
                     ))}
                   </div>
@@ -418,42 +257,23 @@ export default function ClientSection() {
           </div>
 
           {/* Call to Action */}
-          <div
-            data-animate-id="client-cta"
-            className={`${getAnimationClass(
-              "animate-fade-in-up",
-              "client-cta"
-            )} px-8 lg:px-16 transition-all duration-800`}>
+          <div className="px-8 lg:px-16">
             <Card className="max-w-4xl mx-auto border-0 shadow-2xl bg-gradient-to-br from-white to-gray-50/50 hover:shadow-3xl transition-all duration-700">
               <CardContent className="p-12 lg:p-16 text-center">
                 <CardHeader className="pb-8">
-                  <CardTitle
-                    data-animate-id="cta-title"
-                    className={`${getAnimationClass(
-                      "animate-slide-in-left",
-                      "cta-title"
-                    )} text-3xl lg:text-4xl font-bold text-gray-900 mb-6 transition-all duration-800`}>
+                  <CardTitle className="text-3xl lg:text-4xl font-bold text-gray-900 mb-6">
                     Ready to join our success stories?
                   </CardTitle>
                 </CardHeader>
 
                 <CardContent className="pb-8">
-                  <p
-                    data-animate-id="cta-description"
-                    className={`${getAnimationClass(
-                      "animate-slide-in-right",
-                      "cta-description"
-                    )} text-lg text-gray-600 mb-8 max-w-2xl mx-auto leading-relaxed transition-all duration-800`}>
+                  <p className="text-lg text-gray-600 mb-8 max-w-2xl mx-auto leading-relaxed">
                     Let&apos;s discuss how we can help your business achieve its
                     goals with innovative technology solutions.
                   </p>
 
                   <Button
-                    data-animate-id="cta-button"
-                    className={`${getAnimationClass(
-                      "animate-bounce-slow",
-                      "cta-button"
-                    )} px-12 py-4 text-lg font-semibold rounded-full transition-all duration-500 hover:scale-110 hover:shadow-2xl`}
+                    className="px-12 py-4 text-lg font-semibold rounded-full transition-all duration-500 hover:scale-110 hover:shadow-2xl"
                     onClick={handleRequestCallback}
                     variant="black"
                     size="lg"
@@ -465,7 +285,7 @@ export default function ClientSection() {
             </Card>
           </div>
         </div>
-      </section>
+      </SectionWrapper>
 
       {/* Contact Form Dialog */}
       <ContactFormDialog

@@ -1,7 +1,6 @@
 "use client";
 
 import React from "react";
-import { smoothScrollTo, sections } from "@/lib/smooth-scroll";
 
 interface NavLinksProps {
   onLinkClick?: () => void;
@@ -17,9 +16,21 @@ const NavLinks: React.FC<NavLinksProps> = ({ onLinkClick }) => {
     { key: "contact" as const, label: "Contact" },
   ];
 
+  const sections = {
+    home: "hero-section",
+    about: "about-section",
+    services: "services-section",
+    products: "products-section",
+    careers: "career-section",
+    contact: "client-section",
+  };
+
   const handleNavClick = (sectionKey: keyof typeof sections) => {
     const elementId = sections[sectionKey];
-    smoothScrollTo(elementId, 80);
+    const element = document.getElementById(elementId);
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth" });
+    }
     onLinkClick?.(); // Close mobile menu if callback provided
   };
 

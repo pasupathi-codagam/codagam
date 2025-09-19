@@ -5,6 +5,7 @@ import "./globals.css";
 import ScrollToTopButton from "@/components/shared/ScrollToTopButton";
 import { Footer } from "@/components/nav/Footer";
 import Navbar from "@/components/nav/Navbar";
+
 // Define Noto Sans Tamil as primary font
 const notoSansTamil = Noto_Sans_Tamil({
   variable: "--font-noto-tamil",
