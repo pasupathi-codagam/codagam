@@ -24,7 +24,7 @@ const ClientLogoCard = memo(
   ({ client, index }: { client: ClientLogoType; index: number }) => (
     <Card
       key={index}
-      className="group border-0 shadow-lg hover:shadow-2xl transition-all duration-700 hover:scale-105 bg-white/90 backdrop-blur-sm hover:bg-white relative overflow-hidden">
+      className="group border-0 transition-all duration-700 hover:scale-105 bg-white/90 backdrop-blur-sm hover:bg-white relative overflow-hidden">
       <CardContent className="p-8 lg:p-10 text-center">
         {/* Logo Image */}
         <div className="relative h-16 lg:h-20 flex items-center justify-center mb-4">
@@ -235,7 +235,7 @@ export default function ClientSection() {
               <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent rounded-3xl"></div>
 
               {/* Main Container Card */}
-              <Card className="relative bg-white/80 backdrop-blur-sm border-0 shadow-2xl rounded-3xl overflow-hidden">
+              <Card className="relative bg-white/80 backdrop-blur-sm border-0 rounded-3xl overflow-hidden">
                 <CardContent className="p-12 lg:p-20">
                   <div className="grid grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-16 items-center">
                     {clientLogos.map((client, index) => (
@@ -258,7 +258,7 @@ export default function ClientSection() {
 
           {/* Call to Action */}
           <div className="px-8 lg:px-16">
-            <Card className="max-w-4xl mx-auto border-0 shadow-2xl bg-gradient-to-br from-white to-gray-50/50 hover:shadow-3xl transition-all duration-700">
+            <Card className="max-w-4xl mx-auto border-0 bg-gradient-to-br from-white to-gray-50/50 transition-all duration-700">
               <CardContent className="p-12 lg:p-16 text-center">
                 <CardHeader className="pb-8">
                   <CardTitle className="text-3xl lg:text-4xl font-bold text-gray-900 mb-6">
@@ -273,7 +273,7 @@ export default function ClientSection() {
                   </p>
 
                   <Button
-                    className="px-12 py-4 text-lg font-semibold rounded-full transition-all duration-500 hover:scale-110 hover:shadow-2xl"
+                    className="px-12 py-4 text-lg font-semibold rounded-full transition-all duration-500 hover:scale-110"
                     onClick={handleRequestCallback}
                     variant="black"
                     size="lg"

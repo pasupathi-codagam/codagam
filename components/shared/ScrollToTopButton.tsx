@@ -33,7 +33,7 @@ const ScrollToTopButton: React.FC = () => {
         <Button
           onClick={scrollToTop}
           size="icon"
-          className="fixed bottom-14 md:bottom-12 right-4 rounded-full shadow-lg z-50"
+          className="fixed bottom-14 md:bottom-12 right-4 rounded-full z-50"
           aria-label="Scroll to top"
           title="Scroll to top"
           variant="black">

@@ -27,7 +27,7 @@ const ProductCard = memo(
       role="listitem">
       <div className="px-8 lg:px-16">
         <Card
-          className="h-full border-0 shadow-2xl bg-white hover:shadow-3xl transition-all duration-500 hover:scale-105 rounded-3xl overflow-hidden cursor-pointer group"
+          className="h-full border-0 bg-white transition-all duration-500 hover:scale-105 rounded-3xl overflow-hidden cursor-pointer group"
           onClick={() => onCardClick(item)}>
           <div className="grid lg:grid-cols-2 gap-0 items-stretch min-h-[600px]">
             {/* Content Section - Left Side */}

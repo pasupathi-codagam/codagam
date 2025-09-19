@@ -16,7 +16,7 @@ import { SectionWrapper } from "@/components/shared";
 // Memoized benefit card component
 const BenefitCard = memo(({ benefit }: { benefit: BenefitCardType }) => (
   <Card
-    className={`group border-0 shadow-lg hover:shadow-2xl transition-all duration-700 hover:scale-105 bg-gradient-to-br from-white to-${benefit.bgColor} hover:from-${benefit.color}-50 hover:to-white`}>
+    className={`group border-0 transition-all duration-700 hover:scale-105 bg-gradient-to-br from-white to-${benefit.bgColor} hover:from-${benefit.color}-50 hover:to-white`}>
     <CardContent className="p-8">
       <div className="flex items-start space-x-6">
         <div
@@ -215,7 +215,7 @@ export default function CareerSection() {
             </div>
 
             {/* Application Form */}
-            <Card className="border-0 shadow-2xl bg-gradient-to-br from-gray-50 to-blue-50/30 hover:shadow-3xl transition-all duration-700">
+            <Card className="border-0 bg-gradient-to-br from-gray-50 to-blue-50/30 transition-all duration-700">
               <CardContent className="p-8 lg:p-12">
                 <CardHeader className="text-center mb-8">
                   <CardTitle className="text-3xl font-bold text-gray-900 mb-4">
@@ -263,7 +263,7 @@ export default function CareerSection() {
                   </FormField>
 
                   <Button
-                    className="w-full h-14 text-lg font-semibold rounded-full transition-all duration-500 hover:scale-105 hover:shadow-2xl"
+                    className="w-full h-14 text-lg font-semibold rounded-full transition-all duration-500 hover:scale-105"
                     type="submit"
                     variant="black"
                     size="lg"

@@ -21,7 +21,7 @@ const ServiceCard = memo(({ item, index, currentIndex }: ServiceCardProps) => (
     role="listitem">
     <div className="grid lg:grid-cols-2 gap-8 items-stretch min-h-[600px] px-8 lg:px-16 ">
       {/* Content Card - Left Side */}
-      <Card className="order-2 lg:order-1 h-full border-0 shadow-2xl hover:shadow-3xl transition-all duration-500 hover:scale-105 rounded-3xl bg-white">
+      <Card className="order-2 lg:order-1 h-full border-0 transition-all duration-500 hover:scale-105 rounded-3xl bg-white">
         <CardHeader className="pb-6">
           <CardTitle className="text-4xl lg:text-5xl font-bold text-gray-900 leading-tight">
             {item.title}.
@@ -36,7 +36,7 @@ const ServiceCard = memo(({ item, index, currentIndex }: ServiceCardProps) => (
 
       {/* Image - Right Side */}
       <div className="order-1 lg:order-2">
-        <div className="relative h-full min-h-[600px] rounded-3xl overflow-hidden shadow-2xl hover:shadow-3xl transition-all duration-500 hover:scale-105">
+        <div className="relative h-full min-h-[600px] rounded-3xl overflow-hidden transition-all duration-500 hover:scale-105">
           <Image
             src={item.image}
             alt={item.alt}

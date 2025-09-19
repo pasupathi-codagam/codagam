@@ -60,7 +60,7 @@ const FloatingIcon = memo(
 
     return (
       <div
-        className="absolute w-12 h-12 bg-white/80 backdrop-blur-sm rounded-xl flex items-center justify-center animate-float shadow-lg"
+        className="absolute w-12 h-12 bg-white/80 backdrop-blur-sm rounded-xl flex items-center justify-center animate-float"
         style={style}>
         <Icon className={`w-6 h-6 ${color}`} />
       </div>
@@ -83,7 +83,7 @@ const FeatureCard = memo(
         <div className="space-y-6">
           <div className="flex items-center space-x-4">
             <div
-              className={`w-16 h-16 bg-gradient-to-r ${feature.color} rounded-2xl flex items-center justify-center text-white shadow-2xl group-hover:scale-110 transition-all duration-500`}>
+              className={`w-16 h-16 bg-gradient-to-r ${feature.color} rounded-2xl flex items-center justify-center text-white group-hover:scale-110 transition-all duration-500`}>
               {feature.icon}
             </div>
             <span className="text-sm font-medium text-gray-500 uppercase tracking-wider bg-gray-100 px-3 py-1 rounded-full">
@@ -451,7 +451,7 @@ const AboutSection = memo(() => {
                 {/* Stats */}
                 <div className="flex justify-center items-center space-x-20 mb-20">
                   <div className="text-center group flex flex-col items-center">
-                    <div className="w-20 h-20 bg-gradient-to-r from-blue-400 to-cyan-400 rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-all duration-500 shadow-2xl">
+                    <div className="w-20 h-20 bg-gradient-to-r from-blue-400 to-cyan-400 rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-all duration-500">
                       <div className="text-2xl font-bold text-white leading-none">
                         500+
                       </div>
@@ -462,7 +462,7 @@ const AboutSection = memo(() => {
                   </div>
 
                   <div className="text-center group flex flex-col items-center">
-                    <div className="w-20 h-20 bg-gradient-to-r from-purple-400 to-pink-400 rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-all duration-500 shadow-2xl">
+                    <div className="w-20 h-20 bg-gradient-to-r from-purple-400 to-pink-400 rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-all duration-500">
                       <div className="text-2xl font-bold text-white leading-none">
                         50+
                       </div>
@@ -473,7 +473,7 @@ const AboutSection = memo(() => {
                   </div>
 
                   <div className="text-center group flex flex-col items-center">
-                    <div className="w-20 h-20 bg-gradient-to-r from-green-400 to-emerald-400 rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-all duration-500 shadow-2xl">
+                    <div className="w-20 h-20 bg-gradient-to-r from-green-400 to-emerald-400 rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-all duration-500">
                       <div className="text-2xl font-bold text-white leading-none">
                         4+
                       </div>
@@ -510,7 +510,7 @@ const AboutSection = memo(() => {
                     onClick={handleContactClick}
                     variant="black"
                     size="lg"
-                    className="px-10 py-5 rounded-full font-medium transition-all duration-300 transform hover:scale-105 shadow-2xl"
+                    className="px-10 py-5 rounded-full font-medium transition-all duration-300 transform hover:scale-105"
                     aria-label="Start your project with Codagam">
                     Start your project
                   </Button>

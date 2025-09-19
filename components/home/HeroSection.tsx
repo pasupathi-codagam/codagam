@@ -68,7 +68,7 @@ const HeroSection: React.FC<HeroSectionProps> = memo(() => {
                 loop
                 muted
                 playsInline
-                className="w-full h-[500px] object-cover rounded-2xl shadow-2xl"
+                className="w-full h-[500px] object-cover rounded-2xl"
                 aria-label="Codagam team and technology solutions"
                 preload="metadata">
                 <track kind="captions" />
