@@ -354,7 +354,7 @@ export default function ProductsSection() {
               </div>
 
               {/* Navigation Buttons - Bottom Right */}
-              <div className="absolute right-8 flex gap-6 z-10">
+              <div className="absolute right-8 bottom-8 flex gap-6 z-10">
                 <NavigationButton
                   direction="prev"
                   onClick={handlePrevClick}
