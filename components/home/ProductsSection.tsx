@@ -333,7 +333,7 @@ export default function ProductsSection() {
             <div className="relative">
               <div
                 ref={scrollContainerRef}
-                className="overflow-x-auto scrollbar-hide scroll-smooth"
+                className="overflow-x-auto scrollbar-hide scroll-smooth bg-gray-200 p-6"
                 style={{ scrollSnapType: "x mandatory" }}
                 role="region"
                 aria-label="Products gallery">

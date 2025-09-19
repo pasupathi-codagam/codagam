@@ -17,24 +17,22 @@ import {
 const ServiceCard = memo(({ item, index, currentIndex }: ServiceCardProps) => (
   <div
     key={item.id}
-    className="flex-shrink-0 w-full max-w-5xl scroll-snap-start"
+    className="flex-shrink-0 w-full max-w-5xl scroll-snap-start "
     role="listitem">
-    <div className="grid lg:grid-cols-2 gap-8 items-stretch min-h-[600px] px-8 lg:px-16">
+    <div className="grid lg:grid-cols-2 gap-8 items-stretch min-h-[600px] px-8 lg:px-16 ">
       {/* Content Card - Left Side */}
-      <div className="order-2 lg:order-1">
-        <Card className="h-full border-0 shadow-2xl bg-gradient-to-br from-white to-gray-50 hover:shadow-3xl transition-all duration-500 hover:scale-105 rounded-3xl">
-          <CardHeader className="pb-6">
-            <CardTitle className="text-4xl lg:text-5xl font-bold text-gray-900 leading-tight">
-              {item.title}.
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="flex-1">
-            <p className="text-lg text-gray-600 leading-relaxed">
-              {item.description}
-            </p>
-          </CardContent>
-        </Card>
-      </div>
+      <Card className="order-2 lg:order-1 h-full border-0 shadow-2xl hover:shadow-3xl transition-all duration-500 hover:scale-105 rounded-3xl bg-white">
+        <CardHeader className="pb-6">
+          <CardTitle className="text-4xl lg:text-5xl font-bold text-gray-900 leading-tight">
+            {item.title}.
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="flex-1">
+          <p className="text-lg text-gray-600 leading-relaxed">
+            {item.description}
+          </p>
+        </CardContent>
+      </Card>
 
       {/* Image - Right Side */}
       <div className="order-1 lg:order-2">
@@ -155,7 +153,7 @@ export default function ServicesSection() {
   return (
     <SectionWrapper
       id="services-section"
-      className="min-h-screen flex items-center"
+      className="min-h-screen flex items-center "
       role="main"
       aria-label="Services section">
       <div className="w-full">
@@ -172,7 +170,7 @@ export default function ServicesSection() {
           <div className="relative">
             <div
               ref={scrollContainerRef}
-              className="overflow-x-auto scrollbar-hide scroll-smooth"
+              className="overflow-x-auto scrollbar-hide scroll-smooth bg-gray-200 p-6"
               style={{ scrollSnapType: "x mandatory" }}
               role="region"
               aria-label="Services gallery">
@@ -192,7 +190,7 @@ export default function ServicesSection() {
             </div>
 
             {/* Navigation Buttons - Bottom Right */}
-            <div className="absolute right-8 flex gap-6 z-10">
+            <div className="absolute right-8  flex gap-6 z-10">
               <NavigationButton
                 direction="prev"
                 onClick={handlePrevClick}
