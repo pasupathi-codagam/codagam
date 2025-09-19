@@ -62,7 +62,6 @@ const FloatingIcon = memo(
 
 FloatingIcon.displayName = "FloatingIcon";
 
-
 // Memoized feature card component
 const FeatureCard = memo(
   ({
