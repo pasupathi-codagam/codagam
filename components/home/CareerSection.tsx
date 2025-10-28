@@ -11,85 +11,67 @@ import {
   FormSubmitEvent,
   FormChangeEvent,
 } from "@/models/interfaces";
+import {
+  ChevronDown,
+  ChevronUp,
+  Send,
+  User,
+  Mail,
+  FileText,
+} from "lucide-react";
 import { SectionWrapper } from "@/components/shared";
 
-// Memoized benefit card component
-const BenefitCard = memo(({ benefit }: { benefit: BenefitCardType }) => (
-  <Card
-    className={`group border-0 transition-all duration-700 hover:scale-105 bg-gradient-to-br from-white to-${benefit.bgColor} hover:from-${benefit.color}-50 hover:to-white`}>
-    <CardContent className="p-8">
-      <div className="flex items-start space-x-6">
-        <div
-          className={`w-12 h-12 bg-${benefit.color}-100 rounded-2xl flex items-center justify-center group-hover:bg-${benefit.color}-600 transition-all duration-500 group-hover:scale-110`}>
+// Memoized benefit card component with collapsible
+const BenefitCard = memo(
+  ({
+    benefit,
+    isOpen,
+    onToggle,
+  }: {
+    benefit: BenefitCardType;
+    isOpen: boolean;
+    onToggle: () => void;
+  }) => (
+    <div className="space-y-4">
+      <Button
+        variant="outline"
+        className={`w-full h-16 text-lg font-semibold rounded-2xl border-2 transition-all duration-300 group ${
+          isOpen
+            ? "border-blue-500 bg-blue-50"
+            : "border-gray-200 hover:border-blue-500 hover:bg-blue-50"
+        }`}
+        onClick={onToggle}
+        aria-label={`Toggle ${benefit.title} details`}>
+        <div className="flex items-center justify-center space-x-4">
           <div
-            className={`w-6 h-6 bg-${benefit.color}-600 rounded-full group-hover:bg-white transition-all duration-500`}></div>
+            className={`w-8 h-8 bg-${benefit.color}-100 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300`}>
+            <div
+              className={`w-4 h-4 bg-${benefit.color}-600 rounded-full`}></div>
+          </div>
+          <span className="text-gray-900">{benefit.title}</span>
+          {isOpen ? (
+            <ChevronUp className="w-6 h-6 text-gray-500 group-hover:text-blue-600 transition-colors duration-300" />
+          ) : (
+            <ChevronDown className="w-6 h-6 text-gray-500 group-hover:text-blue-600 transition-colors duration-300" />
+          )}
         </div>
-        <div className="flex-1">
-          <CardTitle
-            className={`text-2xl font-bold text-gray-900 mb-3 group-hover:text-${benefit.color}-600 transition-all duration-500`}>
-            {benefit.title}
-          </CardTitle>
-          <p className="text-lg text-gray-600 leading-relaxed group-hover:text-gray-700 transition-colors duration-300">
+      </Button>
+
+      <div
+        className={`overflow-hidden transition-all duration-500 ease-in-out ${
+          isOpen ? "max-h-[200px] opacity-100" : "max-h-0 opacity-0"
+        }`}>
+        <div className="bg-white border-2 border-gray-100 rounded-2xl p-6 shadow-sm">
+          <p className="text-lg text-gray-600 leading-relaxed">
             {benefit.description}
           </p>
         </div>
       </div>
-    </CardContent>
-  </Card>
-));
-
-BenefitCard.displayName = "BenefitCard";
-
-// Memoized form field component
-const FormField = memo(
-  ({
-    id,
-    name,
-    type,
-    value,
-    onChange,
-    placeholder,
-    required,
-    accept,
-    children,
-  }: {
-    id: string;
-    name: string;
-    type: string;
-    value: string | File | null;
-    onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-    placeholder: string;
-    required?: boolean;
-    accept?: string;
-    children?: React.ReactNode;
-  }) => (
-    <div className="space-y-3">
-      <Label htmlFor={id} className="text-base font-semibold text-gray-900">
-        {name}
-      </Label>
-      <div className="relative">
-        <Input
-          id={id}
-          name={id}
-          type={type}
-          value={typeof value === "string" ? value : ""}
-          onChange={onChange}
-          placeholder={placeholder}
-          className={`h-14 text-base border-gray-200 focus:border-blue-500 focus:ring-blue-500 transition-all duration-300 hover:border-blue-300 ${
-            type === "file"
-              ? "file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
-              : ""
-          }`}
-          accept={accept}
-          required={required}
-        />
-      </div>
-      {children}
     </div>
   )
 );
 
-FormField.displayName = "FormField";
+BenefitCard.displayName = "BenefitCard";
 
 export default function CareerSection() {
   const [formData, setFormData] = useState<FormDataType>({
@@ -99,6 +81,8 @@ export default function CareerSection() {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitMessage, setSubmitMessage] = useState("");
+  const [isOpen, setIsOpen] = useState(false);
+  const [openBenefit, setOpenBenefit] = useState<string | null>(null);
 
   // Memoized benefits data
   const benefits = useMemo(
@@ -207,88 +191,145 @@ export default function CareerSection() {
                 Why work with us?
               </h3>
 
-              <div className="space-y-8">
+              <div className="space-y-6">
                 {benefits.map((benefit) => (
-                  <BenefitCard key={benefit.id} benefit={benefit} />
+                  <BenefitCard
+                    key={benefit.id}
+                    benefit={benefit}
+                    isOpen={openBenefit === benefit.id}
+                    onToggle={() =>
+                      setOpenBenefit(
+                        openBenefit === benefit.id ? null : benefit.id
+                      )
+                    }
+                  />
                 ))}
               </div>
             </div>
 
-            {/* Application Form */}
-            <Card className="border-0 bg-gradient-to-br from-gray-50 to-blue-50/30 transition-all duration-700">
-              <CardContent className="p-8 lg:p-12">
-                <CardHeader className="text-center mb-8">
-                  <CardTitle className="text-3xl font-bold text-gray-900 mb-4">
-                    Ready to join us?
-                  </CardTitle>
-                  <p className="text-gray-600 text-lg">
-                    Send us your application and let&apos;s start the
-                    conversation.
-                  </p>
-                </CardHeader>
+            {/* Application Form - Collapsible */}
+            <div className="space-y-6">
+              <div className="text-center">
+                <h3 className="text-4xl lg:text-5xl font-bold text-gray-900 leading-tight mb-6">
+                  Ready to join us?
+                </h3>
+                <p className="text-xl text-gray-600 leading-relaxed mb-8">
+                  Send us your application and let&apos;s start the
+                  conversation.
+                </p>
+              </div>
 
-                <form onSubmit={handleSubmit} className="space-y-6">
-                  <FormField
-                    id="name"
-                    name="Full Name"
-                    type="text"
-                    value={formData.name}
-                    onChange={handleChange}
-                    placeholder="Enter your full name"
-                    required
-                  />
+              <div className="space-y-6">
+                <Button
+                  variant="outline"
+                  className="w-full h-16 text-lg font-semibold rounded-2xl border-2 border-gray-200 hover:border-blue-500 hover:bg-blue-50 transition-all duration-300 group"
+                  onClick={() => setIsOpen(!isOpen)}
+                  aria-label="Toggle application form">
+                  <div className="flex items-center justify-center space-x-4">
+                    <Send className="w-6 h-6 text-blue-600 group-hover:scale-110 transition-transform duration-300" />
+                    <span>Apply Now</span>
+                    {isOpen ? (
+                      <ChevronUp className="w-6 h-6 text-gray-500 group-hover:text-blue-600 transition-colors duration-300" />
+                    ) : (
+                      <ChevronDown className="w-6 h-6 text-gray-500 group-hover:text-blue-600 transition-colors duration-300" />
+                    )}
+                  </div>
+                </Button>
 
-                  <FormField
-                    id="email"
-                    name="Email Address"
-                    type="email"
-                    value={formData.email}
-                    onChange={handleChange}
-                    placeholder="Enter your email address"
-                    required
-                  />
+                <div
+                  className={`overflow-hidden transition-all duration-500 ease-in-out ${
+                    isOpen ? "max-h-[800px] opacity-100" : "max-h-0 opacity-0"
+                  }`}>
+                  <div className="bg-white border-2 border-gray-100 rounded-2xl p-8 shadow-sm">
+                    <form onSubmit={handleSubmit} className="space-y-6">
+                      <div className="space-y-3">
+                        <Label
+                          htmlFor="name"
+                          className="text-base font-semibold text-gray-900 flex items-center space-x-2">
+                          <User className="w-5 h-5 text-blue-600" />
+                          <span>Full Name</span>
+                        </Label>
+                        <Input
+                          id="name"
+                          name="name"
+                          type="text"
+                          value={formData.name}
+                          onChange={handleChange}
+                          placeholder="Enter your full name"
+                          className="h-14 text-base border-gray-200 focus:border-blue-500 focus:ring-blue-500 transition-all duration-300 hover:border-blue-300 rounded-xl"
+                          required
+                        />
+                      </div>
 
-                  <FormField
-                    id="resume"
-                    name="Resume"
-                    type="file"
-                    value={formData.resume}
-                    onChange={handleChange}
-                    placeholder=""
-                    accept=".pdf,.doc,.docx"
-                    required>
-                    <p className="text-sm text-gray-500">
-                      PDF, DOC, or DOCX files up to 10MB
-                    </p>
-                  </FormField>
+                      <div className="space-y-3">
+                        <Label
+                          htmlFor="email"
+                          className="text-base font-semibold text-gray-900 flex items-center space-x-2">
+                          <Mail className="w-5 h-5 text-blue-600" />
+                          <span>Email Address</span>
+                        </Label>
+                        <Input
+                          id="email"
+                          name="email"
+                          type="email"
+                          value={formData.email}
+                          onChange={handleChange}
+                          placeholder="Enter your email address"
+                          className="h-14 text-base border-gray-200 focus:border-blue-500 focus:ring-blue-500 transition-all duration-300 hover:border-blue-300 rounded-xl"
+                          required
+                        />
+                      </div>
 
-                  <Button
-                    className="w-full h-14 text-lg font-semibold rounded-full transition-all duration-500 hover:scale-105"
-                    type="submit"
-                    variant="black"
-                    size="lg"
-                    disabled={isSubmitting}
-                    aria-label={
-                      isSubmitting
-                        ? "Submitting application"
-                        : "Submit application"
-                    }>
-                    {isSubmitting ? "Submitting..." : "Submit Application"}
-                  </Button>
+                      <div className="space-y-3">
+                        <Label
+                          htmlFor="resume"
+                          className="text-base font-semibold text-gray-900 flex items-center space-x-2">
+                          <FileText className="w-5 h-5 text-blue-600" />
+                          <span>Resume</span>
+                        </Label>
+                        <Input
+                          id="resume"
+                          name="resume"
+                          type="file"
+                          onChange={handleChange}
+                          accept=".pdf,.doc,.docx"
+                          className="h-14 text-base border-gray-200 focus:border-blue-500 focus:ring-blue-500 transition-all duration-300 hover:border-blue-300 rounded-xl file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
+                          required
+                        />
+                        <p className="text-sm text-gray-500">
+                          PDF, DOC, or DOCX files up to 10MB
+                        </p>
+                      </div>
 
-                  {submitMessage && (
-                    <div
-                      className={`p-4 rounded-2xl text-base ${
-                        submitMessage.includes("error")
-                          ? "bg-red-50 text-red-700 border border-red-200"
-                          : "bg-green-50 text-green-700 border border-green-200"
-                      }`}>
-                      {submitMessage}
-                    </div>
-                  )}
-                </form>
-              </CardContent>
-            </Card>
+                      <Button
+                        className="w-full h-14 text-lg font-semibold rounded-xl transition-all duration-500 hover:scale-105"
+                        type="submit"
+                        variant="black"
+                        size="lg"
+                        disabled={isSubmitting}
+                        aria-label={
+                          isSubmitting
+                            ? "Submitting application"
+                            : "Submit application"
+                        }>
+                        {isSubmitting ? "Submitting..." : "Submit Application"}
+                      </Button>
+
+                      {submitMessage && (
+                        <div
+                          className={`p-4 rounded-xl text-base ${
+                            submitMessage.includes("error")
+                              ? "bg-red-50 text-red-700 border border-red-200"
+                              : "bg-green-50 text-green-700 border border-green-200"
+                          }`}>
+                          {submitMessage}
+                        </div>
+                      )}
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
