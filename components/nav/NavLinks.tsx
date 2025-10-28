@@ -1,12 +1,14 @@
 "use client";
 
-import React from "react";
+import React, { useState, useEffect, useMemo } from "react";
 
 interface NavLinksProps {
   onLinkClick?: () => void;
 }
 
 const NavLinks: React.FC<NavLinksProps> = ({ onLinkClick }) => {
+  const [activeSection, setActiveSection] = useState("home");
+
   const navItems = [
     { key: "home" as const, label: "Home" },
     { key: "about" as const, label: "About" },
@@ -16,31 +18,69 @@ const NavLinks: React.FC<NavLinksProps> = ({ onLinkClick }) => {
     { key: "contact" as const, label: "Contact" },
   ];
 
-  const sections = {
-    home: "hero-section",
-    about: "about-section",
-    services: "services-section",
-    products: "products-section",
-    careers: "career-section",
-    contact: "client-section",
-  };
+  const sections = useMemo(
+    () => ({
+      home: "hero-section",
+      about: "about-section",
+      services: "services-section",
+      products: "products-section",
+      careers: "career-section",
+      contact: "footer-section",
+    }),
+    []
+  );
+
+  // Modern scroll spy for active section detection
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollPosition = window.scrollY + 100;
+
+      for (const [key, sectionId] of Object.entries(sections)) {
+        const element = document.getElementById(sectionId);
+        if (element) {
+          const { offsetTop, offsetHeight } = element;
+          if (
+            scrollPosition >= offsetTop &&
+            scrollPosition < offsetTop + offsetHeight
+          ) {
+            setActiveSection(key);
+            break;
+          }
+        }
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [sections]);
 
   const handleNavClick = (sectionKey: keyof typeof sections) => {
     const elementId = sections[sectionKey];
     const element = document.getElementById(elementId);
+
     if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
+      // Modern scroll method with offset for navbar
+      const offsetTop = element.offsetTop - 80; // Account for navbar height
+      window.scrollTo({
+        top: offsetTop,
+        behavior: "smooth",
+      });
     }
+
     onLinkClick?.(); // Close mobile menu if callback provided
   };
 
   return (
-    <div className="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-4 md:space-x-6 lg:space-x-8">
+    <div className="w-full flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-1 md:space-x-2 lg:space-x-3">
       {navItems.map((item) => (
         <button
           key={item.key}
           onClick={() => handleNavClick(item.key)}
-          className="px-3 py-2 text-sm font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50 rounded-md transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
+          className={`relative  px-4 py-2 text-md font-medium transition-all duration-300 focus:outline-none ${
+            activeSection === item.key
+              ? "text-blue-900"
+              : "text-gray-700 hover:text-blue-900"
+          }`}>
           {item.label}
         </button>
       ))}

@@ -1,36 +1,9 @@
 import type { Metadata, Viewport } from "next";
-import { Noto_Sans_Tamil, Livvic, Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
 import ScrollToTopButton from "@/components/shared/ScrollToTopButton";
 import { Footer } from "@/components/nav/Footer";
 import Navbar from "@/components/nav/Navbar";
-
-// Define Noto Sans Tamil as primary font
-const notoSansTamil = Noto_Sans_Tamil({
-  variable: "--font-noto-tamil",
-  subsets: ["tamil", "latin"],
-  weight: ["400", "500", "700"],
-  display: "swap",
-});
-
-// Define Livvic as secondary font
-const livvic = Livvic({
-  variable: "--font-livvic",
-  subsets: ["latin"],
-  weight: ["400", "500", "700"],
-  display: "swap",
-});
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
 
 export const viewport: Viewport = {
   width: "device-width",
@@ -80,8 +53,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`min-h-screen bg-white ${notoSansTamil.variable} ${livvic.variable} ${geistSans.variable} ${geistMono.variable} antialiased`}>
+      <body className={`min-h-screen bg-white font-sans antialiased`}>
         <Navbar />
         <main className="flex-1">{children}</main>
         <ScrollToTopButton />

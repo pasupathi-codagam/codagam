@@ -37,7 +37,6 @@ export interface Feature {
   icon: ReactNode;
   color: string;
   bgColor: string;
-  stats: { number: string; label: string };
 }
 
 export interface FloatingIcon {

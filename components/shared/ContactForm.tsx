@@ -2,17 +2,40 @@
 import React, { useState, useCallback } from "react";
 import validateEmail from "@/helper/validateEmail";
 import { Button } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 
 interface ContactFormProps {
   className?: string;
   showTitle?: boolean;
   onSuccess?: () => void;
+  asDialog?: boolean;
+  triggerText?: string;
+  triggerVariant?:
+    | "default"
+    | "destructive"
+    | "outline"
+    | "secondary"
+    | "ghost"
+    | "link"
+    | "black";
+  triggerSize?: "default" | "sm" | "lg" | "icon";
 }
 
 export function ContactForm({
   className = "",
   showTitle = true,
   onSuccess,
+  asDialog = false,
+  triggerText = "Get in Touch",
+  triggerVariant = "black",
+  triggerSize = "default",
 }: ContactFormProps) {
   const [formData, setFormData] = useState({
     name: "",
@@ -23,6 +46,7 @@ export function ContactForm({
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitMessage, setSubmitMessage] = useState("");
   const [emailError, setEmailError] = useState("");
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -63,6 +87,9 @@ export function ContactForm({
         if (response.ok) {
           setSubmitMessage("Message sent successfully!");
           setFormData({ name: "", email: "", phone: "", message: "" });
+          if (asDialog) {
+            setIsDialogOpen(false);
+          }
           if (onSuccess) onSuccess();
         } else {
           setSubmitMessage("Failed to send message. Please try again.");
@@ -73,10 +100,11 @@ export function ContactForm({
         setIsSubmitting(false);
       }
     },
-    [formData, onSuccess]
+    [formData, onSuccess, asDialog]
   );
 
-  return (
+  // Form content component
+  const FormContent = () => (
     <div className={className}>
       {showTitle && (
         <h4 className="font-semibold mb-4 text-black flex items-center">
@@ -133,4 +161,34 @@ export function ContactForm({
       </form>
     </div>
   );
+
+  // If asDialog is true, return dialog version
+  if (asDialog) {
+    return (
+      <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+        <DialogTrigger asChild>
+          <Button variant={triggerVariant} size={triggerSize}>
+            {triggerText}
+          </Button>
+        </DialogTrigger>
+        <DialogContent className="max-w-lg p-4 sm:p-6">
+          <DialogHeader>
+            <DialogTitle className="text-lg sm:text-xl text-black">
+              Get in Touch
+            </DialogTitle>
+            <DialogDescription className="text-sm sm:text-base">
+              We&apos;d love to hear from you. Send us a message and we&apos;ll
+              respond as soon as possible.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="mt-4 sm:mt-6">
+            <FormContent />
+          </div>
+        </DialogContent>
+      </Dialog>
+    );
+  }
+
+  // Return inline version
+  return <FormContent />;
 }
