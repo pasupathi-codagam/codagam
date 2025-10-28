@@ -6,6 +6,11 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@/components/ui/collapsible";
+import {
   FormData as FormDataType,
   BenefitCard as BenefitCardType,
   FormSubmitEvent,
@@ -219,116 +224,118 @@ export default function CareerSection() {
                 </p>
               </div>
 
-              <div className="space-y-6">
-                <Button
-                  variant="outline"
-                  className="w-full h-16 text-lg font-semibold rounded-2xl border-2 border-gray-200 hover:border-blue-500 hover:bg-blue-50 transition-all duration-300 group"
-                  onClick={() => setIsOpen(!isOpen)}
-                  aria-label="Toggle application form">
-                  <div className="flex items-center justify-center space-x-4">
-                    <Send className="w-6 h-6 text-blue-600 group-hover:scale-110 transition-transform duration-300" />
-                    <span>Apply Now</span>
-                    {isOpen ? (
-                      <ChevronUp className="w-6 h-6 text-gray-500 group-hover:text-blue-600 transition-colors duration-300" />
-                    ) : (
-                      <ChevronDown className="w-6 h-6 text-gray-500 group-hover:text-blue-600 transition-colors duration-300" />
-                    )}
-                  </div>
-                </Button>
-
-                <div
-                  className={`overflow-hidden transition-all duration-500 ease-in-out ${
-                    isOpen ? "max-h-[800px] opacity-100" : "max-h-0 opacity-0"
-                  }`}>
-                  <div className="bg-white border-2 border-gray-100 rounded-2xl p-8 shadow-sm">
-                    <form onSubmit={handleSubmit} className="space-y-6">
-                      <div className="space-y-3">
-                        <Label
-                          htmlFor="name"
-                          className="text-base font-semibold text-gray-900 flex items-center space-x-2">
-                          <User className="w-5 h-5 text-blue-600" />
-                          <span>Full Name</span>
-                        </Label>
-                        <Input
-                          id="name"
-                          name="name"
-                          type="text"
-                          value={formData.name}
-                          onChange={handleChange}
-                          placeholder="Enter your full name"
-                          className="h-14 text-base border-gray-200 focus:border-blue-500 focus:ring-blue-500 transition-all duration-300 hover:border-blue-300 rounded-xl"
-                          required
-                        />
+              <Collapsible open={isOpen} onOpenChange={setIsOpen}>
+                <div className="space-y-6">
+                  <CollapsibleTrigger asChild>
+                    <Button
+                      variant="outline"
+                      className="w-full h-16 text-lg font-semibold rounded-2xl border-2 border-gray-200 hover:border-blue-500 hover:bg-blue-50 transition-all duration-300 group"
+                      aria-label="Toggle application form">
+                      <div className="flex items-center justify-center space-x-4">
+                        <Send className="w-6 h-6 text-blue-600 group-hover:scale-110 transition-transform duration-300" />
+                        <span>Apply Now</span>
+                        {isOpen ? (
+                          <ChevronUp className="w-6 h-6 text-gray-500 group-hover:text-blue-600 transition-colors duration-300" />
+                        ) : (
+                          <ChevronDown className="w-6 h-6 text-gray-500 group-hover:text-blue-600 transition-colors duration-300" />
+                        )}
                       </div>
+                    </Button>
+                  </CollapsibleTrigger>
 
-                      <div className="space-y-3">
-                        <Label
-                          htmlFor="email"
-                          className="text-base font-semibold text-gray-900 flex items-center space-x-2">
-                          <Mail className="w-5 h-5 text-blue-600" />
-                          <span>Email Address</span>
-                        </Label>
-                        <Input
-                          id="email"
-                          name="email"
-                          type="email"
-                          value={formData.email}
-                          onChange={handleChange}
-                          placeholder="Enter your email address"
-                          className="h-14 text-base border-gray-200 focus:border-blue-500 focus:ring-blue-500 transition-all duration-300 hover:border-blue-300 rounded-xl"
-                          required
-                        />
-                      </div>
-
-                      <div className="space-y-3">
-                        <Label
-                          htmlFor="resume"
-                          className="text-base font-semibold text-gray-900 flex items-center space-x-2">
-                          <FileText className="w-5 h-5 text-blue-600" />
-                          <span>Resume</span>
-                        </Label>
-                        <Input
-                          id="resume"
-                          name="resume"
-                          type="file"
-                          onChange={handleChange}
-                          accept=".pdf,.doc,.docx"
-                          className="h-14 text-base border-gray-200 focus:border-blue-500 focus:ring-blue-500 transition-all duration-300 hover:border-blue-300 rounded-xl file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
-                          required
-                        />
-                        <p className="text-sm text-gray-500">
-                          PDF, DOC, or DOCX files up to 10MB
-                        </p>
-                      </div>
-
-                      <Button
-                        className="w-full h-14 text-lg font-semibold rounded-xl transition-all duration-500 hover:scale-105"
-                        type="submit"
-                        variant="black"
-                        size="lg"
-                        disabled={isSubmitting}
-                        aria-label={
-                          isSubmitting
-                            ? "Submitting application"
-                            : "Submit application"
-                        }>
-                        {isSubmitting ? "Submitting..." : "Submit Application"}
-                      </Button>
-
-                      {submitMessage && (
-                        <div
-                          className={`p-4 rounded-xl text-base ${
-                            submitMessage.includes("error")
-                              ? "bg-red-50 text-red-700 border border-red-200"
-                              : "bg-green-50 text-green-700 border border-green-200"
-                          }`}>
-                          {submitMessage}
+                  <CollapsibleContent className="space-y-6">
+                    <div className="bg-white border-2 border-gray-100 rounded-2xl p-8 shadow-sm">
+                      <form onSubmit={handleSubmit} className="space-y-6">
+                        <div className="space-y-3">
+                          <Label
+                            htmlFor="name"
+                            className="text-base font-semibold text-gray-900 flex items-center space-x-2">
+                            <User className="w-5 h-5 text-blue-600" />
+                            <span>Full Name</span>
+                          </Label>
+                          <Input
+                            id="name"
+                            name="name"
+                            type="text"
+                            value={formData.name}
+                            onChange={handleChange}
+                            placeholder="Enter your full name"
+                            className="h-14 text-base border-gray-200 focus:border-blue-500 focus:ring-blue-500 transition-all duration-300 hover:border-blue-300 rounded-xl"
+                            required
+                          />
                         </div>
-                      )}
-                    </form>
-                  </div>
+
+                        <div className="space-y-3">
+                          <Label
+                            htmlFor="email"
+                            className="text-base font-semibold text-gray-900 flex items-center space-x-2">
+                            <Mail className="w-5 h-5 text-blue-600" />
+                            <span>Email Address</span>
+                          </Label>
+                          <Input
+                            id="email"
+                            name="email"
+                            type="email"
+                            value={formData.email}
+                            onChange={handleChange}
+                            placeholder="Enter your email address"
+                            className="h-14 text-base border-gray-200 focus:border-blue-500 focus:ring-blue-500 transition-all duration-300 hover:border-blue-300 rounded-xl"
+                            required
+                          />
+                        </div>
+
+                        <div className="space-y-3">
+                          <Label
+                            htmlFor="resume"
+                            className="text-base font-semibold text-gray-900 flex items-center space-x-2">
+                            <FileText className="w-5 h-5 text-blue-600" />
+                            <span>Resume</span>
+                          </Label>
+                          <Input
+                            id="resume"
+                            name="resume"
+                            type="file"
+                            onChange={handleChange}
+                            accept=".pdf,.doc,.docx"
+                            className="h-14 text-base border-gray-200 focus:border-blue-500 focus:ring-blue-500 transition-all duration-300 hover:border-blue-300 rounded-xl file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
+                            required
+                          />
+                          <p className="text-sm text-gray-500">
+                            PDF, DOC, or DOCX files up to 10MB
+                          </p>
+                        </div>
+
+                        <Button
+                          className="w-full h-14 text-lg font-semibold rounded-xl transition-all duration-500 hover:scale-105"
+                          type="submit"
+                          variant="black"
+                          size="lg"
+                          disabled={isSubmitting}
+                          aria-label={
+                            isSubmitting
+                              ? "Submitting application"
+                              : "Submit application"
+                          }>
+                          {isSubmitting
+                            ? "Submitting..."
+                            : "Submit Application"}
+                        </Button>
+
+                        {submitMessage && (
+                          <div
+                            className={`p-4 rounded-xl text-base ${
+                              submitMessage.includes("error")
+                                ? "bg-red-50 text-red-700 border border-red-200"
+                                : "bg-green-50 text-green-700 border border-green-200"
+                            }`}>
+                            {submitMessage}
+                          </div>
+                        )}
+                      </form>
+                    </div>
+                  </CollapsibleContent>
                 </div>
-              </div>
+              </Collapsible>
             </div>
           </div>
         </div>
