@@ -17,35 +17,45 @@ import {
 const ServiceCard = memo(({ item, index, currentIndex }: ServiceCardProps) => (
   <div
     key={item.id}
-    className="flex-shrink-0 w-full max-w-5xl scroll-snap-start "
+    className="flex-shrink-0 w-full max-w-5xl scroll-snap-start"
     role="listitem">
-    <div className="grid lg:grid-cols-2 gap-8 items-stretch min-h-[600px] px-8 lg:px-16 ">
-      {/* Content Card - Left Side */}
-      <Card className="order-2 lg:order-1 h-full border-0 transition-all duration-500 hover:scale-105 rounded-3xl bg-white">
-        <CardHeader className="pb-6">
-          <CardTitle className="text-4xl lg:text-5xl font-bold text-gray-900 leading-tight">
-            {item.title}.
-          </CardTitle>
-        </CardHeader>
-        <CardContent className="flex-1">
-          <p className="text-lg text-gray-600 leading-relaxed">
-            {item.description}
-          </p>
-        </CardContent>
-      </Card>
+    <div className="px-8 lg:px-16">
+      <div className="grid lg:grid-cols-2 gap-0 items-stretch min-h-[600px]">
+        {/* Image Background - Left Side */}
+        <div className="order-1 lg:order-1">
+          <div className="relative h-full min-h-[600px] overflow-hidden rounded-l-3xl">
+            <Image
+              src={item.image}
+              alt={item.alt}
+              fill
+              className="object-cover transition-transform duration-700 hover:scale-110"
+              priority={index === currentIndex}
+              sizes="(max-width: 1024px) 100vw, 50vw"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent"></div>
+          </div>
+        </div>
 
-      {/* Image - Right Side */}
-      <div className="order-1 lg:order-2">
-        <div className="relative h-full min-h-[600px] rounded-3xl overflow-hidden transition-all duration-500 hover:scale-105">
-          <Image
-            src={item.image}
-            alt={item.alt}
-            fill
-            className="object-cover transition-transform duration-700 hover:scale-110"
-            priority={index === currentIndex}
-            sizes="(max-width: 1024px) 100vw, 50vw"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent"></div>
+        {/* Content Card - Right Side */}
+        <div className="order-2 lg:order-2">
+          <Card
+            className="group relative overflow-hidden border-0 shadow-lg hover:shadow-2xl transition-all duration-500 bg-white h-full min-h-[600px]"
+            style={{ borderRadius: "0 1.5rem 1.5rem 0" }}>
+            <div className="p-8 lg:p-12 flex flex-col justify-center h-full">
+              <div className="flex-1 flex flex-col justify-center">
+                <CardHeader className="pb-6 px-0">
+                  <CardTitle className="text-4xl lg:text-5xl font-bold text-gray-900 leading-tight">
+                    {item.title}.
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="flex-1 px-0">
+                  <p className="text-lg text-gray-600 leading-relaxed">
+                    {item.description}
+                  </p>
+                </CardContent>
+              </div>
+            </div>
+          </Card>
         </div>
       </div>
     </div>
