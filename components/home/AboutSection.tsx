@@ -12,7 +12,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { Brain, Award, Users, Zap, CheckCircle } from "lucide-react";
+import { Brain, Award, Users, Zap } from "lucide-react";
 import {
   ContactFormDialogProps,
   ButtonClickHandler,
@@ -27,7 +27,7 @@ const StatsCard = memo(
     label,
     color,
   }: {
-    icon: React.ComponentType<any>;
+    icon: React.ComponentType<{ className?: string }>;
     number: string;
     label: string;
     color: string;
