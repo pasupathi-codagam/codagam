@@ -17,40 +17,8 @@ import {
   ContactFormDialogProps,
   ButtonClickHandler,
 } from "@/models/interfaces";
-import { SectionWrapper, StatsCard } from "@/components/shared";
-
-// Memoized client logo card component
-const ClientLogoCard = memo(
-  ({ client, index }: { client: ClientLogoType; index: number }) => (
-    <Card
-      key={index}
-      className="group border-0 transition-all duration-700 hover:scale-105 bg-white/90 backdrop-blur-sm hover:bg-white relative overflow-hidden">
-      <CardContent className="p-8 lg:p-10 text-center">
-        {/* Logo Image */}
-        <div className="relative h-16 lg:h-20 flex items-center justify-center mb-4">
-          <Image
-            src={client.logo}
-            alt={client.alt}
-            width={160}
-            height={60}
-            className="h-12 lg:h-16 w-auto object-contain opacity-60 group-hover:opacity-100 transition-all duration-500 group-hover:scale-110 filter grayscale group-hover:grayscale-0"
-            sizes="(max-width: 768px) 120px, 160px"
-          />
-        </div>
-
-        {/* Company Name */}
-        <CardTitle className="text-sm font-medium text-gray-500 group-hover:text-gray-700 transition-colors duration-300">
-          {client.name}
-        </CardTitle>
-
-        {/* Subtle Glow Effect */}
-        <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-blue-500/0 via-transparent to-indigo-500/0 group-hover:from-blue-500/5 group-hover:to-indigo-500/5 transition-all duration-500"></div>
-      </CardContent>
-    </Card>
-  )
-);
-
-ClientLogoCard.displayName = "ClientLogoCard";
+import { SectionWrapper } from "@/components/shared";
+import { Marquee } from "@/components/ui/marquee";
 
 // Memoized contact form dialog
 const ContactFormDialog = memo(
@@ -115,36 +83,35 @@ export default function ClientSection() {
         logo: "https://d3vkpydtgsc252.cloudfront.net/uploads/2021/02/codeable.png",
         alt: "logo of codeable",
       },
-    ],
-    []
-  );
-
-  // Memoized stats data
-  const statsData = useMemo(
-    () => [
       {
-        number: "500+",
-        label: "Projects Delivered",
-        color: "blue",
-        elementId: "stat-1",
+        name: "Facebook",
+        logo: "https://d3vkpydtgsc252.cloudfront.net/uploads/2021/02/facebook.png",
+        alt: "logo of facebook",
       },
       {
-        number: "50+",
-        label: "Happy Clients",
-        color: "green",
-        elementId: "stat-2",
+        name: "Google",
+        logo: "https://d3vkpydtgsc252.cloudfront.net/uploads/2021/02/google.png",
+        alt: "logo of google",
       },
       {
-        number: "4+",
-        label: "Years Experience",
-        color: "purple",
-        elementId: "stat-3",
+        name: "GoodFirms",
+        logo: "https://d3vkpydtgsc252.cloudfront.net/uploads/2021/02/goodfirms.png",
+        alt: "logo of goodfirms",
       },
       {
-        number: "99%",
-        label: "Success Rate",
-        color: "orange",
-        elementId: "stat-4",
+        name: "Clutch",
+        logo: "https://d3vkpydtgsc252.cloudfront.net/uploads/2021/02/clutch.png",
+        alt: "logo of clutch",
+      },
+      {
+        name: "Upwork",
+        logo: "https://d3vkpydtgsc252.cloudfront.net/uploads/2021/02/upwork.png",
+        alt: "logo of upwork",
+      },
+      {
+        name: "Codeable",
+        logo: "https://d3vkpydtgsc252.cloudfront.net/uploads/2021/02/codeable.png",
+        alt: "logo of codeable",
       },
     ],
     []
@@ -175,42 +142,7 @@ export default function ClientSection() {
         role="main"
         aria-label="Client testimonials and partners section">
         <div className="w-full">
-          {/* Header */}
-          <div className="text-center mb-24 px-8 lg:px-16">
-            <div className="inline-flex items-center px-4 py-2 bg-gray-100 rounded-full mb-8 border border-gray-200">
-              <span className="text-gray-700 text-sm font-medium">
-                Trusted Partners
-              </span>
-            </div>
-
-            <h2 className="text-6xl lg:text-8xl font-bold text-gray-900 leading-tight mb-8">
-              Trusted by
-              <br />
-              <span className="text-blue-600">industry leaders</span>
-            </h2>
-
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-              We partner with forward-thinking companies to deliver innovative
-              solutions that drive growth and transform businesses.
-            </p>
-          </div>
-
-          {/* Stats Section */}
-          <div className="px-8 lg:px-16 mb-20">
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
-              {statsData.map((stat) => (
-                <StatsCard
-                  key={stat.elementId}
-                  number={stat.number}
-                  label={stat.label}
-                  color={stat.color}
-                  elementId={stat.elementId}
-                />
-              ))}
-            </div>
-          </div>
-
-          {/* Client Logos - Apple-style Design */}
+          {/* Client Logos - Marquee Effect */}
           <div className="px-8 lg:px-16 mb-20">
             {/* Header Section */}
             <div className="text-center mb-16">
@@ -228,31 +160,26 @@ export default function ClientSection() {
               </p>
             </div>
 
-            {/* Logos Grid - Apple-style */}
-            <div className="relative">
-              {/* Background Elements */}
-              <div className="absolute inset-0 bg-gradient-to-br from-gray-50 via-white to-blue-50 rounded-3xl"></div>
-              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent rounded-3xl"></div>
-
-              {/* Main Container Card */}
-              <Card className="relative bg-white/80 backdrop-blur-sm border-0 rounded-3xl overflow-hidden">
-                <CardContent className="p-12 lg:p-20">
-                  <div className="grid grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-16 items-center">
-                    {clientLogos.map((client, index) => (
-                      <ClientLogoCard
-                        key={index}
-                        client={client}
-                        index={index}
+            {/* Marquee Container */}
+            <div className="relative overflow-hidden bg-white rounded-3xl p-8">
+              <Marquee pauseOnHover className="[--duration:20s]">
+                {clientLogos.map((client, index) => (
+                  <div
+                    key={index}
+                    className="mx-8 flex items-center justify-center">
+                    <div className="relative h-16 w-32 flex items-center justify-center">
+                      <Image
+                        src={client.logo}
+                        alt={client.alt}
+                        width={120}
+                        height={60}
+                        className="h-12 w-auto object-contain opacity-60 hover:opacity-100 transition-opacity duration-300 filter grayscale hover:grayscale-0"
+                        sizes="120px"
                       />
-                    ))}
+                    </div>
                   </div>
-
-                  {/* Bottom Accent */}
-                  <div className="mt-12 flex justify-center">
-                    <div className="w-24 h-1 bg-gradient-to-r from-blue-500 to-indigo-500 rounded-full opacity-60"></div>
-                  </div>
-                </CardContent>
-              </Card>
+                ))}
+              </Marquee>
             </div>
           </div>
 
