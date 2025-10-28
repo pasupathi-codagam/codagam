@@ -63,7 +63,7 @@ const HeroSection: React.FC<HeroSectionProps> = memo(() => {
             {/* Right Side - Video */}
             <div className="relative">
               <video
-                src="/images/codagam hero section.mp4"
+                src="/videos/ch.mp4"
                 autoPlay
                 loop
                 muted
