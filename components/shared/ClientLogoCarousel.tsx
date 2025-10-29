@@ -177,7 +177,7 @@ export const ClientLogoCarousel: React.FC<ClientLogoCarouselProps> = ({
   return (
     <section className={`w-full py-12 md:py-16 lg:py-20 ${className}`}>
       {/* Header */}
-      <div className="text-center mb-12 md:mb-16 max-w-4xl mx-auto px-4">
+      <div className="text-center mb-12 md:mb-16 w-full px-4">
         <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-black mb-6">
           {title}
         </h2>
@@ -187,18 +187,16 @@ export const ClientLogoCarousel: React.FC<ClientLogoCarouselProps> = ({
       </div>
 
       {/* Marquee Container */}
-      <div className="relative">
-        {/* Gradient Overlays */}
-        <div className="absolute left-0 top-0 bottom-0 w-20 md:w-32 bg-gradient-to-r from-white to-transparent z-10 pointer-events-none"></div>
-        <div className="absolute right-0 top-0 bottom-0 w-20 md:w-32 bg-gradient-to-l from-white to-transparent z-10 pointer-events-none"></div>
-
+      <div className="relative w-full">
         {/* Marquee with logos */}
-        <Marquee pauseOnHover className="[--duration:60s] smooth-marquee">
+        <Marquee
+          pauseOnHover
+          className="[--duration:60s] smooth-marquee w-full">
           {clientLogos.map((client, index) => (
             <div
               key={`${client.name}-${index}`}
               className="flex-shrink-0 mx-4 md:mx-6 lg:mx-8">
-              <div className="relative w-40 md:w-48 lg:w-56 xl:w-64 h-24 md:h-28 lg:h-32 xl:h-36 bg-white rounded-lg shadow-sm border border-gray-100 flex items-center justify-center group hover:shadow-md transition-all duration-300">
+              <div className="relative w-40 md:w-48 lg:w-56 xl:w-64 h-24 md:h-28 lg:h-32 xl:h-36 flex items-center justify-center group transition-all duration-300">
                 <Image
                   src={client.logo}
                   alt={client.alt}
