@@ -20,44 +20,46 @@ import { NavigationButton } from "@/components/shared";
 const ServiceCard = memo(({ item, index, currentIndex }: ServiceCardProps) => (
   <div
     key={item.id}
-    className="flex-shrink-0 w-full max-w-5xl scroll-snap-start"
+    className="flex-shrink-0 w-full max-w-5xl scroll-snap-start group"
     role="listitem">
     <div className="px-8 lg:px-16">
-      <div className="grid lg:grid-cols-2 gap-0 items-stretch min-h-[400px] sm:min-h-[450px] lg:min-h-[500px]">
+      <div className="grid lg:grid-cols-2 gap-0 items-stretch min-h-[400px] sm:min-h-[450px] lg:min-h-[500px] group-hover:scale-[1.02] transition-all duration-500 ease-out">
         {/* Image Background - Left Side */}
         <div className="order-1 lg:order-1">
-          <div className="relative h-full min-h-[300px] sm:min-h-[350px] lg:min-h-[400px] overflow-hidden rounded-l-3xl">
+          <div className="relative h-full min-h-[300px] sm:min-h-[350px] lg:min-h-[400px] overflow-hidden rounded-l-3xl group-hover:shadow-xl transition-all duration-500">
             <Image
               src={item.image}
               alt={item.alt}
               fill
-              className="object-cover transition-transform duration-700 hover:scale-110"
+              className="object-cover "
               priority={index === currentIndex}
               sizes="(max-width: 1024px) 100vw, 50vw"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent"></div>
+            <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent group-hover:from-black/30 transition-all duration-500"></div>
           </div>
         </div>
 
         {/* Content Card - Right Side */}
         <div className="order-2 lg:order-2">
           <Card
-            className="relative overflow-hidden border-0 shadow-lg bg-white h-full min-h-[400px] sm:min-h-[450px] lg:min-h-[500px]"
+            className="relative overflow-hidden border-0 shadow-lg bg-white h-full min-h-[400px] sm:min-h-[450px] lg:min-h-[500px] group-hover:shadow-xl group-hover:bg-gray-50 transition-all duration-500"
             style={{ borderRadius: "0 1.5rem 1.5rem 0" }}>
             <div className="p-4 sm:p-6 lg:p-8 flex flex-col justify-center h-full">
               <div className="flex-1 flex flex-col justify-center">
                 <CardHeader className="pb-6 px-0">
-                  <CardTitle className="text-xl lg:text-2xl font-bold text-gray-900 leading-tight">
+                  <CardTitle className="text-xl lg:text-2xl font-bold text-gray-900 leading-tight group-hover:text-blue-600 transition-colors duration-500">
                     {item.title}.
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="flex-1 px-0">
-                  <p className="text-sm lg:text-base text-gray-600 leading-relaxed">
+                  <p className="text-sm lg:text-base text-gray-600 leading-relaxed group-hover:text-gray-700 transition-colors duration-500">
                     {item.description}
                   </p>
                 </CardContent>
               </div>
             </div>
+            {/* Hover overlay effect */}
+            <div className="absolute inset-0 bg-gradient-to-r from-blue-500/5 to-purple-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
           </Card>
         </div>
       </div>
