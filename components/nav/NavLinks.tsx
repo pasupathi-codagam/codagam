@@ -80,8 +80,8 @@ const NavLinks: React.FC<NavLinksProps> = ({ onLinkClick }) => {
           variant="ghost"
           className={`relative text-sm sm:text-base font-medium transition-all duration-300 py-2 sm:py-1 ${
             activeSection === item.key
-              ? "text-blue-900"
-              : "text-gray-700 hover:text-blue-900"
+              ? "text-primary"
+              : "text-muted-foreground hover:text-primary"
           }`}>
           {item.label}
         </Button>

@@ -68,7 +68,7 @@ export function Footer() {
   return (
     <footer
       id="footer-section"
-      className="bg-white text-black pt-4 sm:pt-6 lg:pt-8 xl:pt-10 pb-2 border-t border-gray-200">
+      className="bg-background text-foreground pt-4 sm:pt-6 lg:pt-8 xl:pt-10 pb-2 border-t border-border">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 lg:gap-8 text-center sm:text-left">
           {/* Company Info */}
@@ -82,7 +82,7 @@ export function Footer() {
                 className="object-contain rounded w-16 h-10 sm:w-20 sm:h-12 md:w-24 md:h-16"
               />
             </div>
-            <p className="text-xs sm:text-sm text-gray-600 text-center sm:text-left">
+            <p className="text-xs sm:text-sm text-muted-foreground text-center sm:text-left">
               <strong>Mobile:</strong> +91 75984 54546
               <br />
               <strong>Email:</strong> support@codagam.com
@@ -103,7 +103,7 @@ export function Footer() {
                   variant="ghost"
                   size="sm"
                   className="flex items-center px-2 py-1 hover:bg-blue-50 hover:text-blue-900 transition group text-center sm:text-left text-xs sm:text-sm">
-                  <link.icon className="w-3 h-3 sm:w-4 sm:h-4 mr-2 text-gray-600 group-hover:text-blue-900" />
+                  <link.icon className="w-3 h-3 sm:w-4 sm:h-4 mr-2 text-muted-foreground group-hover:text-primary" />
                   {link.label}
                 </Button>
               ))}
@@ -129,7 +129,7 @@ export function Footer() {
               <Link
                 href="https://twitter.com/codagam"
                 className="flex items-center justify-center w-8 h-8 sm:w-10 sm:h-10 hover:scale-110 transition-transform duration-300">
-                <X className="h-5 w-5 sm:h-6 sm:w-6 text-gray-800" />
+                <X className="h-5 w-5 sm:h-6 sm:w-6 text-foreground" />
               </Link>
               <Link
                 href="https://linkedin.com/company/codagam"
@@ -150,9 +150,9 @@ export function Footer() {
       </div>
 
       {/* Bottom Bar */}
-      <div className="border-t border-gray-200 pt-2 pb-1">
+      <div className="border-t border-border pt-2 pb-1">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col sm:flex-row justify-center sm:justify-between items-center text-xs sm:text-sm text-gray-600 gap-2">
+          <div className="flex flex-col sm:flex-row justify-center sm:justify-between items-center text-xs sm:text-sm text-muted-foreground gap-2">
             <p>&copy; 2024 Codagam. All rights reserved.</p>
             <div className="flex gap-3 sm:gap-4">
               <Link

@@ -11,14 +11,14 @@ const NavigationButton = memo(
     <Button
       variant="outline"
       size="icon"
-      className="rounded-full group h-16 w-16 bg-white/95 backdrop-blur-sm border border-gray-200/50 disabled:opacity-40 disabled:cursor-not-allowed hover:bg-white hover:scale-110 transition-all duration-300"
+      className="rounded-full group h-16 w-16 bg-background/95 backdrop-blur-sm border border-border/50 disabled:opacity-40 disabled:cursor-not-allowed hover:bg-background hover:scale-110 transition-all duration-300"
       onClick={onClick}
       disabled={disabled}
       aria-label={ariaLabel}>
       {direction === "prev" ? (
-        <ChevronLeft className="w-6 h-6 text-gray-700 group-hover:text-gray-900 transition-colors duration-300" />
+        <ChevronLeft className="w-6 h-6 text-foreground group-hover:text-primary transition-colors duration-300" />
       ) : (
-        <ChevronRight className="w-6 h-6 text-gray-700 group-hover:text-gray-900 transition-colors duration-300" />
+        <ChevronRight className="w-6 h-6 text-foreground group-hover:text-primary transition-colors duration-300" />
       )}
     </Button>
   )

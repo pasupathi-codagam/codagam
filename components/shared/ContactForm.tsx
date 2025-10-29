@@ -120,7 +120,7 @@ export function ContactForm({
           placeholder="Your Name"
           value={formData.name}
           onChange={handleChange}
-          className="border border-gray-300 rounded px-3 py-2 text-xs sm:text-sm h-10 sm:h-12"
+          className="border border-border rounded px-3 py-2 text-xs sm:text-sm h-10 sm:h-12"
           required
         />
         <input
@@ -129,7 +129,7 @@ export function ContactForm({
           placeholder="Your Email"
           value={formData.email}
           onChange={handleChange}
-          className={`border border-gray-300 rounded px-3 py-2 text-xs sm:text-sm h-10 sm:h-12 ${
+          className={`border border-border rounded px-3 py-2 text-xs sm:text-sm h-10 sm:h-12 ${
             emailError ? "border-red-500" : ""
           }`}
           required
@@ -141,7 +141,7 @@ export function ContactForm({
           placeholder="Your Phone (10 digits)"
           value={formData.phone}
           onChange={handleChange}
-          className="border border-gray-300 rounded px-3 py-2 text-xs sm:text-sm h-10 sm:h-12"
+          className="border border-border rounded px-3 py-2 text-xs sm:text-sm h-10 sm:h-12"
           maxLength={10}
           pattern="[0-9]{10}"
           required
@@ -152,7 +152,7 @@ export function ContactForm({
           rows={3}
           value={formData.message}
           onChange={handleChange}
-          className="border border-gray-300 rounded px-3 py-2 text-xs sm:text-sm resize-none"
+          className="border border-border rounded px-3 py-2 text-xs sm:text-sm resize-none"
           required></textarea>
         <Button
           type="submit"

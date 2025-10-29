@@ -15,7 +15,7 @@ const HeroSection: React.FC<HeroSectionProps> = memo(() => {
   return (
     <section
       id="hero-section"
-      className="min-h-screen bg-white flex items-center py-4 sm:py-8 md:py-12 lg:py-16 px-4 sm:px-6 lg:px-8"
+      className="min-h-screen bg-background flex items-center py-4 sm:py-8 md:py-12 lg:py-16 px-4 sm:px-6 lg:px-8"
       role="banner"
       aria-label="Hero section">
       <div className="w-full">
@@ -28,19 +28,21 @@ const HeroSection: React.FC<HeroSectionProps> = memo(() => {
                 <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-blue-900 leading-none">
                   Codagam
                 </h1>
-                <p className="text-base sm:text-lg lg:text-xl text-gray-600 font-medium">
+                <p className="text-base sm:text-lg lg:text-xl text-muted-foreground font-medium">
                   Consult | Code | Collaborate
                 </p>
               </div>
 
               {/* Main Headline */}
               <div className="space-y-3 sm:space-y-4 text-center lg:text-left">
-                <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-semibold text-gray-900 leading-tight">
+                <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-semibold text-foreground leading-tight">
                   Digital Transformation
                   <br />
-                  <span className="text-gray-600">for Modern Business</span>
+                  <span className="text-muted-foreground">
+                    for Modern Business
+                  </span>
                 </h2>
-                <p className="text-sm sm:text-base lg:text-lg text-gray-600 leading-relaxed max-w-2xl mx-auto lg:mx-0">
+                <p className="text-sm sm:text-base lg:text-lg text-muted-foreground leading-relaxed max-w-2xl mx-auto lg:mx-0">
                   We help you establish and upscale your business online so that
                   you don&apos;t miss any chance of serving a customer.
                 </p>

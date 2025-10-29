@@ -36,13 +36,13 @@ export default function ClientSection() {
           <Card className="max-w-4xl mx-auto border-0 bg-gradient-to-br from-white to-gray-50/50 transition-all duration-700 rounded-2xl sm:rounded-3xl">
             <CardContent className="p-4 sm:p-6 lg:p-8 text-center">
               <CardHeader className="pb-3 sm:pb-4">
-                <CardTitle className="text-lg sm:text-xl lg:text-2xl font-bold text-gray-900 mb-2 sm:mb-3">
+                <CardTitle className="text-lg sm:text-xl lg:text-2xl font-bold text-foreground mb-2 sm:mb-3">
                   Ready to join our success stories?
                 </CardTitle>
               </CardHeader>
 
               <CardContent className="pb-3 sm:pb-4">
-                <p className="text-xs sm:text-sm lg:text-base text-gray-600 mb-3 sm:mb-4 max-w-2xl mx-auto leading-relaxed">
+                <p className="text-xs sm:text-sm lg:text-base text-muted-foreground mb-3 sm:mb-4 max-w-2xl mx-auto leading-relaxed">
                   Let&apos;s discuss how we can help your business achieve its
                   goals with innovative technology solutions.
                 </p>

@@ -43,8 +43,8 @@ const BenefitCard = memo(
         variant="outline"
         className={`w-full h-14 sm:h-16 text-sm sm:text-base lg:text-lg font-semibold rounded-2xl border-2 transition-all duration-300 group ${
           isOpen
-            ? "border-gray-500 bg-gray-50 shadow-md"
-            : "border-gray-200 hover:border-gray-500 hover:bg-gray-50 hover:shadow-sm"
+            ? "border-ring bg-accent shadow-md"
+            : "border-border hover:border-ring hover:bg-accent hover:shadow-sm"
         }`}
         onClick={onToggle}
         aria-label={`Toggle ${benefit.title} details`}>
@@ -55,14 +55,14 @@ const BenefitCard = memo(
                 className={`w-5 h-5 sm:w-6 sm:h-6 text-${benefit.color}-600`}
               />
             </div>
-            <span className="text-gray-900 font-medium text-sm sm:text-base">
+            <span className="text-foreground font-medium text-sm sm:text-base">
               {benefit.title}
             </span>
           </div>
           {isOpen ? (
-            <ChevronUp className="w-4 h-4 sm:w-5 sm:h-5 text-gray-500 group-hover:text-gray-700 transition-colors duration-300" />
+            <ChevronUp className="w-4 h-4 sm:w-5 sm:h-5 text-muted-foreground group-hover:text-foreground transition-colors duration-300" />
           ) : (
-            <ChevronDown className="w-4 h-4 sm:w-5 sm:h-5 text-gray-500 group-hover:text-gray-700 transition-colors duration-300" />
+            <ChevronDown className="w-4 h-4 sm:w-5 sm:h-5 text-muted-foreground group-hover:text-foreground transition-colors duration-300" />
           )}
         </div>
       </Button>
@@ -71,8 +71,8 @@ const BenefitCard = memo(
         className={`overflow-hidden transition-all duration-500 ease-in-out ${
           isOpen ? "max-h-[200px] opacity-100" : "max-h-0 opacity-0"
         }`}>
-        <div className="bg-gradient-to-br from-white to-gray-50 border border-gray-200 rounded-2xl p-4 sm:p-6 shadow-sm">
-          <p className="text-sm sm:text-base text-gray-600 leading-relaxed">
+        <div className="bg-gradient-to-br from-background to-muted border border-border rounded-2xl p-4 sm:p-6 shadow-sm">
+          <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
             {benefit.description}
           </p>
         </div>
@@ -177,17 +177,17 @@ export default function CareerSection() {
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="text-center mb-6 sm:mb-8 lg:mb-10">
-          <div className="inline-flex items-center px-4 sm:px-6 py-2 sm:py-3 bg-gradient-to-r from-gray-50 to-gray-100 mb-4 border border-gray-100 rounded-full">
-            <span className="text-gray-700 text-xs sm:text-sm font-semibold uppercase tracking-wider">
+          <div className="inline-flex items-center px-4 sm:px-6 py-2 sm:py-3 bg-gradient-to-r from-muted to-accent mb-4 border border-border rounded-full">
+            <span className="text-foreground text-xs sm:text-sm font-semibold uppercase tracking-wider">
               Careers
             </span>
           </div>
 
-          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 leading-tight mb-4">
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-foreground leading-tight mb-4">
             Join our team
           </h2>
 
-          <p className="text-sm sm:text-base lg:text-lg text-gray-600 max-w-3xl mx-auto leading-relaxed px-4">
+          <p className="text-sm sm:text-base lg:text-lg text-muted-foreground max-w-3xl mx-auto leading-relaxed px-4">
             We&apos;re looking for passionate individuals who want to build the
             future of technology. Join us in creating innovative solutions that
             make a real impact.
@@ -197,7 +197,7 @@ export default function CareerSection() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 lg:gap-10 items-start">
           {/* Benefits Section */}
           <div className="space-y-6 sm:space-y-8 lg:space-y-10 xl:space-y-12">
-            <h3 className="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-900 leading-tight">
+            <h3 className="text-xl sm:text-2xl lg:text-3xl font-bold text-foreground leading-tight">
               Why work with us?
             </h3>
 
@@ -220,10 +220,10 @@ export default function CareerSection() {
           {/* Application Form - Collapsible */}
           <div className="space-y-3 sm:space-y-4">
             <div className="text-center">
-              <h3 className="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-900 leading-tight mb-3 sm:mb-4">
+              <h3 className="text-xl sm:text-2xl lg:text-3xl font-bold text-foreground leading-tight mb-3 sm:mb-4">
                 Ready to join us?
               </h3>
-              <p className="text-sm sm:text-base lg:text-lg text-gray-600 leading-relaxed mb-4 sm:mb-6">
+              <p className="text-sm sm:text-base lg:text-lg text-muted-foreground leading-relaxed mb-4 sm:mb-6">
                 Send us your application and let&apos;s start the conversation.
               </p>
             </div>
@@ -233,36 +233,36 @@ export default function CareerSection() {
                 <CollapsibleTrigger asChild>
                   <Button
                     variant="outline"
-                    className="w-full h-14 sm:h-16 text-base sm:text-lg font-semibold rounded-2xl border-2 border-gray-200 hover:border-gray-500 hover:bg-gray-50 hover:shadow-md transition-all duration-300 group"
+                    className="w-full h-14 sm:h-16 text-base sm:text-lg font-semibold rounded-2xl border-2 border-border hover:border-ring hover:bg-accent hover:shadow-md transition-all duration-300 group"
                     aria-label="Toggle application form">
                     <div className="flex items-center justify-between w-full px-4 sm:px-6">
                       <div className="flex items-center space-x-3 sm:space-x-4">
                         <div className="w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
                           <Send className="w-5 h-5 sm:w-6 sm:h-6 text-blue-600" />
                         </div>
-                        <span className="text-gray-900 font-medium text-sm sm:text-base">
+                        <span className="text-foreground font-medium text-sm sm:text-base">
                           Apply Now
                         </span>
                       </div>
                       {isOpen ? (
-                        <ChevronUp className="w-4 h-4 sm:w-5 sm:h-5 text-gray-500 group-hover:text-gray-700 transition-colors duration-300" />
+                        <ChevronUp className="w-4 h-4 sm:w-5 sm:h-5 text-muted-foreground group-hover:text-foreground transition-colors duration-300" />
                       ) : (
-                        <ChevronDown className="w-4 h-4 sm:w-5 sm:h-5 text-gray-500 group-hover:text-gray-700 transition-colors duration-300" />
+                        <ChevronDown className="w-4 h-4 sm:w-5 sm:h-5 text-muted-foreground group-hover:text-foreground transition-colors duration-300" />
                       )}
                     </div>
                   </Button>
                 </CollapsibleTrigger>
 
                 <CollapsibleContent className="space-y-4 sm:space-y-6">
-                  <div className="bg-gradient-to-br from-white to-gray-50 border border-gray-200 rounded-2xl p-4 sm:p-6 shadow-lg">
+                  <div className="bg-gradient-to-br from-background to-muted border border-border rounded-2xl p-4 sm:p-6 shadow-lg">
                     <form
                       onSubmit={handleSubmit}
                       className="space-y-3 sm:space-y-4">
                       <div className="space-y-2 sm:space-y-3">
                         <Label
                           htmlFor="name"
-                          className="text-xs sm:text-sm font-semibold text-gray-900 flex items-center space-x-2">
-                          <User className="w-3 h-3 sm:w-4 sm:h-4 text-gray-600" />
+                          className="text-xs sm:text-sm font-semibold text-foreground flex items-center space-x-2">
+                          <User className="w-3 h-3 sm:w-4 sm:h-4 text-muted-foreground" />
                           <span>Full Name</span>
                         </Label>
                         <Input
@@ -272,7 +272,7 @@ export default function CareerSection() {
                           value={formData.name}
                           onChange={handleChange}
                           placeholder="Enter your full name"
-                          className="h-10 sm:h-12 text-xs sm:text-sm border-gray-200 focus:border-gray-500 focus:ring-gray-500 transition-all duration-300 hover:border-gray-300 rounded-xl bg-white shadow-sm"
+                          className="h-10 sm:h-12 text-xs sm:text-sm border-border focus:border-ring focus:ring-ring transition-all duration-300 hover:border-ring/50 rounded-xl bg-background shadow-sm"
                           required
                         />
                       </div>
@@ -280,8 +280,8 @@ export default function CareerSection() {
                       <div className="space-y-2 sm:space-y-3">
                         <Label
                           htmlFor="email"
-                          className="text-xs sm:text-sm font-semibold text-gray-900 flex items-center space-x-2">
-                          <Mail className="w-3 h-3 sm:w-4 sm:h-4 text-gray-600" />
+                          className="text-xs sm:text-sm font-semibold text-foreground flex items-center space-x-2">
+                          <Mail className="w-3 h-3 sm:w-4 sm:h-4 text-muted-foreground" />
                           <span>Email Address</span>
                         </Label>
                         <Input
@@ -291,7 +291,7 @@ export default function CareerSection() {
                           value={formData.email}
                           onChange={handleChange}
                           placeholder="Enter your email address"
-                          className="h-10 sm:h-12 text-xs sm:text-sm border-gray-200 focus:border-gray-500 focus:ring-gray-500 transition-all duration-300 hover:border-gray-300 rounded-xl bg-white shadow-sm"
+                          className="h-10 sm:h-12 text-xs sm:text-sm border-border focus:border-ring focus:ring-ring transition-all duration-300 hover:border-ring/50 rounded-xl bg-background shadow-sm"
                           required
                         />
                       </div>
@@ -299,8 +299,8 @@ export default function CareerSection() {
                       <div className="space-y-2 sm:space-y-3">
                         <Label
                           htmlFor="resume"
-                          className="text-xs sm:text-sm font-semibold text-gray-900 flex items-center space-x-2">
-                          <FileText className="w-3 h-3 sm:w-4 sm:h-4 text-gray-600" />
+                          className="text-xs sm:text-sm font-semibold text-foreground flex items-center space-x-2">
+                          <FileText className="w-3 h-3 sm:w-4 sm:h-4 text-muted-foreground" />
                           <span>Resume</span>
                         </Label>
                         <Input
@@ -309,10 +309,10 @@ export default function CareerSection() {
                           type="file"
                           onChange={handleChange}
                           accept=".pdf,.doc,.docx"
-                          className="h-10 sm:h-12 text-xs sm:text-sm border-gray-200 focus:border-gray-500 focus:ring-gray-500 transition-all duration-300 hover:border-gray-300 rounded-xl bg-white shadow-sm file:mr-2 sm:file:mr-4 file:py-1 sm:file:py-2 file:px-2 sm:file:px-4 file:border-0 file:text-xs sm:file:text-sm file:font-semibold file:bg-gray-50 file:text-gray-700 hover:file:bg-gray-100"
+                          className="h-10 sm:h-12 text-xs sm:text-sm border-border focus:border-ring focus:ring-ring transition-all duration-300 hover:border-ring/50 rounded-xl bg-background shadow-sm file:mr-2 sm:file:mr-4 file:py-1 sm:file:py-2 file:px-2 sm:file:px-4 file:border-0 file:text-xs sm:file:text-sm file:font-semibold file:bg-accent file:text-foreground hover:file:bg-accent/80"
                           required
                         />
-                        <p className="text-xs sm:text-sm text-gray-500">
+                        <p className="text-xs sm:text-sm text-muted-foreground">
                           PDF, DOC, or DOCX files up to 10MB
                         </p>
                       </div>

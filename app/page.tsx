@@ -7,7 +7,7 @@ import ClientSection from "@/components/home/ClientSection";
 
 export default function Home() {
   return (
-    <div className="bg-white">
+    <div >
       <HeroSection />
       <AboutSection />
       <ServicesSection />

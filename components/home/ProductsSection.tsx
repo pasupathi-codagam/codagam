@@ -25,19 +25,19 @@ const ProductCard = memo(
   ({ item, onCardClick }: Omit<ProductCardProps, "index" | "currentIndex">) => (
     <div className="px-4 sm:px-6 lg:px-8 xl:px-16">
       <Card
-        className="h-full border-0 bg-white transition-all duration-500 hover:scale-105 rounded-2xl sm:rounded-3xl overflow-hidden cursor-pointer group"
+        className="h-full border-0 bg-card transition-all duration-500 hover:scale-105 rounded-2xl sm:rounded-3xl overflow-hidden cursor-pointer group"
         onClick={() => onCardClick(item)}>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-0 items-stretch min-h-[350px] sm:min-h-[400px] md:min-h-[450px] lg:min-h-[500px]">
           {/* Content Section - Left Side */}
           <div className="order-2 lg:order-1 p-4 sm:p-6 lg:p-8 flex flex-col justify-center">
             <div className="flex-1 flex flex-col justify-center">
-              <div className="text-xs sm:text-sm font-medium text-gray-500 uppercase tracking-wider mb-3 sm:mb-4">
+              <div className="text-xs sm:text-sm font-medium text-muted-foreground uppercase tracking-wider mb-3 sm:mb-4">
                 {item.label}
               </div>
-              <CardTitle className="text-lg sm:text-xl lg:text-2xl font-bold text-gray-900 leading-tight group-hover:text-blue-900 transition-colors duration-500 mb-2 sm:mb-3">
+              <CardTitle className="text-lg sm:text-xl lg:text-2xl font-bold text-foreground leading-tight group-hover:text-blue-900 transition-colors duration-500 mb-2 sm:mb-3">
                 {item.headline}.
               </CardTitle>
-              <p className="text-gray-600 text-xs sm:text-sm lg:text-base leading-relaxed mb-3 sm:mb-4">
+              <p className="text-muted-foreground text-xs sm:text-sm lg:text-base leading-relaxed mb-3 sm:mb-4">
                 {item.description}
               </p>
 
@@ -92,29 +92,31 @@ const ProductDetailsDialog = memo(
         {selectedProduct && (
           <div className="space-y-8">
             {/* Product Label */}
-            <div className="text-sm font-medium text-gray-500 uppercase tracking-wider">
+            <div className="text-sm font-medium text-muted-foreground uppercase tracking-wider">
               {selectedProduct.label}
             </div>
 
             {/* Product Headline */}
-            <h3 className="text-2xl font-bold text-gray-900 leading-tight">
+            <h3 className="text-2xl font-bold text-foreground leading-tight">
               {selectedProduct.headline}
             </h3>
 
             {/* Product Description */}
-            <p className="text-gray-700 leading-relaxed text-base">
+            <p className="text-foreground leading-relaxed text-base">
               {selectedProduct.details}
             </p>
 
             {/* Features List */}
             <div className="space-y-4">
-              <h4 className="text-lg font-semibold text-gray-900">
+              <h4 className="text-lg font-semibold text-foreground">
                 Key Features:
               </h4>
               <ul className="grid grid-cols-1 md:grid-cols-2 gap-2">
                 {selectedProduct.features.map((feature, index) => (
-                  <li key={index} className="flex items-center text-gray-600">
-                    <div className="w-2 h-2 bg-gray-500 rounded-full mr-3 flex-shrink-0"></div>
+                  <li
+                    key={index}
+                    className="flex items-center text-muted-foreground">
+                    <div className="w-2 h-2 bg-muted-foreground rounded-full mr-3 flex-shrink-0"></div>
                     {feature}
                   </li>
                 ))}
@@ -293,10 +295,10 @@ export default function ProductsSection() {
         aria-label="Products section">
         <div className="w-full">
           <div className="text-center mb-6 sm:mb-8 lg:mb-10 px-4 sm:px-6 lg:px-8">
-            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 leading-tight mb-4 sm:mb-6">
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-foreground leading-tight mb-4 sm:mb-6">
               Our Products
             </h2>
-            <p className="text-sm sm:text-base lg:text-lg text-gray-600 max-w-4xl mx-auto">
+            <p className="text-sm sm:text-base lg:text-lg text-muted-foreground max-w-4xl mx-auto">
               Solutions that drive results and transform businesses
             </p>
           </div>
@@ -304,7 +306,7 @@ export default function ProductsSection() {
           <div>
             <div className="relative">
               <Carousel
-                className="bg-gray-200 p-3 sm:p-4 lg:p-6 rounded-xl sm:rounded-2xl"
+                className="bg-muted p-3 sm:p-4 lg:p-6 rounded-xl sm:rounded-2xl"
                 opts={{
                   align: "start",
                   loop: false,
@@ -318,8 +320,8 @@ export default function ProductsSection() {
                     </CarouselItem>
                   ))}
                 </CarouselContent>
-                <CarouselPrevious className="right-16 sm:right-20 lg:right-24 xl:right-28 bottom-3 sm:bottom-4 lg:bottom-6 xl:bottom-8 h-12 w-12 sm:h-14 sm:w-14 lg:h-16 lg:w-16 rounded-full bg-white/95 backdrop-blur-sm border border-gray-200/50 hover:bg-white hover:scale-110 transition-all duration-300" />
-                <CarouselNext className="right-3 sm:right-4 lg:right-6 xl:right-8 bottom-3 sm:bottom-4 lg:bottom-6 xl:bottom-8 h-12 w-12 sm:h-14 sm:w-14 lg:h-16 lg:w-16 rounded-full bg-white/95 backdrop-blur-sm border border-gray-200/50 hover:bg-white hover:scale-110 transition-all duration-300" />
+                <CarouselPrevious className="right-16 sm:right-20 lg:right-24 xl:right-28 bottom-3 sm:bottom-4 lg:bottom-6 xl:bottom-8 h-12 w-12 sm:h-14 sm:w-14 lg:h-16 lg:w-16 rounded-full bg-card/95 backdrop-blur-sm border border-border/50 hover:bg-card hover:scale-110 transition-all duration-300" />
+                <CarouselNext className="right-3 sm:right-4 lg:right-6 xl:right-8 bottom-3 sm:bottom-4 lg:bottom-6 xl:bottom-8 h-12 w-12 sm:h-14 sm:w-14 lg:h-16 lg:w-16 rounded-full bg-card/95 backdrop-blur-sm border border-border/50 hover:bg-card hover:scale-110 transition-all duration-300" />
               </Carousel>
             </div>
           </div>

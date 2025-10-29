@@ -4,6 +4,7 @@ import "./globals.css";
 import ScrollToTopButton from "@/components/shared/ScrollToTopButton";
 import { Footer } from "@/components/nav/Footer";
 import Navbar from "@/components/nav/Navbar";
+import { ThemeProvider } from "@/components/shared/themeSwitch/theme-provider";
 
 export const viewport: Viewport = {
   width: "device-width",
@@ -52,12 +53,19 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={`min-h-screen bg-white font-sans antialiased`}>
-        <Navbar />
-        <main className="flex-1">{children}</main>
-        <ScrollToTopButton />
-        <Footer />
+    <html lang="en" suppressHydrationWarning>
+      <body
+        className={`min-h-screen bg-background text-foreground font-sans antialiased`}>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="light"
+          enableSystem
+          disableTransitionOnChange>
+          <Navbar />
+          <main className="flex-1">{children}</main>
+          <ScrollToTopButton />
+          <Footer />
+        </ThemeProvider>
       </body>
     </html>
   );
