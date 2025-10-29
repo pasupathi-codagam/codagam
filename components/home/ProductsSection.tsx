@@ -355,7 +355,7 @@ export default function ProductsSection() {
         role="main"
         aria-label="Products section">
         <div className="w-full">
-          <div className="text-center mb-12 sm:mb-16 lg:mb-20 px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-8 sm:mb-12 lg:mb-16 px-4 sm:px-6 lg:px-8">
             <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 leading-tight mb-6">
               Our Products
             </h2>

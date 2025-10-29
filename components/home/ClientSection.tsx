@@ -68,7 +68,7 @@ export default function ClientSection() {
     <>
       <section
         id="client-section"
-        className="py-8 sm:py-12 lg:py-16 px-4 sm:px-6 lg:px-8"
+        className="pt-4 sm:pt-6 lg:pt-8 pb-8 sm:pb-12 lg:pb-16 px-4 sm:px-6 lg:px-8"
         role="main"
         aria-label="Client testimonials and partners section">
         <div className="w-full">
