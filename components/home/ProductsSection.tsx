@@ -47,17 +47,17 @@ const ProductCard = memo(
                 </p>
 
                 {/* Action Button */}
-                <div className="flex justify-start items-center">
+                <div className="flex justify-start items-center mt-6">
                   <Button
                     variant="black"
                     size="icon"
-                    className="rounded-full  w-10 h-10 p-0 group-hover:scale-110 group-hover:rotate-90 transition-all duration-500 ease-out"
+                    className="rounded-full w-12 h-12 p-0 group-hover:scale-110 group-hover:rotate-90 transition-all duration-500 ease-out"
                     onClick={(e) => {
                       e.stopPropagation();
                       onCardClick(item);
                     }}
                     aria-label={`Learn more about ${item.label}`}>
-                    <Plus className="w-4 h-4 text-white transition-transform duration-300" />
+                    <Plus className="w-5 h-5 text-white transition-transform duration-300" />
                   </Button>
                 </div>
               </div>
