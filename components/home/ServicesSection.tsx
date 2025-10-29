@@ -1,29 +1,25 @@
 "use client";
 
-import React, {
-  useState,
-  useEffect,
-  useCallback,
-  useMemo,
-  memo,
-  useRef,
-} from "react";
+import React, { useCallback, useMemo, memo } from "react";
 import Image from "next/image";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
 import {
   GalleryItem as GalleryItemType,
   ServiceCardProps,
 } from "@/models/interfaces";
-import { NavigationButton } from "@/components/shared";
 
 // Memoized service card component
-const ServiceCard = memo(({ item, index, currentIndex }: ServiceCardProps) => (
-  <div
-    key={item.id}
-    className="flex-shrink-0 w-full max-w-5xl scroll-snap-start group"
-    role="listitem">
+const ServiceCard = memo(
+  ({ item }: Omit<ServiceCardProps, "index" | "currentIndex">) => (
     <div className="px-8 lg:px-16">
-      <div className="grid lg:grid-cols-2 gap-0 items-stretch min-h-[400px] sm:min-h-[450px] lg:min-h-[500px] group-hover:scale-[1.02] transition-all duration-500 ease-out">
+      <div className="grid lg:grid-cols-2 gap-0 items-stretch min-h-[400px] sm:min-h-[450px] lg:min-h-[500px] group-hover:scale-[1.02] transition-all duration-500 ease-out group">
         {/* Image Background - Left Side */}
         <div className="order-1 lg:order-1">
           <div className="relative h-full min-h-[300px] sm:min-h-[350px] lg:min-h-[400px] overflow-hidden rounded-l-3xl group-hover:shadow-xl transition-all duration-500">
@@ -31,8 +27,7 @@ const ServiceCard = memo(({ item, index, currentIndex }: ServiceCardProps) => (
               src={item.image}
               alt={item.alt}
               fill
-              className="object-cover "
-              priority={index === currentIndex}
+              className="object-cover"
               sizes="(max-width: 1024px) 100vw, 50vw"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent group-hover:from-black/30 transition-all duration-500"></div>
@@ -64,49 +59,12 @@ const ServiceCard = memo(({ item, index, currentIndex }: ServiceCardProps) => (
         </div>
       </div>
     </div>
-  </div>
-));
+  )
+);
 
 ServiceCard.displayName = "ServiceCard";
 
 export default function ServicesSection() {
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [isScrolling, setIsScrolling] = useState(false);
-  const scrollContainerRef = useRef<HTMLDivElement>(null);
-
-  // Inline scroll functionality
-  const scrollToItem = useCallback(
-    (index: number) => {
-      if (!scrollContainerRef.current || isScrolling) return;
-
-      setIsScrolling(true);
-      const container = scrollContainerRef.current;
-      const scrollLeft = index * 800;
-
-      container.scrollTo({
-        left: scrollLeft,
-        behavior: "smooth",
-      });
-
-      setCurrentIndex(index);
-
-      setTimeout(() => setIsScrolling(false), 500);
-    },
-    [isScrolling]
-  );
-
-  const handleScroll = useCallback(() => {
-    if (!scrollContainerRef.current || isScrolling) return;
-
-    const container = scrollContainerRef.current;
-    const scrollLeft = container.scrollLeft;
-    const newIndex = Math.round(scrollLeft / 800);
-
-    if (newIndex !== currentIndex) {
-      setCurrentIndex(newIndex);
-    }
-  }, [currentIndex, isScrolling]);
-
   // Memoized gallery items data
   const galleryItems = useMemo(
     (): GalleryItemType[] => [
@@ -178,26 +136,6 @@ export default function ServicesSection() {
     []
   );
 
-  const handlePrevClick = useCallback(() => {
-    scrollToItem(Math.max(0, currentIndex - 1));
-  }, [scrollToItem, currentIndex]);
-
-  const handleNextClick = useCallback(() => {
-    scrollToItem(Math.min(galleryItems.length - 1, currentIndex + 1));
-  }, [scrollToItem, currentIndex, galleryItems.length]);
-
-  useEffect(() => {
-    const container = scrollContainerRef.current;
-    if (container) {
-      container.addEventListener("scroll", handleScroll);
-      return () => container.removeEventListener("scroll", handleScroll);
-    }
-  }, [handleScroll, scrollContainerRef]);
-
-  // No animations needed - removed animation setup
-
-  // No animations needed - removed animation effects
-
   return (
     <section
       id="services-section"
@@ -216,42 +154,24 @@ export default function ServicesSection() {
 
         <div>
           <div className="relative">
-            <div
-              ref={scrollContainerRef}
-              className="overflow-x-auto scrollbar-hide scroll-smooth bg-gray-200 p-4 sm:p-6"
-              style={{ scrollSnapType: "x mandatory" }}
-              role="region"
-              aria-label="Services gallery">
-              <div
-                className="flex gap-4 sm:gap-6 lg:gap-8 pb-4 sm:pb-6"
-                role="list"
-                aria-label="Services Gallery">
-                {galleryItems.map((item, index) => (
-                  <ServiceCard
+            <Carousel
+              className="bg-gray-200 p-4 sm:p-6"
+              opts={{
+                align: "start",
+                loop: false,
+              }}>
+              <CarouselContent className="gap-4 sm:gap-6 lg:gap-8 pb-4 sm:pb-6">
+                {galleryItems.map((item) => (
+                  <CarouselItem
                     key={item.id}
-                    item={item}
-                    index={index}
-                    currentIndex={currentIndex}
-                  />
+                    className="flex-shrink-0 w-full max-w-5xl">
+                    <ServiceCard item={item} />
+                  </CarouselItem>
                 ))}
-              </div>
-            </div>
-
-            {/* Navigation Buttons - Bottom Right */}
-            <div className="absolute right-4 sm:right-6 lg:right-8 bottom-4 sm:bottom-6 lg:bottom-8 flex gap-4 sm:gap-6 z-10">
-              <NavigationButton
-                direction="prev"
-                onClick={handlePrevClick}
-                disabled={currentIndex === 0}
-                ariaLabel="Previous services gallery"
-              />
-              <NavigationButton
-                direction="next"
-                onClick={handleNextClick}
-                disabled={currentIndex === galleryItems.length - 1}
-                ariaLabel="Next services gallery"
-              />
-            </div>
+              </CarouselContent>
+              <CarouselPrevious className="right-20 sm:right-24 lg:right-28 bottom-4 sm:bottom-6 lg:bottom-8 h-16 w-16 rounded-full bg-white/95 backdrop-blur-sm border border-gray-200/50 hover:bg-white hover:scale-110 transition-all duration-300" />
+              <CarouselNext className="right-4 sm:right-6 lg:right-8 bottom-4 sm:bottom-6 lg:bottom-8 h-16 w-16 rounded-full bg-white/95 backdrop-blur-sm border border-gray-200/50 hover:bg-white hover:scale-110 transition-all duration-300" />
+            </Carousel>
           </div>
         </div>
       </div>

@@ -1,85 +1,78 @@
 "use client";
 
-import React, {
-  useState,
-  useEffect,
-  useCallback,
-  useMemo,
-  memo,
-  useRef,
-} from "react";
+import React, { useState, useCallback, useMemo, memo } from "react";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Card, CardTitle } from "@/components/ui/card";
 import { Plus, ExternalLink } from "lucide-react";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
+import {
   ProductItem as ProductItemType,
   ProductCardProps,
   ProductDetailsDialogProps,
   ButtonWithUrlHandler,
 } from "@/models/interfaces";
-import { NavigationButton } from "@/components/shared";
 
 // Memoized product card component
 const ProductCard = memo(
-  ({ item, index, currentIndex, onCardClick }: ProductCardProps) => (
-    <div
-      key={item.id}
-      className="flex-shrink-0 w-full max-w-5xl scroll-snap-start"
-      role="listitem">
-      <div className="px-8 lg:px-16">
-        <Card
-          className="h-full border-0 bg-white transition-all duration-500 hover:scale-105 rounded-3xl overflow-hidden cursor-pointer group"
-          onClick={() => onCardClick(item)}>
-          <div className="grid lg:grid-cols-2 gap-0 items-stretch min-h-[400px] sm:min-h-[450px] lg:min-h-[500px]">
-            {/* Content Section - Left Side */}
-            <div className="order-2 lg:order-1 p-4 sm:p-6 lg:p-8 flex flex-col justify-center">
-              <div className="flex-1 flex flex-col justify-center">
-                <div className="text-sm font-medium text-gray-500 uppercase tracking-wider mb-4">
-                  {item.label}
-                </div>
-                <CardTitle className="text-xl lg:text-2xl font-bold text-gray-900 leading-tight group-hover:text-blue-900 transition-colors duration-500 mb-3">
-                  {item.headline}.
-                </CardTitle>
-                <p className="text-gray-600 text-sm lg:text-base leading-relaxed mb-4">
-                  {item.description}
-                </p>
-
-                {/* Action Button */}
-                <div className="flex justify-start items-center mt-6">
-                  <Button
-                    variant="black"
-                    size="icon"
-                    className="rounded-full w-12 h-12 p-0 group-hover:scale-110 group-hover:rotate-90 transition-all duration-500 ease-out"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      onCardClick(item);
-                    }}
-                    aria-label={`Learn more about ${item.label}`}>
-                    <Plus className="w-5 h-5 text-white transition-transform duration-300" />
-                  </Button>
-                </div>
+  ({ item, onCardClick }: Omit<ProductCardProps, "index" | "currentIndex">) => (
+    <div className="px-8 lg:px-16">
+      <Card
+        className="h-full border-0 bg-white transition-all duration-500 hover:scale-105 rounded-3xl overflow-hidden cursor-pointer group"
+        onClick={() => onCardClick(item)}>
+        <div className="grid lg:grid-cols-2 gap-0 items-stretch min-h-[400px] sm:min-h-[450px] lg:min-h-[500px]">
+          {/* Content Section - Left Side */}
+          <div className="order-2 lg:order-1 p-4 sm:p-6 lg:p-8 flex flex-col justify-center">
+            <div className="flex-1 flex flex-col justify-center">
+              <div className="text-sm font-medium text-gray-500 uppercase tracking-wider mb-4">
+                {item.label}
               </div>
-            </div>
+              <CardTitle className="text-xl lg:text-2xl font-bold text-gray-900 leading-tight group-hover:text-blue-900 transition-colors duration-500 mb-3">
+                {item.headline}.
+              </CardTitle>
+              <p className="text-gray-600 text-sm lg:text-base leading-relaxed mb-4">
+                {item.description}
+              </p>
 
-            {/* Image Section - Right Side */}
-            <div className="order-1 lg:order-2 relative h-full min-h-[300px] sm:min-h-[350px] lg:min-h-[400px] flex items-center justify-center p-3 sm:p-4 lg:p-6">
-              <div className="relative w-3/4 h-3/4 flex items-center justify-center">
-                <Image
-                  src={item.image}
-                  alt={item.alt}
-                  fill
-                  className="object-contain"
-                  priority={index === currentIndex}
-                  sizes="(max-width: 1024px) 100vw, 50vw"
-                />
+              {/* Action Button */}
+              <div className="flex justify-start items-center mt-6">
+                <Button
+                  variant="black"
+                  size="icon"
+                  className="rounded-full w-12 h-12 p-0 group-hover:scale-110 group-hover:rotate-90 transition-all duration-500 ease-out"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    onCardClick(item);
+                  }}
+                  aria-label={`Learn more about ${item.label}`}>
+                  <Plus className="w-5 h-5 text-white transition-transform duration-300" />
+                </Button>
               </div>
-              <div className="absolute inset-0 bg-gradient-to-l from-transparent via-transparent to-white/10 lg:bg-gradient-to-l lg:from-transparent lg:via-transparent lg:to-white/20"></div>
             </div>
           </div>
-        </Card>
-      </div>
+
+          {/* Image Section - Right Side */}
+          <div className="order-1 lg:order-2 relative h-full min-h-[300px] sm:min-h-[350px] lg:min-h-[400px] flex items-center justify-center p-3 sm:p-4 lg:p-6">
+            <div className="relative w-3/4 h-3/4 flex items-center justify-center">
+              <Image
+                src={item.image}
+                alt={item.alt}
+                fill
+                className="object-contain"
+                sizes="(max-width: 1024px) 100vw, 50vw"
+              />
+            </div>
+            <div className="absolute inset-0 bg-gradient-to-l from-transparent via-transparent to-white/10 lg:bg-gradient-to-l lg:from-transparent lg:via-transparent lg:to-white/20"></div>
+          </div>
+        </div>
+      </Card>
     </div>
   )
 );
@@ -152,42 +145,6 @@ export default function ProductsSection() {
   const [selectedProduct, setSelectedProduct] =
     useState<ProductItemType | null>(null);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [isScrolling, setIsScrolling] = useState(false);
-  const scrollContainerRef = useRef<HTMLDivElement>(null);
-
-  // Inline scroll functionality
-  const scrollToItem = useCallback(
-    (index: number) => {
-      if (!scrollContainerRef.current || isScrolling) return;
-
-      setIsScrolling(true);
-      const container = scrollContainerRef.current;
-      const scrollLeft = index * 800;
-
-      container.scrollTo({
-        left: scrollLeft,
-        behavior: "smooth",
-      });
-
-      setCurrentIndex(index);
-
-      setTimeout(() => setIsScrolling(false), 500);
-    },
-    [isScrolling]
-  );
-
-  const handleScroll = useCallback(() => {
-    if (!scrollContainerRef.current || isScrolling) return;
-
-    const container = scrollContainerRef.current;
-    const scrollLeft = container.scrollLeft;
-    const newIndex = Math.round(scrollLeft / 800);
-
-    if (newIndex !== currentIndex) {
-      setCurrentIndex(newIndex);
-    }
-  }, [currentIndex, isScrolling]);
 
   // Memoized product items data
   const productItems = useMemo(
@@ -327,26 +284,6 @@ export default function ProductsSection() {
     setSelectedProduct(null);
   }, []);
 
-  const handlePrevClick = useCallback(() => {
-    scrollToItem(Math.max(0, currentIndex - 1));
-  }, [scrollToItem, currentIndex]);
-
-  const handleNextClick = useCallback(() => {
-    scrollToItem(Math.min(productItems.length - 1, currentIndex + 1));
-  }, [scrollToItem, currentIndex, productItems.length]);
-
-  useEffect(() => {
-    const container = scrollContainerRef.current;
-    if (container) {
-      container.addEventListener("scroll", handleScroll);
-      return () => container.removeEventListener("scroll", handleScroll);
-    }
-  }, [handleScroll, scrollContainerRef]);
-
-  // No animations needed - removed animation setup
-
-  // No animations needed - removed animation effects
-
   return (
     <>
       <section
@@ -366,43 +303,24 @@ export default function ProductsSection() {
 
           <div>
             <div className="relative">
-              <div
-                ref={scrollContainerRef}
-                className="overflow-x-auto scrollbar-hide scroll-smooth bg-gray-200 p-4 sm:p-6"
-                style={{ scrollSnapType: "x mandatory" }}
-                role="region"
-                aria-label="Products gallery">
-                <div
-                  className="flex gap-4 sm:gap-6 lg:gap-8 pb-4 sm:pb-6"
-                  role="list"
-                  aria-label="Products Gallery">
-                  {productItems.map((item, index) => (
-                    <ProductCard
+              <Carousel
+                className="bg-gray-200 p-4 sm:p-6"
+                opts={{
+                  align: "start",
+                  loop: false,
+                }}>
+                <CarouselContent className="gap-4 sm:gap-6 lg:gap-8 pb-4 sm:pb-6">
+                  {productItems.map((item) => (
+                    <CarouselItem
                       key={item.id}
-                      item={item}
-                      index={index}
-                      currentIndex={currentIndex}
-                      onCardClick={handleCardClick}
-                    />
+                      className="flex-shrink-0 w-full max-w-5xl">
+                      <ProductCard item={item} onCardClick={handleCardClick} />
+                    </CarouselItem>
                   ))}
-                </div>
-              </div>
-
-              {/* Navigation Buttons - Bottom Right */}
-              <div className="absolute right-4 sm:right-6 lg:right-8 bottom-4 sm:bottom-6 lg:bottom-8 flex gap-4 sm:gap-6 z-10">
-                <NavigationButton
-                  direction="prev"
-                  onClick={handlePrevClick}
-                  disabled={currentIndex === 0}
-                  ariaLabel="Previous products gallery"
-                />
-                <NavigationButton
-                  direction="next"
-                  onClick={handleNextClick}
-                  disabled={currentIndex === productItems.length - 1}
-                  ariaLabel="Next products gallery"
-                />
-              </div>
+                </CarouselContent>
+                <CarouselPrevious className="right-20 sm:right-24 lg:right-28 bottom-4 sm:bottom-6 lg:bottom-8 h-16 w-16 rounded-full bg-white/95 backdrop-blur-sm border border-gray-200/50 hover:bg-white hover:scale-110 transition-all duration-300" />
+                <CarouselNext className="right-4 sm:right-6 lg:right-8 bottom-4 sm:bottom-6 lg:bottom-8 h-16 w-16 rounded-full bg-white/95 backdrop-blur-sm border border-gray-200/50 hover:bg-white hover:scale-110 transition-all duration-300" />
+              </Carousel>
             </div>
           </div>
         </div>
