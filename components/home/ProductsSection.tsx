@@ -65,12 +65,12 @@ const ProductCard = memo(
 
             {/* Image Section - Right Side */}
             <div className="order-1 lg:order-2 relative h-full min-h-[300px] sm:min-h-[350px] lg:min-h-[400px] flex items-center justify-center p-3 sm:p-4 lg:p-6">
-              <div className="relative w-3/4 h-3/4 rounded-2xl overflow-hidden ">
+              <div className="relative w-3/4 h-3/4 flex items-center justify-center">
                 <Image
                   src={item.image}
                   alt={item.alt}
                   fill
-                  className="object-contain "
+                  className="object-contain"
                   priority={index === currentIndex}
                   sizes="(max-width: 1024px) 100vw, 50vw"
                 />
@@ -198,7 +198,7 @@ export default function ProductsSection() {
         headline: "Your digital marketplace platform.",
         description:
           "A comprehensive digital marketplace connecting buyers and sellers with seamless transactions and user-friendly interface.",
-        image: "/images/gt_logo_bg_trans.png",
+        image: "/images/gt_logo.png",
         alt: "GobiToday marketplace platform",
         website: "https://gobitoday.com/",
         details:
@@ -351,7 +351,7 @@ export default function ProductsSection() {
     <>
       <section
         id="products-section"
-        className="flex items-center py-8 sm:py-12 lg:py-16 px-4 sm:px-6 lg:px-8"
+        className="flex items-center pt-4 sm:pt-6 lg:pt-8 pb-8 sm:pb-12 lg:pb-16 px-4 sm:px-6 lg:px-8"
         role="main"
         aria-label="Products section">
         <div className="w-full">

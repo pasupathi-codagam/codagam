@@ -1,7 +1,6 @@
 "use client";
 
-import React, { useState, useCallback, useMemo, memo } from "react";
-import Image from "next/image";
+import React, { useState, useCallback, memo } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ContactForm } from "@/components/shared/ContactForm";
@@ -13,11 +12,10 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import {
-  ClientLogo as ClientLogoType,
   ContactFormDialogProps,
   ButtonClickHandler,
 } from "@/models/interfaces";
-import { Marquee } from "@/components/ui/marquee";
+import { ClientLogoCarousel } from "@/components/shared";
 
 // Memoized contact form dialog
 const ContactFormDialog = memo(
@@ -49,73 +47,6 @@ ContactFormDialog.displayName = "ContactFormDialog";
 export default function ClientSection() {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
-  // Memoized client logos data
-  const clientLogos = useMemo(
-    (): ClientLogoType[] => [
-      {
-        name: "Facebook",
-        logo: "https://d3vkpydtgsc252.cloudfront.net/uploads/2021/02/facebook.png",
-        alt: "logo of facebook",
-      },
-      {
-        name: "Google",
-        logo: "https://d3vkpydtgsc252.cloudfront.net/uploads/2021/02/google.png",
-        alt: "logo of google",
-      },
-      {
-        name: "GoodFirms",
-        logo: "https://d3vkpydtgsc252.cloudfront.net/uploads/2021/02/goodfirms.png",
-        alt: "logo of goodfirms",
-      },
-      {
-        name: "Clutch",
-        logo: "https://d3vkpydtgsc252.cloudfront.net/uploads/2021/02/clutch.png",
-        alt: "logo of clutch",
-      },
-      {
-        name: "Upwork",
-        logo: "https://d3vkpydtgsc252.cloudfront.net/uploads/2021/02/upwork.png",
-        alt: "logo of upwork",
-      },
-      {
-        name: "Codeable",
-        logo: "https://d3vkpydtgsc252.cloudfront.net/uploads/2021/02/codeable.png",
-        alt: "logo of codeable",
-      },
-      {
-        name: "Facebook",
-        logo: "https://d3vkpydtgsc252.cloudfront.net/uploads/2021/02/facebook.png",
-        alt: "logo of facebook",
-      },
-      {
-        name: "Google",
-        logo: "https://d3vkpydtgsc252.cloudfront.net/uploads/2021/02/google.png",
-        alt: "logo of google",
-      },
-      {
-        name: "GoodFirms",
-        logo: "https://d3vkpydtgsc252.cloudfront.net/uploads/2021/02/goodfirms.png",
-        alt: "logo of goodfirms",
-      },
-      {
-        name: "Clutch",
-        logo: "https://d3vkpydtgsc252.cloudfront.net/uploads/2021/02/clutch.png",
-        alt: "logo of clutch",
-      },
-      {
-        name: "Upwork",
-        logo: "https://d3vkpydtgsc252.cloudfront.net/uploads/2021/02/upwork.png",
-        alt: "logo of upwork",
-      },
-      {
-        name: "Codeable",
-        logo: "https://d3vkpydtgsc252.cloudfront.net/uploads/2021/02/codeable.png",
-        alt: "logo of codeable",
-      },
-    ],
-    []
-  );
-
   // Optimized event handlers with useCallback
   const handleRequestCallback: ButtonClickHandler = useCallback(() => {
     setIsDialogOpen(true);
@@ -141,45 +72,13 @@ export default function ClientSection() {
         role="main"
         aria-label="Client testimonials and partners section">
         <div className="w-full">
-          {/* Client Logos - Marquee Effect */}
-          <div className="px-4 sm:px-6 lg:px-8 mb-12 sm:mb-16 lg:mb-20">
-            {/* Header Section */}
-            <div className="text-center mb-8 sm:mb-12 lg:mb-16">
-              <div className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-gray-50 to-gray-100 rounded-full mb-8 border border-gray-100">
-                <span className="text-gray-700 text-sm font-semibold uppercase tracking-wider">
-                  Trusted Partners
-                </span>
-              </div>
-              <h3 className="text-2xl lg:text-3xl font-bold text-gray-900 mb-4 leading-tight">
-                Our Partners
-              </h3>
-              <p className="text-base lg:text-lg text-gray-600 max-w-2xl mx-auto leading-relaxed">
-                We&apos;re proud to work with these industry-leading companies
-                that trust us to deliver exceptional results
-              </p>
-            </div>
-
-            {/* Marquee Container */}
-            <div className="relative overflow-hidden bg-white rounded-3xl p-4 sm:p-6 lg:p-8">
-              <Marquee pauseOnHover className="[--duration:20s]">
-                {clientLogos.map((client, index) => (
-                  <div
-                    key={index}
-                    className="mx-8 flex items-center justify-center">
-                    <div className="relative h-16 w-32 flex items-center justify-center">
-                      <Image
-                        src={client.logo}
-                        alt={client.alt}
-                        width={120}
-                        height={60}
-                        className="h-12 w-auto object-contain opacity-60 hover:opacity-100 transition-opacity duration-300 filter grayscale hover:grayscale-0"
-                        sizes="120px"
-                      />
-                    </div>
-                  </div>
-                ))}
-              </Marquee>
-            </div>
+          {/* Client Logos Carousel */}
+          <div className="mb-12 sm:mb-16 lg:mb-20">
+            <ClientLogoCarousel
+              title="Our Partners"
+              subtitle="We're proud to work with these industry-leading companies that trust us to deliver exceptional results"
+              className="px-4 sm:px-6 lg:px-8"
+            />
           </div>
 
           {/* Call to Action */}
