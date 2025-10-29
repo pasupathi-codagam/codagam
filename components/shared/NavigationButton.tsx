@@ -11,7 +11,7 @@ const NavigationButton = memo(
     <Button
       variant="outline"
       size="icon"
-      className="group h-16 w-16 bg-white/95 backdrop-blur-sm border border-gray-200/50 disabled:opacity-40 disabled:cursor-not-allowed hover:bg-white hover:scale-110 transition-all duration-300"
+      className="rounded-full group h-16 w-16 bg-white/95 backdrop-blur-sm border border-gray-200/50 disabled:opacity-40 disabled:cursor-not-allowed hover:bg-white hover:scale-110 transition-all duration-300"
       onClick={onClick}
       disabled={disabled}
       aria-label={ariaLabel}>
