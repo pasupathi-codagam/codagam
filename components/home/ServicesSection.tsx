@@ -20,10 +20,10 @@ const ServiceCard = memo(({ item, index, currentIndex }: ServiceCardProps) => (
     className="flex-shrink-0 w-full max-w-5xl scroll-snap-start"
     role="listitem">
     <div className="px-8 lg:px-16">
-      <div className="grid lg:grid-cols-2 gap-0 items-stretch min-h-[600px]">
+      <div className="grid lg:grid-cols-2 gap-0 items-stretch min-h-[400px] sm:min-h-[450px] lg:min-h-[500px]">
         {/* Image Background - Left Side */}
         <div className="order-1 lg:order-1">
-          <div className="relative h-full min-h-[600px] overflow-hidden rounded-l-3xl">
+          <div className="relative h-full min-h-[300px] sm:min-h-[350px] lg:min-h-[400px] overflow-hidden rounded-l-3xl">
             <Image
               src={item.image}
               alt={item.alt}
@@ -39,17 +39,17 @@ const ServiceCard = memo(({ item, index, currentIndex }: ServiceCardProps) => (
         {/* Content Card - Right Side */}
         <div className="order-2 lg:order-2">
           <Card
-            className="group relative overflow-hidden border-0 shadow-lg hover:shadow-2xl transition-all duration-500 bg-white h-full min-h-[600px]"
+            className="group relative overflow-hidden border-0 shadow-lg hover:shadow-2xl transition-all duration-500 bg-white h-full min-h-[400px] sm:min-h-[450px] lg:min-h-[500px]"
             style={{ borderRadius: "0 1.5rem 1.5rem 0" }}>
-            <div className="p-8 lg:p-12 flex flex-col justify-center h-full">
+            <div className="p-4 sm:p-6 lg:p-8 flex flex-col justify-center h-full">
               <div className="flex-1 flex flex-col justify-center">
                 <CardHeader className="pb-6 px-0">
-                  <CardTitle className="text-4xl lg:text-5xl font-bold text-gray-900 leading-tight">
+                  <CardTitle className="text-xl lg:text-2xl font-bold text-gray-900 leading-tight">
                     {item.title}.
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="flex-1 px-0">
-                  <p className="text-lg text-gray-600 leading-relaxed">
+                  <p className="text-sm lg:text-base text-gray-600 leading-relaxed">
                     {item.description}
                   </p>
                 </CardContent>
@@ -163,15 +163,15 @@ export default function ServicesSection() {
   return (
     <SectionWrapper
       id="services-section"
-      className="min-h-screen flex items-center "
+      className="flex items-center"
       role="main"
       aria-label="Services section">
       <div className="w-full">
-        <div className="text-center mb-20 px-8 lg:px-16">
-          <h2 className="text-5xl lg:text-7xl font-bold text-gray-900 leading-tight mb-8">
+        <div className="text-center mb-12 sm:mb-16 lg:mb-20 px-4 sm:px-6 lg:px-8">
+          <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 leading-tight mb-6">
             Our Services
           </h2>
-          <p className="text-xl lg:text-2xl text-gray-600 max-w-4xl mx-auto">
+          <p className="text-base lg:text-lg text-gray-600 max-w-4xl mx-auto">
             Empowering your digital journey with cutting-edge solutions
           </p>
         </div>
@@ -180,12 +180,12 @@ export default function ServicesSection() {
           <div className="relative">
             <div
               ref={scrollContainerRef}
-              className="overflow-x-auto scrollbar-hide scroll-smooth bg-gray-200 p-6"
+              className="overflow-x-auto scrollbar-hide scroll-smooth bg-gray-200 p-4 sm:p-6"
               style={{ scrollSnapType: "x mandatory" }}
               role="region"
               aria-label="Services gallery">
               <div
-                className="flex gap-8 pb-6"
+                className="flex gap-4 sm:gap-6 lg:gap-8 pb-4 sm:pb-6"
                 role="list"
                 aria-label="Services Gallery">
                 {galleryItems.map((item, index) => (
@@ -200,7 +200,7 @@ export default function ServicesSection() {
             </div>
 
             {/* Navigation Buttons - Bottom Right */}
-            <div className="absolute right-8 bottom-8 flex gap-6 z-10">
+            <div className="absolute right-4 sm:right-6 lg:right-8 bottom-4 sm:bottom-6 lg:bottom-8 flex gap-4 sm:gap-6 z-10">
               <NavigationButton
                 direction="prev"
                 onClick={handlePrevClick}

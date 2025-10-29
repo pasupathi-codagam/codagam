@@ -26,7 +26,7 @@ const HeroSection: React.FC<HeroSectionProps> = memo(() => {
             <div className="px-8 lg:px-16 space-y-8">
               {/* Brand */}
               <div className="space-y-3">
-                <h1 className="text-5xl lg:text-7xl font-bold text-blue-600 leading-none">
+                <h1 className="text-5xl lg:text-7xl font-bold text-black leading-none">
                   Codagam
                 </h1>
                 <p className="text-lg lg:text-xl text-gray-600 font-medium">

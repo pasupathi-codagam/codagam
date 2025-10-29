@@ -29,17 +29,17 @@ const ProductCard = memo(
         <Card
           className="h-full border-0 bg-white transition-all duration-500 hover:scale-105 rounded-3xl overflow-hidden cursor-pointer group"
           onClick={() => onCardClick(item)}>
-          <div className="grid lg:grid-cols-2 gap-0 items-stretch min-h-[600px]">
+          <div className="grid lg:grid-cols-2 gap-0 items-stretch min-h-[400px] sm:min-h-[450px] lg:min-h-[500px]">
             {/* Content Section - Left Side */}
-            <div className="order-2 lg:order-1 p-8 lg:p-12 flex flex-col justify-center">
+            <div className="order-2 lg:order-1 p-4 sm:p-6 lg:p-8 flex flex-col justify-center">
               <div className="flex-1 flex flex-col justify-center">
                 <div className="text-sm font-medium text-gray-500 uppercase tracking-wider mb-4">
                   {item.label}
                 </div>
-                <CardTitle className="text-4xl lg:text-5xl font-bold text-gray-900 mb-6 leading-tight">
+                <CardTitle className="text-xl lg:text-2xl font-bold text-gray-900 mb-3 leading-tight">
                   {item.headline}.
                 </CardTitle>
-                <p className="text-gray-600 text-lg leading-relaxed mb-8">
+                <p className="text-gray-600 text-sm lg:text-base leading-relaxed mb-4">
                   {item.description}
                 </p>
 
@@ -48,20 +48,20 @@ const ProductCard = memo(
                   <Button
                     variant="black"
                     size="icon"
-                    className="rounded-full w-12 h-12 p-0 group-hover:scale-110 group-hover:rotate-90 transition-all duration-500 ease-out"
+                    className="rounded-full w-10 h-10 p-0 group-hover:scale-110 group-hover:rotate-90 transition-all duration-500 ease-out"
                     onClick={(e) => {
                       e.stopPropagation();
                       onCardClick(item);
                     }}
                     aria-label={`Learn more about ${item.label}`}>
-                    <Plus className="w-5 h-5 text-white transition-transform duration-300" />
+                    <Plus className="w-4 h-4 text-white transition-transform duration-300" />
                   </Button>
                 </div>
               </div>
             </div>
 
             {/* Image Section - Right Side */}
-            <div className="order-1 lg:order-2 relative h-full min-h-[600px] flex items-center justify-center p-8">
+            <div className="order-1 lg:order-2 relative h-full min-h-[300px] sm:min-h-[350px] lg:min-h-[400px] flex items-center justify-center p-3 sm:p-4 lg:p-6">
               <div className="relative w-3/4 h-3/4 rounded-2xl overflow-hidden ">
                 <Image
                   src={item.image}
@@ -101,12 +101,12 @@ const ProductDetailsDialog = memo(
             </div>
 
             {/* Product Headline */}
-            <h3 className="text-3xl font-bold text-gray-900 leading-tight">
+            <h3 className="text-2xl font-bold text-gray-900 leading-tight">
               {selectedProduct.headline}
             </h3>
 
             {/* Product Description */}
-            <p className="text-gray-700 leading-relaxed text-lg">
+            <p className="text-gray-700 leading-relaxed text-base">
               {selectedProduct.details}
             </p>
 
@@ -118,7 +118,7 @@ const ProductDetailsDialog = memo(
               <ul className="grid grid-cols-1 md:grid-cols-2 gap-2">
                 {selectedProduct.features.map((feature, index) => (
                   <li key={index} className="flex items-center text-gray-600">
-                    <div className="w-2 h-2 bg-blue-500 rounded-full mr-3 flex-shrink-0"></div>
+                    <div className="w-2 h-2 bg-gray-500 rounded-full mr-3 flex-shrink-0"></div>
                     {feature}
                   </li>
                 ))}
@@ -316,15 +316,15 @@ export default function ProductsSection() {
     <>
       <SectionWrapper
         id="products-section"
-        className="min-h-screen flex items-center"
+        className="flex items-center"
         role="main"
         aria-label="Products section">
         <div className="w-full">
-          <div className="text-center mb-20 px-8 lg:px-16">
-            <h2 className="text-5xl lg:text-7xl font-bold text-gray-900 leading-tight mb-8">
+          <div className="text-center mb-12 sm:mb-16 lg:mb-20 px-4 sm:px-6 lg:px-8">
+            <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 leading-tight mb-6">
               Our Products
             </h2>
-            <p className="text-xl lg:text-2xl text-gray-600 max-w-4xl mx-auto">
+            <p className="text-base lg:text-lg text-gray-600 max-w-4xl mx-auto">
               Solutions that drive results and transform businesses
             </p>
           </div>
@@ -333,12 +333,12 @@ export default function ProductsSection() {
             <div className="relative">
               <div
                 ref={scrollContainerRef}
-                className="overflow-x-auto scrollbar-hide scroll-smooth bg-gray-200 p-6"
+                className="overflow-x-auto scrollbar-hide scroll-smooth bg-gray-200 p-4 sm:p-6"
                 style={{ scrollSnapType: "x mandatory" }}
                 role="region"
                 aria-label="Products gallery">
                 <div
-                  className="flex gap-8 pb-6"
+                  className="flex gap-4 sm:gap-6 lg:gap-8 pb-4 sm:pb-6"
                   role="list"
                   aria-label="Products Gallery">
                   {productItems.map((item, index) => (
@@ -354,7 +354,7 @@ export default function ProductsSection() {
               </div>
 
               {/* Navigation Buttons - Bottom Right */}
-              <div className="absolute right-8 bottom-8 flex gap-6 z-10">
+              <div className="absolute right-4 sm:right-6 lg:right-8 bottom-4 sm:bottom-6 lg:bottom-8 flex gap-4 sm:gap-6 z-10">
                 <NavigationButton
                   direction="prev"
                   onClick={handlePrevClick}

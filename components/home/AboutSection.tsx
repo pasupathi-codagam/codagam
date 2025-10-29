@@ -130,28 +130,27 @@ const AboutSection = memo(() => {
     <>
       <SectionWrapper
         id="about-section"
-        className="min-h-screen bg-white"
+        className="bg-white"
         role="main"
         aria-label="About Codagam section">
-        <div className="w-full px-4 sm:px-6 lg:px-8 py-16 lg:py-24">
+        <div className="w-full">
           <div className="max-w-7xl mx-auto">
             {/* Header Section */}
-            <div className="text-center mb-16 lg:mb-24">
-              <div className="inline-flex items-center px-4 py-2 bg-blue-50 rounded-full mb-8 border border-blue-100">
-                <div className="w-2 h-2 bg-blue-500 rounded-full animate-pulse mr-3"></div>
-                <span className="text-blue-700 text-sm font-semibold">
+            <div className="text-center mb-8 sm:mb-12 lg:mb-16">
+              <div className="inline-flex items-center px-4 py-2 bg-gray-50 rounded-full mb-8 border border-gray-100">
+                <div className="w-2 h-2 bg-gray-500 rounded-full animate-pulse mr-3"></div>
+                <span className="text-gray-700 text-sm font-semibold">
                   About Codagam
                 </span>
               </div>
 
-              <h1 className="text-4xl lg:text-6xl font-bold text-gray-900 mb-6">
-                Empowering <span className="text-blue-600">businesses</span>{" "}
-                with
+              <h1 className="text-2xl lg:text-3xl font-bold text-gray-900 mb-4">
+                Empowering <span className="text-black">businesses</span> with
                 <br />
                 <span className="text-gray-900">innovative solutions</span>
               </h1>
 
-              <p className="text-lg lg:text-xl text-gray-600 leading-relaxed max-w-4xl mx-auto mb-12">
+              <p className="text-base lg:text-lg text-gray-600 leading-relaxed max-w-4xl mx-auto mb-8">
                 At Codagam, we pride ourselves on delivering transformative
                 technology solutions. Our team of experts is dedicated to
                 driving positive change and fostering sustainable growth.
@@ -172,11 +171,11 @@ const AboutSection = memo(() => {
             </div>
 
             {/* Why Choose Us Section */}
-            <div className="bg-gray-50 rounded-3xl p-8 lg:p-12 mb-16 lg:mb-24">
-              <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+            <div className="bg-gray-50 rounded-3xl p-6 sm:p-8 lg:p-10 mb-8 sm:mb-12 lg:mb-16">
+              <div className="grid lg:grid-cols-2 gap-8 sm:gap-10 lg:gap-12 items-center">
                 {/* Left Side - Image */}
                 <div className="order-2 lg:order-1">
-                  <div className="relative h-96 lg:h-[500px] rounded-2xl overflow-hidden">
+                  <div className="relative h-64 sm:h-80 lg:h-96 rounded-2xl overflow-hidden">
                     <Image
                       src="/images/Codagam_Img (2).jpg"
                       alt="Codagam team and technology solutions"
@@ -190,9 +189,9 @@ const AboutSection = memo(() => {
                 </div>
 
                 {/* Right Side - Content */}
-                <div className="order-1 lg:order-2 space-y-8">
+                <div className="order-1 lg:order-2 space-y-6 sm:space-y-8">
                   <div>
-                    <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-6">
+                    <h2 className="text-2xl lg:text-3xl font-bold text-gray-900 mb-4">
                       Why Us?
                     </h2>
                     <p className="text-lg text-gray-600 leading-relaxed mb-6">
@@ -207,7 +206,7 @@ const AboutSection = memo(() => {
 
                   <div className="space-y-6">
                     <div>
-                      <h3 className="text-xl font-semibold text-gray-900 mb-3">
+                      <h3 className="text-lg font-semibold text-gray-900 mb-2">
                         AI-Driven Excellence
                       </h3>
                       <p className="text-gray-600 leading-relaxed">
@@ -220,7 +219,7 @@ const AboutSection = memo(() => {
                     </div>
 
                     <div>
-                      <h3 className="text-xl font-semibold text-gray-900 mb-3">
+                      <h3 className="text-lg font-semibold text-gray-900 mb-2">
                         Innovation at the Forefront
                       </h3>
                       <p className="text-gray-600 leading-relaxed">

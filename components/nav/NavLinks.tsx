@@ -25,7 +25,7 @@ const NavLinks: React.FC<NavLinksProps> = ({ onLinkClick }) => {
       services: "services-section",
       products: "products-section",
       careers: "career-section",
-      contact: "footer-section",
+      contact: "client-section",
     }),
     []
   );

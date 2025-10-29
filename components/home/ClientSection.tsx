@@ -138,30 +138,30 @@ export default function ClientSection() {
     <>
       <SectionWrapper
         id="client-section"
-        className="min-h-screen"
+        className=""
         role="main"
         aria-label="Client testimonials and partners section">
         <div className="w-full">
           {/* Client Logos - Marquee Effect */}
-          <div className="px-8 lg:px-16 mb-20">
+          <div className="px-4 sm:px-6 lg:px-8 mb-12 sm:mb-16 lg:mb-20">
             {/* Header Section */}
-            <div className="text-center mb-16">
-              <div className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-full mb-8 border border-blue-100">
-                <span className="text-blue-700 text-sm font-semibold uppercase tracking-wider">
+            <div className="text-center mb-8 sm:mb-12 lg:mb-16">
+              <div className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-gray-50 to-gray-100 rounded-full mb-8 border border-gray-100">
+                <span className="text-gray-700 text-sm font-semibold uppercase tracking-wider">
                   Trusted Partners
                 </span>
               </div>
-              <h3 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-6 leading-tight">
+              <h3 className="text-2xl lg:text-3xl font-bold text-gray-900 mb-4 leading-tight">
                 Our Partners
               </h3>
-              <p className="text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed">
+              <p className="text-base lg:text-lg text-gray-600 max-w-2xl mx-auto leading-relaxed">
                 We&apos;re proud to work with these industry-leading companies
                 that trust us to deliver exceptional results
               </p>
             </div>
 
             {/* Marquee Container */}
-            <div className="relative overflow-hidden bg-white rounded-3xl p-8">
+            <div className="relative overflow-hidden bg-white rounded-3xl p-4 sm:p-6 lg:p-8">
               <Marquee pauseOnHover className="[--duration:20s]">
                 {clientLogos.map((client, index) => (
                   <div
@@ -184,17 +184,17 @@ export default function ClientSection() {
           </div>
 
           {/* Call to Action */}
-          <div className="px-8 lg:px-16">
+          <div className="px-4 sm:px-6 lg:px-8">
             <Card className="max-w-4xl mx-auto border-0 bg-gradient-to-br from-white to-gray-50/50 transition-all duration-700">
-              <CardContent className="p-12 lg:p-16 text-center">
+              <CardContent className="p-8 sm:p-10 lg:p-12 text-center">
                 <CardHeader className="pb-8">
-                  <CardTitle className="text-3xl lg:text-4xl font-bold text-gray-900 mb-6">
+                  <CardTitle className="text-2xl lg:text-3xl font-bold text-gray-900 mb-4">
                     Ready to join our success stories?
                   </CardTitle>
                 </CardHeader>
 
                 <CardContent className="pb-8">
-                  <p className="text-lg text-gray-600 mb-8 max-w-2xl mx-auto leading-relaxed">
+                  <p className="text-base text-gray-600 mb-6 max-w-2xl mx-auto leading-relaxed">
                     Let&apos;s discuss how we can help your business achieve its
                     goals with innovative technology solutions.
                   </p>
