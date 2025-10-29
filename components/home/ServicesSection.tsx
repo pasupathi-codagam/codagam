@@ -42,7 +42,7 @@ const ServiceCard = memo(({ item, index, currentIndex }: ServiceCardProps) => (
         {/* Content Card - Right Side */}
         <div className="order-2 lg:order-2">
           <Card
-            className="group relative overflow-hidden border-0 shadow-lg hover:shadow-2xl transition-all duration-500 bg-white h-full min-h-[400px] sm:min-h-[450px] lg:min-h-[500px]"
+            className="relative overflow-hidden border-0 shadow-lg bg-white h-full min-h-[400px] sm:min-h-[450px] lg:min-h-[500px]"
             style={{ borderRadius: "0 1.5rem 1.5rem 0" }}>
             <div className="p-4 sm:p-6 lg:p-8 flex flex-col justify-center h-full">
               <div className="flex-1 flex flex-col justify-center">
