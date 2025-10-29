@@ -238,7 +238,7 @@ export default function CareerSection() {
                     <div className="flex items-center justify-between w-full px-4 sm:px-6">
                       <div className="flex items-center space-x-3 sm:space-x-4">
                         <div className="w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                          <Send className="w-5 h-5 sm:w-6 sm:h-6 text-blue-600" />
+                          <Send className="w-5 h-5 sm:w-6 sm:h-6 text-primary" />
                         </div>
                         <span className="text-foreground font-medium text-sm sm:text-base">
                           Apply Now
@@ -335,8 +335,8 @@ export default function CareerSection() {
                         <div
                           className={`p-3 sm:p-4 rounded-xl text-sm sm:text-base ${
                             submitMessage.includes("error")
-                              ? "bg-red-50 text-red-700 border border-red-200"
-                              : "bg-green-50 text-green-700 border border-green-200"
+                              ? "bg-red-50 dark:bg-red-900/20 text-red-700 dark:text-red-400 border border-red-200 dark:border-red-800"
+                              : "bg-green-50 dark:bg-green-900/20 text-green-700 dark:text-green-400 border border-green-200 dark:border-green-800"
                           }`}>
                           {submitMessage}
                         </div>

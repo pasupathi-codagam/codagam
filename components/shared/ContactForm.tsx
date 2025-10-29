@@ -107,7 +107,7 @@ export function ContactForm({
   const FormContent = () => (
     <div className={className}>
       {showTitle && (
-        <h4 className="font-semibold mb-3 sm:mb-4 text-black flex items-center text-sm sm:text-base">
+        <h4 className="font-semibold mb-3 sm:mb-4 text-foreground flex items-center text-sm sm:text-base">
           📩 Get in Touch
         </h4>
       )}
@@ -134,7 +134,7 @@ export function ContactForm({
           }`}
           required
         />
-        {emailError && <p className="text-red-500 text-xs">{emailError}</p>}
+        {emailError && <p className="text-destructive text-xs">{emailError}</p>}
         <input
           type="tel"
           name="phone"
@@ -163,7 +163,9 @@ export function ContactForm({
           {isSubmitting ? "Sending..." : "Send Message"}
         </Button>
         {submitMessage && (
-          <p className="text-green-600 text-xs mt-2">{submitMessage}</p>
+          <p className="text-green-600 dark:text-green-400 text-xs mt-2">
+            {submitMessage}
+          </p>
         )}
       </form>
     </div>
@@ -180,7 +182,7 @@ export function ContactForm({
         </DialogTrigger>
         <DialogContent className="max-w-lg p-4 sm:p-6">
           <DialogHeader>
-            <DialogTitle className="text-lg sm:text-xl text-black">
+            <DialogTitle className="text-lg sm:text-xl text-foreground">
               Get in Touch
             </DialogTitle>
             <DialogDescription className="text-sm sm:text-base">

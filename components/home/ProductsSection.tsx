@@ -34,7 +34,7 @@ const ProductCard = memo(
               <div className="text-xs sm:text-sm font-medium text-muted-foreground uppercase tracking-wider mb-3 sm:mb-4">
                 {item.label}
               </div>
-              <CardTitle className="text-lg sm:text-xl lg:text-2xl font-bold text-foreground leading-tight group-hover:text-blue-900 transition-colors duration-500 mb-2 sm:mb-3">
+              <CardTitle className="text-lg sm:text-xl lg:text-2xl font-bold text-foreground leading-tight group-hover:text-primary transition-colors duration-500 mb-2 sm:mb-3">
                 {item.headline}.
               </CardTitle>
               <p className="text-muted-foreground text-xs sm:text-sm lg:text-base leading-relaxed mb-3 sm:mb-4">

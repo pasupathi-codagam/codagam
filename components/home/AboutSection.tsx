@@ -129,7 +129,7 @@ const AboutSection = memo(() => {
     <>
       <section
         id="about-section"
-        className="bg-card pt-4 sm:pt-6 lg:pt-8 pb-6 sm:pb-8 lg:pb-10 px-4 sm:px-6 lg:px-8"
+        className="pt-4 sm:pt-6 lg:pt-8 pb-6 sm:pb-8 lg:pb-10 px-4 sm:px-6 lg:px-8"
         role="main"
         aria-label="About Codagam section">
         <div className="w-full">
@@ -144,7 +144,8 @@ const AboutSection = memo(() => {
               </div>
 
               <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-foreground mb-4 px-4">
-                Empowering <span className="text-black">businesses</span> with
+                Empowering <span className="text-foreground">businesses</span>{" "}
+                with
                 <br />
                 <span className="text-foreground">innovative solutions</span>
               </h1>
@@ -170,7 +171,7 @@ const AboutSection = memo(() => {
             </div>
 
             {/* Why Choose Us Section */}
-            <div className="bg-accent rounded-2xl sm:rounded-3xl p-4 sm:p-6 lg:p-8 mb-6 sm:mb-8 lg:mb-10">
+            <div className="rounded-2xl sm:rounded-3xl p-4 sm:p-6 lg:p-8 mb-6 sm:mb-8 lg:mb-10">
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 lg:gap-12 items-center">
                 {/* Left Side - Image */}
                 <div className="order-2 lg:order-1">

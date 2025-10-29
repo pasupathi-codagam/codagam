@@ -178,7 +178,7 @@ export const ClientLogoCarousel: React.FC<ClientLogoCarouselProps> = ({
     <section className={`w-full py-4 sm:py-6 md:py-8 lg:py-10 ${className}`}>
       {/* Header */}
       <div className="text-center mb-4 sm:mb-6 md:mb-8 w-full px-4">
-        <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-black mb-4 sm:mb-6">
+        <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-4 sm:mb-6">
           {title}
         </h2>
         <p className="text-sm sm:text-base md:text-lg lg:text-xl text-muted-foreground leading-relaxed">

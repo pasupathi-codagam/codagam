@@ -91,8 +91,8 @@ export function Footer() {
 
           {/* Quick Links */}
           <div>
-            <h4 className="font-semibold mb-3 text-sm sm:text-base text-black flex items-center justify-center sm:justify-start">
-              <ArrowRight className="h-3 w-3 sm:h-4 sm:w-4 mr-2 text-blue-900" />
+            <h4 className="font-semibold mb-3 text-sm sm:text-base text-foreground flex items-center justify-center sm:justify-start">
+              <ArrowRight className="h-3 w-3 sm:h-4 sm:w-4 mr-2 text-primary" />
               Quick Links
             </h4>
             <nav className="flex flex-col space-y-1 items-center sm:items-start">
@@ -102,7 +102,7 @@ export function Footer() {
                   onClick={() => handleNavClick(link.href)}
                   variant="ghost"
                   size="sm"
-                  className="flex items-center px-2 py-1 hover:bg-blue-50 hover:text-blue-900 transition group text-center sm:text-left text-xs sm:text-sm">
+                  className="flex items-center px-2 py-1 hover:bg-accent hover:text-primary transition group text-center sm:text-left text-xs sm:text-sm">
                   <link.icon className="w-3 h-3 sm:w-4 sm:h-4 mr-2 text-muted-foreground group-hover:text-primary" />
                   {link.label}
                 </Button>
@@ -112,7 +112,7 @@ export function Footer() {
 
           {/* Social Media Links */}
           <div>
-            <h4 className="font-semibold mb-3 sm:mb-4 text-sm sm:text-base text-black text-center sm:text-left">
+            <h4 className="font-semibold mb-3 sm:mb-4 text-sm sm:text-base text-foreground text-center sm:text-left">
               Follow Us
             </h4>
             <div className="flex items-center flex-wrap gap-2 sm:gap-3 justify-center sm:justify-start">
@@ -124,7 +124,7 @@ export function Footer() {
               <Link
                 href="https://www.facebook.com/codagam"
                 className="flex items-center justify-center w-8 h-8 sm:w-10 sm:h-10 hover:scale-110 transition-transform duration-300">
-                <FacebookIcon className="h-5 w-5 sm:h-6 sm:w-6 text-blue-600" />
+                <FacebookIcon className="h-5 w-5 sm:h-6 sm:w-6 text-primary" />
               </Link>
               <Link
                 href="https://twitter.com/codagam"
@@ -134,35 +134,35 @@ export function Footer() {
               <Link
                 href="https://linkedin.com/company/codagam"
                 className="flex items-center justify-center w-8 h-8 sm:w-10 sm:h-10 hover:scale-110 transition-transform duration-300">
-                <Linkedin className="h-5 w-5 sm:h-6 sm:w-6 text-blue-700" />
+                <Linkedin className="h-5 w-5 sm:h-6 sm:w-6 text-primary" />
               </Link>
             </div>
           </div>
 
           {/* Contact Form */}
           <div>
-            <h4 className="font-semibold mb-3 sm:mb-4 text-sm sm:text-base text-black text-center sm:text-left">
+            <h4 className="font-semibold mb-3 sm:mb-4 text-sm sm:text-base text-foreground text-center sm:text-left">
               Get in Touch
             </h4>
-            <ContactForm showTitle={false} className="w-full" />
+            <ContactForm showTitle={false} className="w-full mb-4" />
           </div>
         </div>
       </div>
 
       {/* Bottom Bar */}
-      <div className="border-t border-border pt-2 pb-1">
+      <div className="border-t border-border pt-4 pb-4">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col sm:flex-row justify-center sm:justify-between items-center text-xs sm:text-sm text-muted-foreground gap-2">
             <p>&copy; 2024 Codagam. All rights reserved.</p>
             <div className="flex gap-3 sm:gap-4">
               <Link
                 href="/privacy"
-                className="hover:text-blue-900 transition text-xs sm:text-sm">
+                className="hover:text-primary transition text-xs sm:text-sm">
                 Privacy Policy
               </Link>
               <Link
                 href="/terms"
-                className="hover:text-blue-900 transition text-xs sm:text-sm">
+                className="hover:text-primary transition text-xs sm:text-sm">
                 Terms of Service
               </Link>
             </div>
