@@ -177,6 +177,7 @@ export interface BenefitCard {
   color: string;
   bgColor: string;
   elementId: string;
+  icon: React.ComponentType<{ className?: string }>;
 }
 
 export interface BenefitCardProps {

@@ -51,7 +51,7 @@ const ProductCard = memo(
                   <Button
                     variant="black"
                     size="icon"
-                    className="rounded-full w-10 h-10 p-0 group-hover:scale-110 group-hover:rotate-90 transition-all duration-500 ease-out"
+                    className="rounded-full  w-10 h-10 p-0 group-hover:scale-110 group-hover:rotate-90 transition-all duration-500 ease-out"
                     onClick={(e) => {
                       e.stopPropagation();
                       onCardClick(item);
@@ -133,7 +133,7 @@ const ProductDetailsDialog = memo(
               <Button
                 variant="black"
                 onClick={() => onVisitWebsite(selectedProduct.website)}
-                className="rounded-full px-8 py-3 text-base font-medium inline-flex items-center gap-2"
+                className="px-8 py-3 text-base font-medium inline-flex items-center gap-2"
                 aria-label={`Visit ${selectedProduct.label} website`}>
                 Learn more
                 <ExternalLink className="w-4 h-4" />

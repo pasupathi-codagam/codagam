@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { Menu, X } from "lucide-react";
 import NavLinks from "./NavLinks";
+import { Button } from "@/components/ui/button";
 
 const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -20,17 +21,18 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="bg-white fixed top-0 left-0 right-0 z-50">
+    <nav className="fixed top-0 left-0 right-0 z-50 bg-white shadow-sm border-b border-gray-200">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
-          <button
+          <Button
             onClick={handleLogoClick}
-            className="flex items-center space-x-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 rounded-md p-1">
+            variant="ghost"
+            className="flex items-center space-x-2 p-1">
             <span className="text-lg sm:text-xl font-bold text-blue-900">
               Codagam
             </span>
-          </button>
+          </Button>
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-8">
@@ -38,15 +40,17 @@ const Navbar = () => {
           </div>
 
           {/* Mobile Menu Button */}
-          <button
+          <Button
             onClick={toggleMobileMenu}
-            className="md:hidden p-2 rounded-md text-gray-700 hover:text-gray-900 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all duration-200">
+            variant="ghost"
+            size="icon"
+            className="md:hidden text-gray-700 hover:text-gray-900 hover:bg-gray-50">
             {isMobileMenuOpen ? (
               <X className="h-6 w-6" />
             ) : (
               <Menu className="h-6 w-6" />
             )}
-          </button>
+          </Button>
         </div>
 
         {/* Mobile Navigation */}

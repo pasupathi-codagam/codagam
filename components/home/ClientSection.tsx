@@ -98,7 +98,7 @@ export default function ClientSection() {
                   </p>
 
                   <Button
-                    className="px-12 py-4 text-lg font-semibold rounded-full transition-all duration-500 hover:scale-110"
+                    className="px-12 py-4 text-lg font-semibold transition-all duration-500 hover:scale-110"
                     onClick={handleRequestCallback}
                     variant="black"
                     size="lg"

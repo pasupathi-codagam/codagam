@@ -6,7 +6,7 @@ import { HeroSectionProps, ButtonClickHandler } from "@/models/interfaces";
 
 const HeroSection: React.FC<HeroSectionProps> = memo(() => {
   const handleGetStarted: ButtonClickHandler = useCallback(() => {
-    const element = document.getElementById("client-section");
+    const element = document.getElementById("footer-section");
     if (element) {
       element.scrollIntoView({ behavior: "smooth" });
     }
@@ -25,7 +25,7 @@ const HeroSection: React.FC<HeroSectionProps> = memo(() => {
             <div className="px-8 lg:px-16 space-y-8">
               {/* Brand */}
               <div className="space-y-3">
-                <h1 className="text-5xl lg:text-7xl font-bold text-black leading-none">
+                <h1 className="text-5xl lg:text-7xl font-bold text-blue-900 leading-none">
                   Codagam
                 </h1>
                 <p className="text-lg lg:text-xl text-gray-600 font-medium">
@@ -52,7 +52,7 @@ const HeroSection: React.FC<HeroSectionProps> = memo(() => {
                   onClick={handleGetStarted}
                   variant="black"
                   size="lg"
-                  className="px-8 py-4 rounded-full text-lg font-medium transition-all duration-300 hover:scale-105"
+                  className="px-8 py-4  text-lg font-medium transition-all duration-300 hover:scale-105"
                   aria-label="Get started with Codagam services">
                   Get Started
                 </Button>

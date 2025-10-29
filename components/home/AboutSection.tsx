@@ -136,7 +136,7 @@ const AboutSection = memo(() => {
           <div className="max-w-7xl mx-auto">
             {/* Header Section */}
             <div className="text-center mb-8 sm:mb-12 lg:mb-16">
-              <div className="inline-flex items-center px-4 py-2 bg-gray-50 rounded-full mb-8 border border-gray-100">
+              <div className="inline-flex items-center px-4 py-2 bg-gray-50 mb-8 border border-gray-100">
                 <div className="w-2 h-2 bg-gray-500 rounded-full animate-pulse mr-3"></div>
                 <span className="text-gray-700 text-sm font-semibold">
                   About Codagam
