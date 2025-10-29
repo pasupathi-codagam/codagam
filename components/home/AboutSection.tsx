@@ -236,40 +236,6 @@ const AboutSection = memo(() => {
                 </div>
               </div>
             </div>
-
-            {/* Call to Action */}
-            <div className="text-center">
-              <div className="max-w-3xl mx-auto">
-                <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-6">
-                  Ready to get started?
-                </h2>
-
-                <p className="text-lg text-gray-600 mb-8 leading-relaxed">
-                  Join hundreds of businesses that have transformed their
-                  operations with our AI-driven solutions and R&D innovations.
-                </p>
-
-                <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                  <Button
-                    onClick={handleContactClick}
-                    variant="black"
-                    size="lg"
-                    className="px-8 py-4 rounded-full font-medium transition-all duration-300 transform hover:scale-105"
-                    aria-label="Start your project with Codagam">
-                    Start your project
-                  </Button>
-
-                  <Button
-                    onClick={handleProductsClick}
-                    variant="outline"
-                    size="lg"
-                    className="px-8 py-4 rounded-full font-medium transition-all duration-300 transform hover:scale-105 border-2 border-gray-300 hover:border-gray-400"
-                    aria-label="View our work and products">
-                    View our work
-                  </Button>
-                </div>
-              </div>
-            </div>
           </div>
         </div>
       </SectionWrapper>
