@@ -17,7 +17,6 @@ import {
   ContactFormDialogProps,
   ButtonClickHandler,
 } from "@/models/interfaces";
-import { SectionWrapper } from "@/components/shared";
 
 // Stats card component
 const StatsCard = memo(
@@ -128,9 +127,9 @@ const AboutSection = memo(() => {
 
   return (
     <>
-      <SectionWrapper
+      <section
         id="about-section"
-        className="bg-white"
+        className="bg-white py-8 sm:py-12 lg:py-16 px-4 sm:px-6 lg:px-8"
         role="main"
         aria-label="About Codagam section">
         <div className="w-full">
@@ -237,7 +236,7 @@ const AboutSection = memo(() => {
             </div>
           </div>
         </div>
-      </SectionWrapper>
+      </section>
 
       {/* Contact Form Dialog */}
       <ContactFormDialog

@@ -1,17 +1,20 @@
 "use client";
 
-import React, { useEffect, useCallback, useMemo, memo } from "react";
+import React, {
+  useState,
+  useEffect,
+  useCallback,
+  useMemo,
+  memo,
+  useRef,
+} from "react";
 import Image from "next/image";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   GalleryItem as GalleryItemType,
   ServiceCardProps,
 } from "@/models/interfaces";
-import {
-  SectionWrapper,
-  useScrollContainer,
-  NavigationButton,
-} from "@/components/shared";
+import { NavigationButton } from "@/components/shared";
 
 // Memoized service card component
 const ServiceCard = memo(({ item, index, currentIndex }: ServiceCardProps) => (
@@ -65,9 +68,42 @@ const ServiceCard = memo(({ item, index, currentIndex }: ServiceCardProps) => (
 ServiceCard.displayName = "ServiceCard";
 
 export default function ServicesSection() {
-  // Use the reusable scroll container
-  const { currentIndex, scrollContainerRef, scrollToItem, handleScroll } =
-    useScrollContainer(800);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [isScrolling, setIsScrolling] = useState(false);
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+
+  // Inline scroll functionality
+  const scrollToItem = useCallback(
+    (index: number) => {
+      if (!scrollContainerRef.current || isScrolling) return;
+
+      setIsScrolling(true);
+      const container = scrollContainerRef.current;
+      const scrollLeft = index * 800;
+
+      container.scrollTo({
+        left: scrollLeft,
+        behavior: "smooth",
+      });
+
+      setCurrentIndex(index);
+
+      setTimeout(() => setIsScrolling(false), 500);
+    },
+    [isScrolling]
+  );
+
+  const handleScroll = useCallback(() => {
+    if (!scrollContainerRef.current || isScrolling) return;
+
+    const container = scrollContainerRef.current;
+    const scrollLeft = container.scrollLeft;
+    const newIndex = Math.round(scrollLeft / 800);
+
+    if (newIndex !== currentIndex) {
+      setCurrentIndex(newIndex);
+    }
+  }, [currentIndex, isScrolling]);
 
   // Memoized gallery items data
   const galleryItems = useMemo(
@@ -161,9 +197,9 @@ export default function ServicesSection() {
   // No animations needed - removed animation effects
 
   return (
-    <SectionWrapper
+    <section
       id="services-section"
-      className="flex items-center"
+      className="flex items-center py-8 sm:py-12 lg:py-16 px-4 sm:px-6 lg:px-8"
       role="main"
       aria-label="Services section">
       <div className="w-full">
@@ -217,6 +253,6 @@ export default function ServicesSection() {
           </div>
         </div>
       </div>
-    </SectionWrapper>
+    </section>
   );
 }

@@ -1,6 +1,13 @@
 "use client";
 
-import React, { useState, useEffect, useCallback, useMemo, memo } from "react";
+import React, {
+  useState,
+  useEffect,
+  useCallback,
+  useMemo,
+  memo,
+  useRef,
+} from "react";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Card, CardTitle } from "@/components/ui/card";
@@ -12,11 +19,7 @@ import {
   ProductDetailsDialogProps,
   ButtonWithUrlHandler,
 } from "@/models/interfaces";
-import {
-  SectionWrapper,
-  NavigationButton,
-  useScrollContainer,
-} from "@/components/shared";
+import { NavigationButton } from "@/components/shared";
 
 // Memoized product card component
 const ProductCard = memo(
@@ -149,10 +152,42 @@ export default function ProductsSection() {
   const [selectedProduct, setSelectedProduct] =
     useState<ProductItemType | null>(null);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [isScrolling, setIsScrolling] = useState(false);
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
 
-  // Use the reusable scroll container
-  const { currentIndex, scrollContainerRef, scrollToItem, handleScroll } =
-    useScrollContainer(800);
+  // Inline scroll functionality
+  const scrollToItem = useCallback(
+    (index: number) => {
+      if (!scrollContainerRef.current || isScrolling) return;
+
+      setIsScrolling(true);
+      const container = scrollContainerRef.current;
+      const scrollLeft = index * 800;
+
+      container.scrollTo({
+        left: scrollLeft,
+        behavior: "smooth",
+      });
+
+      setCurrentIndex(index);
+
+      setTimeout(() => setIsScrolling(false), 500);
+    },
+    [isScrolling]
+  );
+
+  const handleScroll = useCallback(() => {
+    if (!scrollContainerRef.current || isScrolling) return;
+
+    const container = scrollContainerRef.current;
+    const scrollLeft = container.scrollLeft;
+    const newIndex = Math.round(scrollLeft / 800);
+
+    if (newIndex !== currentIndex) {
+      setCurrentIndex(newIndex);
+    }
+  }, [currentIndex, isScrolling]);
 
   // Memoized product items data
   const productItems = useMemo(
@@ -314,9 +349,9 @@ export default function ProductsSection() {
 
   return (
     <>
-      <SectionWrapper
+      <section
         id="products-section"
-        className="flex items-center"
+        className="flex items-center py-8 sm:py-12 lg:py-16 px-4 sm:px-6 lg:px-8"
         role="main"
         aria-label="Products section">
         <div className="w-full">
@@ -371,7 +406,7 @@ export default function ProductsSection() {
             </div>
           </div>
         </div>
-      </SectionWrapper>
+      </section>
 
       {/* Product Details Dialog */}
       <ProductDetailsDialog

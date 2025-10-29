@@ -17,7 +17,6 @@ import {
   ContactFormDialogProps,
   ButtonClickHandler,
 } from "@/models/interfaces";
-import { SectionWrapper } from "@/components/shared";
 import { Marquee } from "@/components/ui/marquee";
 
 // Memoized contact form dialog
@@ -136,9 +135,9 @@ export default function ClientSection() {
 
   return (
     <>
-      <SectionWrapper
+      <section
         id="client-section"
-        className=""
+        className="py-8 sm:py-12 lg:py-16 px-4 sm:px-6 lg:px-8"
         role="main"
         aria-label="Client testimonials and partners section">
         <div className="w-full">
@@ -212,7 +211,7 @@ export default function ClientSection() {
             </Card>
           </div>
         </div>
-      </SectionWrapper>
+      </section>
 
       {/* Contact Form Dialog */}
       <ContactFormDialog

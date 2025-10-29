@@ -3,7 +3,6 @@
 import React, { memo, useCallback } from "react";
 import { Button } from "@/components/ui/button";
 import { HeroSectionProps, ButtonClickHandler } from "@/models/interfaces";
-import { SectionWrapper } from "@/components/shared";
 
 const HeroSection: React.FC<HeroSectionProps> = memo(() => {
   const handleGetStarted: ButtonClickHandler = useCallback(() => {
@@ -14,9 +13,9 @@ const HeroSection: React.FC<HeroSectionProps> = memo(() => {
   }, []);
 
   return (
-    <SectionWrapper
+    <section
       id="hero-section"
-      className="min-h-screen bg-white flex items-center"
+      className="min-h-screen bg-white flex items-center py-8 sm:py-12 lg:py-16 px-4 sm:px-6 lg:px-8"
       role="banner"
       aria-label="Hero section">
       <div className="w-full">
@@ -78,7 +77,7 @@ const HeroSection: React.FC<HeroSectionProps> = memo(() => {
           </div>
         </div>
       </div>
-    </SectionWrapper>
+    </section>
   );
 });
 

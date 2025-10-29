@@ -23,7 +23,6 @@ import {
   Mail,
   FileText,
 } from "lucide-react";
-import { SectionWrapper } from "@/components/shared";
 
 // Memoized benefit card component with collapsible
 const BenefitCard = memo(
@@ -160,9 +159,9 @@ export default function CareerSection() {
   );
 
   return (
-    <SectionWrapper
+    <section
       id="career-section"
-      className=""
+      className="py-8 sm:py-12 lg:py-16 px-4 sm:px-6 lg:px-8"
       role="main"
       aria-label="Career opportunities section">
       <div className="w-full">
@@ -339,6 +338,6 @@ export default function CareerSection() {
           </div>
         </div>
       </div>
-    </SectionWrapper>
+    </section>
   );
 }
