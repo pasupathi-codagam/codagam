@@ -18,11 +18,11 @@ import {
 // Memoized service card component
 const ServiceCard = memo(
   ({ item }: Omit<ServiceCardProps, "index" | "currentIndex">) => (
-    <div className="px-8 lg:px-16">
-      <div className="grid lg:grid-cols-2 gap-0 items-stretch min-h-[400px] sm:min-h-[450px] lg:min-h-[500px] group-hover:scale-[1.02] transition-all duration-500 ease-out group">
+    <div className="px-4 sm:px-6 lg:px-8 xl:px-16">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-0 items-stretch min-h-[350px] sm:min-h-[400px] md:min-h-[450px] lg:min-h-[500px] group-hover:scale-[1.02] transition-all duration-500 ease-out group">
         {/* Image Background - Left Side */}
         <div className="order-1 lg:order-1">
-          <div className="relative h-full min-h-[300px] sm:min-h-[350px] lg:min-h-[400px] overflow-hidden rounded-l-3xl group-hover:shadow-xl transition-all duration-500">
+          <div className="relative h-full min-h-[250px] sm:min-h-[300px] md:min-h-[350px] lg:min-h-[400px] overflow-hidden rounded-t-2xl lg:rounded-l-3xl lg:rounded-t-none group-hover:shadow-xl transition-all duration-500">
             <Image
               src={item.image}
               alt={item.alt}
@@ -37,17 +37,17 @@ const ServiceCard = memo(
         {/* Content Card - Right Side */}
         <div className="order-2 lg:order-2">
           <Card
-            className="relative overflow-hidden border-0 shadow-lg bg-white h-full min-h-[400px] sm:min-h-[450px] lg:min-h-[500px] group-hover:shadow-xl group-hover:bg-gray-50 transition-all duration-500"
+            className="relative overflow-hidden border-0 shadow-lg bg-white h-full min-h-[350px] sm:min-h-[400px] md:min-h-[450px] lg:min-h-[500px] group-hover:shadow-xl group-hover:bg-gray-50 transition-all duration-500 rounded-b-2xl lg:rounded-r-3xl lg:rounded-b-none"
             style={{ borderRadius: "0 1.5rem 1.5rem 0" }}>
             <div className="p-4 sm:p-6 lg:p-8 flex flex-col justify-center h-full">
               <div className="flex-1 flex flex-col justify-center">
-                <CardHeader className="pb-6 px-0">
-                  <CardTitle className="text-xl lg:text-2xl font-bold text-gray-900 leading-tight group-hover:text-blue-900 transition-colors duration-500">
+                <CardHeader className="pb-4 sm:pb-6 px-0">
+                  <CardTitle className="text-lg sm:text-xl lg:text-2xl font-bold text-gray-900 leading-tight group-hover:text-blue-900 transition-colors duration-500">
                     {item.title}.
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="flex-1 px-0">
-                  <p className="text-sm lg:text-base text-gray-600 leading-relaxed group-hover:text-gray-700 transition-colors duration-500">
+                  <p className="text-xs sm:text-sm lg:text-base text-gray-600 leading-relaxed group-hover:text-gray-700 transition-colors duration-500">
                     {item.description}
                   </p>
                 </CardContent>
@@ -144,10 +144,10 @@ export default function ServicesSection() {
       aria-label="Services section">
       <div className="w-full">
         <div className="text-center mb-6 sm:mb-8 lg:mb-10 px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 leading-tight mb-6">
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 leading-tight mb-4 sm:mb-6">
             Our Services
           </h2>
-          <p className="text-base lg:text-lg text-gray-600 max-w-4xl mx-auto">
+          <p className="text-sm sm:text-base lg:text-lg text-gray-600 max-w-4xl mx-auto">
             Empowering your digital journey with cutting-edge solutions
           </p>
         </div>
@@ -155,22 +155,22 @@ export default function ServicesSection() {
         <div>
           <div className="relative">
             <Carousel
-              className="bg-gray-200 p-4 sm:p-6"
+              className="bg-gray-200 p-3 sm:p-4 lg:p-6 rounded-xl sm:rounded-2xl"
               opts={{
                 align: "start",
                 loop: false,
               }}>
-              <CarouselContent className="gap-4 sm:gap-6 lg:gap-8 pb-4 sm:pb-6">
+              <CarouselContent className="gap-3 sm:gap-4 lg:gap-6 xl:gap-8 pb-3 sm:pb-4 lg:pb-6">
                 {galleryItems.map((item) => (
                   <CarouselItem
                     key={item.id}
-                    className="flex-shrink-0 w-full max-w-5xl">
+                    className="flex-shrink-0 w-full max-w-4xl lg:max-w-5xl">
                     <ServiceCard item={item} />
                   </CarouselItem>
                 ))}
               </CarouselContent>
-              <CarouselPrevious className="right-20 sm:right-24 lg:right-28 bottom-4 sm:bottom-6 lg:bottom-8 h-16 w-16 rounded-full bg-white/95 backdrop-blur-sm border border-gray-200/50 hover:bg-white hover:scale-110 transition-all duration-300" />
-              <CarouselNext className="right-4 sm:right-6 lg:right-8 bottom-4 sm:bottom-6 lg:bottom-8 h-16 w-16 rounded-full bg-white/95 backdrop-blur-sm border border-gray-200/50 hover:bg-white hover:scale-110 transition-all duration-300" />
+              <CarouselPrevious className="right-16 sm:right-20 lg:right-24 xl:right-28 bottom-3 sm:bottom-4 lg:bottom-6 xl:bottom-8 h-12 w-12 sm:h-14 sm:w-14 lg:h-16 lg:w-16 rounded-full bg-white/95 backdrop-blur-sm border border-gray-200/50 hover:bg-white hover:scale-110 transition-all duration-300" />
+              <CarouselNext className="right-3 sm:right-4 lg:right-6 xl:right-8 bottom-3 sm:bottom-4 lg:bottom-6 xl:bottom-8 h-12 w-12 sm:h-14 sm:w-14 lg:h-16 lg:w-16 rounded-full bg-white/95 backdrop-blur-sm border border-gray-200/50 hover:bg-white hover:scale-110 transition-all duration-300" />
             </Carousel>
           </div>
         </div>

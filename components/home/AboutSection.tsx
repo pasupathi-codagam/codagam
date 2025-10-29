@@ -136,27 +136,27 @@ const AboutSection = memo(() => {
           <div className="max-w-7xl mx-auto">
             {/* Header Section */}
             <div className="text-center mb-6 sm:mb-8 lg:mb-10">
-              <div className="inline-flex items-center px-4 py-2 bg-gray-50 mb-8 border border-gray-100">
+              <div className="inline-flex items-center px-3 sm:px-4 py-2 bg-gray-50 mb-6 sm:mb-8 border border-gray-100 rounded-full">
                 <div className="w-2 h-2 bg-gray-500 rounded-full animate-pulse mr-3"></div>
-                <span className="text-gray-700 text-sm font-semibold">
+                <span className="text-gray-700 text-xs sm:text-sm font-semibold">
                   About Codagam
                 </span>
               </div>
 
-              <h1 className="text-2xl lg:text-3xl font-bold text-gray-900 mb-4">
+              <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-gray-900 mb-4 px-4">
                 Empowering <span className="text-black">businesses</span> with
                 <br />
                 <span className="text-gray-900">innovative solutions</span>
               </h1>
 
-              <p className="text-base lg:text-lg text-gray-600 leading-relaxed max-w-4xl mx-auto mb-8">
+              <p className="text-sm sm:text-base lg:text-lg text-gray-600 leading-relaxed max-w-4xl mx-auto mb-6 sm:mb-8 px-4">
                 At Codagam, we pride ourselves on delivering transformative
                 technology solutions. Our team of experts is dedicated to
                 driving positive change and fostering sustainable growth.
               </p>
 
               {/* Stats Grid */}
-              <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8 max-w-4xl mx-auto">
+              <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 lg:gap-8 max-w-4xl mx-auto px-4">
                 {stats.map((stat, index) => (
                   <StatsCard
                     key={index}
@@ -170,11 +170,11 @@ const AboutSection = memo(() => {
             </div>
 
             {/* Why Choose Us Section */}
-            <div className="bg-gray-50 rounded-3xl p-4 sm:p-6 lg:p-8 mb-6 sm:mb-8 lg:mb-10">
-              <div className="grid lg:grid-cols-2 gap-8 sm:gap-10 lg:gap-12 items-center">
+            <div className="bg-gray-50 rounded-2xl sm:rounded-3xl p-4 sm:p-6 lg:p-8 mb-6 sm:mb-8 lg:mb-10">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 lg:gap-12 items-center">
                 {/* Left Side - Image */}
                 <div className="order-2 lg:order-1">
-                  <div className="relative h-64 sm:h-80 lg:h-96 rounded-2xl overflow-hidden">
+                  <div className="relative h-48 sm:h-64 md:h-80 lg:h-96 rounded-xl sm:rounded-2xl overflow-hidden">
                     <Image
                       src="/images/Codagam_Img (2).jpg"
                       alt="Codagam team and technology solutions"
@@ -188,12 +188,12 @@ const AboutSection = memo(() => {
                 </div>
 
                 {/* Right Side - Content */}
-                <div className="order-1 lg:order-2 space-y-6 sm:space-y-8">
+                <div className="order-1 lg:order-2 space-y-4 sm:space-y-6 lg:space-y-8">
                   <div>
-                    <h2 className="text-2xl lg:text-3xl font-bold text-gray-900 mb-4">
+                    <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-900 mb-3 sm:mb-4">
                       Why Us?
                     </h2>
-                    <p className="text-lg text-gray-600 leading-relaxed mb-6">
+                    <p className="text-sm sm:text-base lg:text-lg text-gray-600 leading-relaxed mb-4 sm:mb-6">
                       At Codagam, we pride ourselves on delivering
                       transformative technology solutions. Our team of experts
                       is dedicated to driving positive change and fostering
@@ -203,12 +203,12 @@ const AboutSection = memo(() => {
                     </p>
                   </div>
 
-                  <div className="space-y-6">
+                  <div className="space-y-4 sm:space-y-6">
                     <div>
-                      <h3 className="text-lg font-semibold text-gray-900 mb-2">
+                      <h3 className="text-base sm:text-lg font-semibold text-gray-900 mb-2">
                         AI-Driven Excellence
                       </h3>
-                      <p className="text-gray-600 leading-relaxed">
+                      <p className="text-sm sm:text-base text-gray-600 leading-relaxed">
                         Our AI-driven solutions are designed for sustained best
                         practices, ensuring ethical standards while delivering
                         pragmatic results. From predictive analytics to
@@ -218,10 +218,10 @@ const AboutSection = memo(() => {
                     </div>
 
                     <div>
-                      <h3 className="text-lg font-semibold text-gray-900 mb-2">
+                      <h3 className="text-base sm:text-lg font-semibold text-gray-900 mb-2">
                         Innovation at the Forefront
                       </h3>
-                      <p className="text-gray-600 leading-relaxed">
+                      <p className="text-sm sm:text-base text-gray-600 leading-relaxed">
                         Our R&D team is at the forefront of technological
                         innovation, constantly exploring new ways to solve
                         pressing challenges. We invest in cutting-edge research

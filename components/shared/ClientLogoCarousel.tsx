@@ -175,13 +175,13 @@ export const ClientLogoCarousel: React.FC<ClientLogoCarouselProps> = ({
   // No need to duplicate logos - Marquee handles this automatically
 
   return (
-    <section className={`w-full py-6 md:py-8 lg:py-10 ${className}`}>
+    <section className={`w-full py-4 sm:py-6 md:py-8 lg:py-10 ${className}`}>
       {/* Header */}
-      <div className="text-center mb-6 md:mb-8 w-full px-4">
-        <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-black mb-6">
+      <div className="text-center mb-4 sm:mb-6 md:mb-8 w-full px-4">
+        <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-black mb-4 sm:mb-6">
           {title}
         </h2>
-        <p className="text-lg md:text-xl text-gray-600 leading-relaxed">
+        <p className="text-sm sm:text-base md:text-lg lg:text-xl text-gray-600 leading-relaxed">
           {subtitle}
         </p>
       </div>
@@ -195,15 +195,15 @@ export const ClientLogoCarousel: React.FC<ClientLogoCarouselProps> = ({
           {clientLogos.map((client, index) => (
             <div
               key={`${client.name}-${index}`}
-              className="flex-shrink-0 mx-4 md:mx-6 lg:mx-8">
-              <div className="relative w-40 md:w-48 lg:w-56 xl:w-64 h-24 md:h-28 lg:h-32 xl:h-36 flex items-center justify-center group transition-all duration-300">
+              className="flex-shrink-0 mx-2 sm:mx-4 md:mx-6 lg:mx-8">
+              <div className="relative w-32 sm:w-40 md:w-48 lg:w-56 xl:w-64 h-20 sm:h-24 md:h-28 lg:h-32 xl:h-36 flex items-center justify-center group transition-all duration-300">
                 <Image
                   src={client.logo}
                   alt={client.alt}
                   width={client.width || 200}
                   height={client.height || 120}
-                  className="max-w-[150px] md:max-w-[180px] lg:max-w-[200px] xl:max-w-[220px] max-h-[80px] md:max-h-[100px] lg:max-h-[120px] xl:max-h-[140px] object-contain"
-                  sizes="(max-width: 768px) 150px, (max-width: 1024px) 180px, (max-width: 1280px) 200px, 220px"
+                  className="max-w-[120px] sm:max-w-[150px] md:max-w-[180px] lg:max-w-[200px] xl:max-w-[220px] max-h-[60px] sm:max-h-[80px] md:max-h-[100px] lg:max-h-[120px] xl:max-h-[140px] object-contain"
+                  sizes="(max-width: 640px) 120px, (max-width: 768px) 150px, (max-width: 1024px) 180px, (max-width: 1280px) 200px, 220px"
                 />
               </div>
             </div>

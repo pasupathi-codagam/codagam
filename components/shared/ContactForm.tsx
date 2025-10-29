@@ -107,18 +107,20 @@ export function ContactForm({
   const FormContent = () => (
     <div className={className}>
       {showTitle && (
-        <h4 className="font-semibold mb-4 text-black flex items-center">
+        <h4 className="font-semibold mb-3 sm:mb-4 text-black flex items-center text-sm sm:text-base">
           📩 Get in Touch
         </h4>
       )}
-      <form className="flex flex-col space-y-3" onSubmit={handleSubmit}>
+      <form
+        className="flex flex-col space-y-2 sm:space-y-3"
+        onSubmit={handleSubmit}>
         <input
           type="text"
           name="name"
           placeholder="Your Name"
           value={formData.name}
           onChange={handleChange}
-          className="border border-gray-300 rounded px-3 py-2 text-sm"
+          className="border border-gray-300 rounded px-3 py-2 text-xs sm:text-sm h-10 sm:h-12"
           required
         />
         <input
@@ -127,7 +129,7 @@ export function ContactForm({
           placeholder="Your Email"
           value={formData.email}
           onChange={handleChange}
-          className={`border border-gray-300 rounded px-3 py-2 text-sm ${
+          className={`border border-gray-300 rounded px-3 py-2 text-xs sm:text-sm h-10 sm:h-12 ${
             emailError ? "border-red-500" : ""
           }`}
           required
@@ -139,7 +141,7 @@ export function ContactForm({
           placeholder="Your Phone (10 digits)"
           value={formData.phone}
           onChange={handleChange}
-          className="border border-gray-300 rounded px-3 py-2 text-sm"
+          className="border border-gray-300 rounded px-3 py-2 text-xs sm:text-sm h-10 sm:h-12"
           maxLength={10}
           pattern="[0-9]{10}"
           required
@@ -150,9 +152,14 @@ export function ContactForm({
           rows={3}
           value={formData.message}
           onChange={handleChange}
-          className="border border-gray-300 rounded px-3 py-2 text-sm"
+          className="border border-gray-300 rounded px-3 py-2 text-xs sm:text-sm resize-none"
           required></textarea>
-        <Button type="submit" disabled={isSubmitting} size="sm" variant="black">
+        <Button
+          type="submit"
+          disabled={isSubmitting}
+          size="sm"
+          variant="black"
+          className="h-10 sm:h-12 text-xs sm:text-sm">
           {isSubmitting ? "Sending..." : "Send Message"}
         </Button>
         {submitMessage && (

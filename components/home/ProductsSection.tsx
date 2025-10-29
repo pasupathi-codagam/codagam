@@ -23,43 +23,43 @@ import {
 // Memoized product card component
 const ProductCard = memo(
   ({ item, onCardClick }: Omit<ProductCardProps, "index" | "currentIndex">) => (
-    <div className="px-8 lg:px-16">
+    <div className="px-4 sm:px-6 lg:px-8 xl:px-16">
       <Card
-        className="h-full border-0 bg-white transition-all duration-500 hover:scale-105 rounded-3xl overflow-hidden cursor-pointer group"
+        className="h-full border-0 bg-white transition-all duration-500 hover:scale-105 rounded-2xl sm:rounded-3xl overflow-hidden cursor-pointer group"
         onClick={() => onCardClick(item)}>
-        <div className="grid lg:grid-cols-2 gap-0 items-stretch min-h-[400px] sm:min-h-[450px] lg:min-h-[500px]">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-0 items-stretch min-h-[350px] sm:min-h-[400px] md:min-h-[450px] lg:min-h-[500px]">
           {/* Content Section - Left Side */}
           <div className="order-2 lg:order-1 p-4 sm:p-6 lg:p-8 flex flex-col justify-center">
             <div className="flex-1 flex flex-col justify-center">
-              <div className="text-sm font-medium text-gray-500 uppercase tracking-wider mb-4">
+              <div className="text-xs sm:text-sm font-medium text-gray-500 uppercase tracking-wider mb-3 sm:mb-4">
                 {item.label}
               </div>
-              <CardTitle className="text-xl lg:text-2xl font-bold text-gray-900 leading-tight group-hover:text-blue-900 transition-colors duration-500 mb-3">
+              <CardTitle className="text-lg sm:text-xl lg:text-2xl font-bold text-gray-900 leading-tight group-hover:text-blue-900 transition-colors duration-500 mb-2 sm:mb-3">
                 {item.headline}.
               </CardTitle>
-              <p className="text-gray-600 text-sm lg:text-base leading-relaxed mb-4">
+              <p className="text-gray-600 text-xs sm:text-sm lg:text-base leading-relaxed mb-3 sm:mb-4">
                 {item.description}
               </p>
 
               {/* Action Button */}
-              <div className="flex justify-start items-center mt-6">
+              <div className="flex justify-start items-center mt-4 sm:mt-6">
                 <Button
                   variant="black"
                   size="icon"
-                  className="rounded-full w-12 h-12 p-0 group-hover:scale-110 group-hover:rotate-90 transition-all duration-500 ease-out"
+                  className="rounded-full w-10 h-10 sm:w-12 sm:h-12 p-0 group-hover:scale-110 group-hover:rotate-90 transition-all duration-500 ease-out"
                   onClick={(e) => {
                     e.stopPropagation();
                     onCardClick(item);
                   }}
                   aria-label={`Learn more about ${item.label}`}>
-                  <Plus className="w-5 h-5 text-white transition-transform duration-300" />
+                  <Plus className="w-4 h-4 sm:w-5 sm:h-5 text-white transition-transform duration-300" />
                 </Button>
               </div>
             </div>
           </div>
 
           {/* Image Section - Right Side */}
-          <div className="order-1 lg:order-2 relative h-full min-h-[300px] sm:min-h-[350px] lg:min-h-[400px] flex items-center justify-center p-3 sm:p-4 lg:p-6">
+          <div className="order-1 lg:order-2 relative h-full min-h-[250px] sm:min-h-[300px] md:min-h-[350px] lg:min-h-[400px] flex items-center justify-center p-3 sm:p-4 lg:p-6">
             <div className="relative w-3/4 h-3/4 flex items-center justify-center">
               <Image
                 src={item.image}
@@ -293,10 +293,10 @@ export default function ProductsSection() {
         aria-label="Products section">
         <div className="w-full">
           <div className="text-center mb-6 sm:mb-8 lg:mb-10 px-4 sm:px-6 lg:px-8">
-            <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 leading-tight mb-6">
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 leading-tight mb-4 sm:mb-6">
               Our Products
             </h2>
-            <p className="text-base lg:text-lg text-gray-600 max-w-4xl mx-auto">
+            <p className="text-sm sm:text-base lg:text-lg text-gray-600 max-w-4xl mx-auto">
               Solutions that drive results and transform businesses
             </p>
           </div>
@@ -304,22 +304,22 @@ export default function ProductsSection() {
           <div>
             <div className="relative">
               <Carousel
-                className="bg-gray-200 p-4 sm:p-6"
+                className="bg-gray-200 p-3 sm:p-4 lg:p-6 rounded-xl sm:rounded-2xl"
                 opts={{
                   align: "start",
                   loop: false,
                 }}>
-                <CarouselContent className="gap-4 sm:gap-6 lg:gap-8 pb-4 sm:pb-6">
+                <CarouselContent className="gap-3 sm:gap-4 lg:gap-6 xl:gap-8 pb-3 sm:pb-4 lg:pb-6">
                   {productItems.map((item) => (
                     <CarouselItem
                       key={item.id}
-                      className="flex-shrink-0 w-full max-w-5xl">
+                      className="flex-shrink-0 w-full max-w-4xl lg:max-w-5xl">
                       <ProductCard item={item} onCardClick={handleCardClick} />
                     </CarouselItem>
                   ))}
                 </CarouselContent>
-                <CarouselPrevious className="right-20 sm:right-24 lg:right-28 bottom-4 sm:bottom-6 lg:bottom-8 h-16 w-16 rounded-full bg-white/95 backdrop-blur-sm border border-gray-200/50 hover:bg-white hover:scale-110 transition-all duration-300" />
-                <CarouselNext className="right-4 sm:right-6 lg:right-8 bottom-4 sm:bottom-6 lg:bottom-8 h-16 w-16 rounded-full bg-white/95 backdrop-blur-sm border border-gray-200/50 hover:bg-white hover:scale-110 transition-all duration-300" />
+                <CarouselPrevious className="right-16 sm:right-20 lg:right-24 xl:right-28 bottom-3 sm:bottom-4 lg:bottom-6 xl:bottom-8 h-12 w-12 sm:h-14 sm:w-14 lg:h-16 lg:w-16 rounded-full bg-white/95 backdrop-blur-sm border border-gray-200/50 hover:bg-white hover:scale-110 transition-all duration-300" />
+                <CarouselNext className="right-3 sm:right-4 lg:right-6 xl:right-8 bottom-3 sm:bottom-4 lg:bottom-6 xl:bottom-8 h-12 w-12 sm:h-14 sm:w-14 lg:h-16 lg:w-16 rounded-full bg-white/95 backdrop-blur-sm border border-gray-200/50 hover:bg-white hover:scale-110 transition-all duration-300" />
               </Carousel>
             </div>
           </div>

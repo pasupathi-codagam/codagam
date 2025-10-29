@@ -72,13 +72,13 @@ const NavLinks: React.FC<NavLinksProps> = ({ onLinkClick }) => {
   };
 
   return (
-    <div className="w-full flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-1 md:space-x-2 lg:space-x-3">
+    <div className="w-full flex flex-col sm:flex-row space-y-1 sm:space-y-0 sm:space-x-1 md:space-x-2 lg:space-x-3">
       {navItems.map((item) => (
         <Button
           key={item.key}
           onClick={() => handleNavClick(item.key)}
           variant="ghost"
-          className={`relative text-md font-medium transition-all duration-300 ${
+          className={`relative text-sm sm:text-base font-medium transition-all duration-300 py-2 sm:py-1 ${
             activeSection === item.key
               ? "text-blue-900"
               : "text-gray-700 hover:text-blue-900"

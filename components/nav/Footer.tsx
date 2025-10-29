@@ -68,7 +68,7 @@ export function Footer() {
   return (
     <footer
       id="footer-section"
-      className="bg-white text-black pt-6 sm:pt-8 lg:pt-10 pb-2 border-t border-gray-200">
+      className="bg-white text-black pt-4 sm:pt-6 lg:pt-8 xl:pt-10 pb-2 border-t border-gray-200">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 lg:gap-8 text-center sm:text-left">
           {/* Company Info */}
@@ -79,7 +79,7 @@ export function Footer() {
                 alt="Codagam Logo"
                 width={100}
                 height={60}
-                className="object-contain rounded w-20 h-12 sm:w-24 sm:h-16"
+                className="object-contain rounded w-16 h-10 sm:w-20 sm:h-12 md:w-24 md:h-16"
               />
             </div>
             <p className="text-xs sm:text-sm text-gray-600 text-center sm:text-left">
@@ -92,7 +92,7 @@ export function Footer() {
           {/* Quick Links */}
           <div>
             <h4 className="font-semibold mb-3 text-sm sm:text-base text-black flex items-center justify-center sm:justify-start">
-              <ArrowRight className="h-4 w-4 mr-2 text-blue-900" />
+              <ArrowRight className="h-3 w-3 sm:h-4 sm:w-4 mr-2 text-blue-900" />
               Quick Links
             </h4>
             <nav className="flex flex-col space-y-1 items-center sm:items-start">
@@ -112,36 +112,36 @@ export function Footer() {
 
           {/* Social Media Links */}
           <div>
-            <h4 className="font-semibold mb-4 text-sm sm:text-base text-black text-center sm:text-left">
+            <h4 className="font-semibold mb-3 sm:mb-4 text-sm sm:text-base text-black text-center sm:text-left">
               Follow Us
             </h4>
-            <div className="flex items-center flex-wrap gap-3 justify-center sm:justify-start">
+            <div className="flex items-center flex-wrap gap-2 sm:gap-3 justify-center sm:justify-start">
               <Link
                 href="https://www.instagram.com/codagam"
-                className="flex items-center justify-center w-10 h-10 hover:scale-110 transition-transform duration-300">
-                <Instagram className="h-6 w-6 text-pink-600" />
+                className="flex items-center justify-center w-8 h-8 sm:w-10 sm:h-10 hover:scale-110 transition-transform duration-300">
+                <Instagram className="h-5 w-5 sm:h-6 sm:w-6 text-pink-600" />
               </Link>
               <Link
                 href="https://www.facebook.com/codagam"
-                className="flex items-center justify-center w-10 h-10 hover:scale-110 transition-transform duration-300">
-                <FacebookIcon className="h-6 w-6 text-blue-600" />
+                className="flex items-center justify-center w-8 h-8 sm:w-10 sm:h-10 hover:scale-110 transition-transform duration-300">
+                <FacebookIcon className="h-5 w-5 sm:h-6 sm:w-6 text-blue-600" />
               </Link>
               <Link
                 href="https://twitter.com/codagam"
-                className="flex items-center justify-center w-10 h-10 hover:scale-110 transition-transform duration-300">
-                <X className="h-6 w-6 text-gray-800" />
+                className="flex items-center justify-center w-8 h-8 sm:w-10 sm:h-10 hover:scale-110 transition-transform duration-300">
+                <X className="h-5 w-5 sm:h-6 sm:w-6 text-gray-800" />
               </Link>
               <Link
                 href="https://linkedin.com/company/codagam"
-                className="flex items-center justify-center w-10 h-10 hover:scale-110 transition-transform duration-300">
-                <Linkedin className="h-6 w-6 text-blue-700" />
+                className="flex items-center justify-center w-8 h-8 sm:w-10 sm:h-10 hover:scale-110 transition-transform duration-300">
+                <Linkedin className="h-5 w-5 sm:h-6 sm:w-6 text-blue-700" />
               </Link>
             </div>
           </div>
 
           {/* Contact Form */}
           <div>
-            <h4 className="font-semibold mb-4 text-sm sm:text-base text-black text-center sm:text-left">
+            <h4 className="font-semibold mb-3 sm:mb-4 text-sm sm:text-base text-black text-center sm:text-left">
               Get in Touch
             </h4>
             <ContactForm showTitle={false} className="w-full" />
@@ -154,11 +154,15 @@ export function Footer() {
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col sm:flex-row justify-center sm:justify-between items-center text-xs sm:text-sm text-gray-600 gap-2">
             <p>&copy; 2024 Codagam. All rights reserved.</p>
-            <div className="flex gap-4">
-              <Link href="/privacy" className="hover:text-blue-900 transition">
+            <div className="flex gap-3 sm:gap-4">
+              <Link
+                href="/privacy"
+                className="hover:text-blue-900 transition text-xs sm:text-sm">
                 Privacy Policy
               </Link>
-              <Link href="/terms" className="hover:text-blue-900 transition">
+              <Link
+                href="/terms"
+                className="hover:text-blue-900 transition text-xs sm:text-sm">
                 Terms of Service
               </Link>
             </div>
