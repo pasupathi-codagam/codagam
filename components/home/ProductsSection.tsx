@@ -115,7 +115,7 @@ const ProductDetailsDialog = memo(
                   <li
                     key={index}
                     className="flex items-center text-muted-foreground">
-                    <div className="w-2 h-2 bg-muted-foreground rounded-full mr-3 flex-shrink-0"></div>
+                    <div className="w-2 h-2 bg-muted-foreground rounded-full mr-3 shrink-0"></div>
                     {feature}
                   </li>
                 ))}
@@ -293,13 +293,25 @@ export default function ProductsSection() {
         role="main"
         aria-label="Products section">
         <div className="w-full">
-          <div className="text-center mb-6 sm:mb-8 lg:mb-10 px-4 sm:px-6 lg:px-8">
-            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-foreground leading-tight mb-4 sm:mb-6">
-              Our Products
-            </h2>
-            <p className="text-sm sm:text-base lg:text-lg text-muted-foreground max-w-4xl mx-auto">
-              Solutions that drive results and transform businesses
-            </p>
+          <div className="max-w-7xl mx-auto">
+            {/* Navigation Link */}
+            <div className="text-center mb-6 sm:mb-8 px-4 sm:px-6 lg:px-8">
+              <div className="inline-flex items-center px-4 sm:px-6 py-2 sm:py-3 bg-linear-to-r from-muted to-accent border border-border rounded-full">
+                <span className="text-foreground text-xs sm:text-sm font-semibold uppercase tracking-wider">
+                  Products
+                </span>
+              </div>
+            </div>
+
+            <div className="text-center mb-6 sm:mb-8 lg:mb-10 px-4 sm:px-6 lg:px-8">
+              <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-foreground mb-4 px-4">
+                Solutions that drive results and transform businesses
+              </h2>
+              <p className="text-sm sm:text-base lg:text-lg text-muted-foreground leading-relaxed max-w-4xl mx-auto px-4">
+                Discover our innovative products designed to accelerate your
+                business growth and digital transformation.
+              </p>
+            </div>
           </div>
 
           <div>
@@ -314,7 +326,7 @@ export default function ProductsSection() {
                   {productItems.map((item) => (
                     <CarouselItem
                       key={item.id}
-                      className="flex-shrink-0 w-full max-w-4xl lg:max-w-5xl">
+                      className="shrink-0 w-full max-w-4xl lg:max-w-5xl">
                       <ProductCard item={item} onCardClick={handleCardClick} />
                     </CarouselItem>
                   ))}

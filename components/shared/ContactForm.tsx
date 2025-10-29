@@ -53,58 +53,58 @@ export function ContactForm({
   ) => {
     const { name, value } = e.target;
 
-    // Handle phone number validation
+    // Handle phone number validation - only allow numbers
     if (name === "phone") {
-      // Only allow numbers and limit to 10 digits
       const numericValue = value.replace(/\D/g, "").slice(0, 10);
       setFormData((prev) => ({ ...prev, [name]: numericValue }));
     } else {
+      // For all other fields, allow any input
       setFormData((prev) => ({ ...prev, [name]: value }));
     }
 
-    if (name === "email") setEmailError("");
+    // Clear email error when user starts typing
+    if (name === "email") {
+      setEmailError("");
+    }
   };
 
-  const handleSubmit = useCallback(
-    async (e: React.FormEvent) => {
-      e.preventDefault();
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
 
-      if (!validateEmail(formData.email)) {
-        setEmailError("Please enter a valid email address");
-        return;
-      }
+    if (!validateEmail(formData.email)) {
+      setEmailError("Please enter a valid email address");
+      return;
+    }
 
-      setIsSubmitting(true);
-      setSubmitMessage("");
+    setIsSubmitting(true);
+    setSubmitMessage("");
 
-      try {
-        const response = await fetch("/api/contact", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(formData),
-        });
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
 
-        if (response.ok) {
-          setSubmitMessage("Message sent successfully!");
-          setFormData({ name: "", email: "", phone: "", message: "" });
-          if (asDialog) {
-            setIsDialogOpen(false);
-          }
-          if (onSuccess) onSuccess();
-        } else {
-          setSubmitMessage("Failed to send message. Please try again.");
+      if (response.ok) {
+        setSubmitMessage("Message sent successfully!");
+        setFormData({ name: "", email: "", phone: "", message: "" });
+        if (asDialog) {
+          setIsDialogOpen(false);
         }
-      } catch {
+        if (onSuccess) onSuccess();
+      } else {
         setSubmitMessage("Failed to send message. Please try again.");
-      } finally {
-        setIsSubmitting(false);
       }
-    },
-    [formData, onSuccess, asDialog]
-  );
+    } catch {
+      setSubmitMessage("Failed to send message. Please try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
-  // Form content component
-  const FormContent = () => (
+  // Form content component - moved outside to prevent re-creation
+  const formContent = (
     <div className={className}>
       {showTitle && (
         <h4 className="font-semibold mb-3 sm:mb-4 text-foreground flex items-center text-sm sm:text-base">
@@ -112,9 +112,11 @@ export function ContactForm({
         </h4>
       )}
       <form
+        key="contact-form"
         className="flex flex-col space-y-2 sm:space-y-3"
         onSubmit={handleSubmit}>
         <input
+          key="name-input"
           type="text"
           name="name"
           placeholder="Your Name"
@@ -124,6 +126,7 @@ export function ContactForm({
           required
         />
         <input
+          key="email-input"
           type="email"
           name="email"
           placeholder="Your Email"
@@ -136,6 +139,7 @@ export function ContactForm({
         />
         {emailError && <p className="text-destructive text-xs">{emailError}</p>}
         <input
+          key="phone-input"
           type="tel"
           name="phone"
           placeholder="Your Phone (10 digits)"
@@ -147,6 +151,7 @@ export function ContactForm({
           required
         />
         <textarea
+          key="message-input"
           name="message"
           placeholder="Your Message"
           rows={3}
@@ -191,7 +196,7 @@ export function ContactForm({
             </DialogDescription>
           </DialogHeader>
           <div className="mt-4 sm:mt-6">
-            <FormContent />
+            {formContent}
           </div>
         </DialogContent>
       </Dialog>
@@ -199,5 +204,5 @@ export function ContactForm({
   }
 
   // Return inline version
-  return <FormContent />;
+  return formContent;
 }

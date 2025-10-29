@@ -34,7 +34,7 @@ const StatsCard = memo(
     <Card className="group relative overflow-hidden border-0 shadow-lg hover:shadow-2xl transition-all duration-500 bg-card">
       <CardContent className="p-8 text-center">
         <div
-          className={`w-16 h-16 mx-auto mb-4 bg-gradient-to-r ${color} rounded-2xl flex items-center justify-center group-hover:scale-110 transition-all duration-500`}>
+          className={`w-16 h-16 mx-auto mb-4 bg-linear-to-r ${color} rounded-2xl flex items-center justify-center group-hover:scale-110 transition-all duration-500`}>
           <Icon className="w-8 h-8 text-white" />
         </div>
         <div className="text-3xl font-bold text-foreground mb-2 group-hover:scale-110 transition-transform duration-300">
@@ -134,15 +134,17 @@ const AboutSection = memo(() => {
         aria-label="About Codagam section">
         <div className="w-full">
           <div className="max-w-7xl mx-auto">
-            {/* Header Section */}
-            <div className="text-center mb-6 sm:mb-8 lg:mb-10">
-              <div className="inline-flex items-center px-3 sm:px-4 py-2 bg-accent mb-6 sm:mb-8 border border-border rounded-full">
-                <div className="w-2 h-2 bg-muted-foreground rounded-full animate-pulse mr-3"></div>
-                <span className="text-foreground text-xs sm:text-sm font-semibold">
+            {/* Navigation Link */}
+            <div className="text-center mb-6 sm:mb-8">
+              <div className="inline-flex items-center px-4 sm:px-6 py-2 sm:py-3 bg-linear-to-r from-muted to-accent border border-border rounded-full">
+                <span className="text-foreground text-xs sm:text-sm font-semibold uppercase tracking-wider">
                   About Codagam
                 </span>
               </div>
+            </div>
 
+            {/* Header Section */}
+            <div className="text-center mb-6 sm:mb-8 lg:mb-10">
               <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-foreground mb-4 px-4">
                 Empowering <span className="text-foreground">businesses</span>{" "}
                 with
@@ -184,7 +186,7 @@ const AboutSection = memo(() => {
                       priority={false}
                       sizes="(max-width: 1024px) 100vw, 50vw"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent"></div>
+                    <div className="absolute inset-0 bg-linear-to-t from-black/20 via-transparent to-transparent"></div>
                   </div>
                 </div>
 

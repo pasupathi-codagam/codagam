@@ -30,7 +30,7 @@ const ServiceCard = memo(
               className="object-cover"
               sizes="(max-width: 1024px) 100vw, 50vw"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent group-hover:from-black/30 transition-all duration-500"></div>
+            <div className="absolute inset-0 bg-linear-to-t from-black/20 via-transparent to-transparent group-hover:from-black/30 transition-all duration-500"></div>
           </div>
         </div>
 
@@ -54,7 +54,7 @@ const ServiceCard = memo(
               </div>
             </div>
             {/* Hover overlay effect */}
-            <div className="absolute inset-0 bg-gradient-to-r from-blue-500/5 to-purple-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
+            <div className="absolute inset-0 bg-linear-to-r from-blue-500/5 to-purple-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
           </Card>
         </div>
       </div>
@@ -143,13 +143,25 @@ export default function ServicesSection() {
       role="main"
       aria-label="Services section">
       <div className="w-full">
-        <div className="text-center mb-6 sm:mb-8 lg:mb-10 px-4 sm:px-6 lg:px-8">
-          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-foreground leading-tight mb-4 sm:mb-6">
-            Our Services
-          </h2>
-          <p className="text-sm sm:text-base lg:text-lg text-muted-foreground max-w-4xl mx-auto">
-            Empowering your digital journey with cutting-edge solutions
-          </p>
+        <div className="max-w-7xl mx-auto">
+          {/* Navigation Link */}
+          <div className="text-center mb-6 sm:mb-8 px-4 sm:px-6 lg:px-8">
+            <div className="inline-flex items-center px-4 sm:px-6 py-2 sm:py-3 bg-linear-to-r from-muted to-accent border border-border rounded-full">
+              <span className="text-foreground text-xs sm:text-sm font-semibold uppercase tracking-wider">
+                Services
+              </span>
+            </div>
+          </div>
+
+          <div className="text-center mb-6 sm:mb-8 lg:mb-10 px-4 sm:px-6 lg:px-8">
+            <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-foreground mb-4 px-4">
+              Empowering your digital journey with cutting-edge solutions
+            </h2>
+            <p className="text-sm sm:text-base lg:text-lg text-muted-foreground leading-relaxed max-w-4xl mx-auto px-4">
+              Our comprehensive suite of services is designed to accelerate your
+              digital transformation and drive sustainable growth.
+            </p>
+          </div>
         </div>
 
         <div>
@@ -164,7 +176,7 @@ export default function ServicesSection() {
                 {galleryItems.map((item) => (
                   <CarouselItem
                     key={item.id}
-                    className="flex-shrink-0 w-full max-w-4xl lg:max-w-5xl">
+                    className="shrink-0 w-full max-w-4xl lg:max-w-5xl">
                     <ServiceCard item={item} />
                   </CarouselItem>
                 ))}

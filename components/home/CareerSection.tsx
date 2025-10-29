@@ -71,7 +71,7 @@ const BenefitCard = memo(
         className={`overflow-hidden transition-all duration-500 ease-in-out ${
           isOpen ? "max-h-[200px] opacity-100" : "max-h-0 opacity-0"
         }`}>
-        <div className="bg-gradient-to-br from-background to-muted border border-border rounded-2xl p-4 sm:p-6 shadow-sm">
+        <div className="bg-linear-to-br from-background to-muted border border-border rounded-2xl p-4 sm:p-6 shadow-sm">
           <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
             {benefit.description}
           </p>
@@ -93,6 +93,7 @@ export default function CareerSection() {
   const [submitMessage, setSubmitMessage] = useState("");
   const [isOpen, setIsOpen] = useState(false);
   const [openBenefit, setOpenBenefit] = useState<string | null>(null);
+  const [emailError, setEmailError] = useState("");
 
   // Memoized benefits data
   const benefits = useMemo(
@@ -131,42 +132,67 @@ export default function CareerSection() {
     []
   );
 
-  // Optimized event handlers with useCallback
-  const handleChange: FormChangeEvent = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      const { name, value, files } = e.target;
+  // Event handler for form changes
+  const handleChange: FormChangeEvent = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const { name, value, files } = e.target;
 
-      if (name === "resume" && files) {
-        setFormData((prev) => ({ ...prev, [name]: files[0] }));
-      } else {
-        setFormData((prev) => ({ ...prev, [name]: value }));
+    if (name === "resume" && files) {
+      setFormData((prev) => ({ ...prev, [name]: files[0] }));
+    } else {
+      // Allow all characters for name and email
+      setFormData((prev) => ({ ...prev, [name]: value }));
+      if (name === "email") setEmailError("");
+    }
+  };
+
+  const handleSubmit: FormSubmitEvent = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    setSubmitMessage("");
+    setEmailError("");
+
+    // Email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(formData.email)) {
+      setEmailError("Please enter a valid email address");
+      setIsSubmitting(false);
+      return;
+    }
+
+    try {
+      const formDataToSend = new FormData();
+      formDataToSend.append("name", formData.name);
+      formDataToSend.append("email", formData.email);
+      if (formData.resume) {
+        formDataToSend.append("resume", formData.resume);
       }
-    },
-    []
-  );
 
-  const handleSubmit: FormSubmitEvent = useCallback(
-    async (e: React.FormEvent) => {
-      e.preventDefault();
-      setIsSubmitting(true);
+      const response = await fetch("/api/careers", {
+        method: "POST",
+        body: formDataToSend,
+      });
 
-      try {
-        // Simulate form submission
-        await new Promise((resolve) => setTimeout(resolve, 2000));
+      if (response.ok) {
         setSubmitMessage(
           "Thank you for your application! We'll review your resume and get back to you soon."
         );
         setFormData({ name: "", email: "", resume: null });
-      } catch {
+      } else {
         setSubmitMessage(
           "There was an error submitting your application. Please try again."
         );
-      } finally {
-        setIsSubmitting(false);
       }
-    },
-    []
-  );
+    } catch (error) {
+      console.error("Error submitting application:", error);
+      setSubmitMessage(
+        "There was an error submitting your application. Please try again."
+      );
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   return (
     <section
@@ -175,14 +201,17 @@ export default function CareerSection() {
       role="main"
       aria-label="Career opportunities section">
       <div className="max-w-7xl mx-auto">
-        {/* Header */}
-        <div className="text-center mb-6 sm:mb-8 lg:mb-10">
-          <div className="inline-flex items-center px-4 sm:px-6 py-2 sm:py-3 bg-gradient-to-r from-muted to-accent mb-4 border border-border rounded-full">
+        {/* Navigation Link */}
+        <div className="text-center mb-6 sm:mb-8">
+          <div className="inline-flex items-center px-4 sm:px-6 py-2 sm:py-3 bg-linear-to-r from-muted to-accent border border-border rounded-full">
             <span className="text-foreground text-xs sm:text-sm font-semibold uppercase tracking-wider">
               Careers
             </span>
           </div>
+        </div>
 
+        {/* Header */}
+        <div className="text-center mb-6 sm:mb-8 lg:mb-10">
           <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-foreground leading-tight mb-4">
             Join our team
           </h2>
@@ -254,7 +283,7 @@ export default function CareerSection() {
                 </CollapsibleTrigger>
 
                 <CollapsibleContent className="space-y-4 sm:space-y-6">
-                  <div className="bg-gradient-to-br from-background to-muted border border-border rounded-2xl p-4 sm:p-6 shadow-lg">
+                  <div className="bg-linear-to-br from-background to-muted border border-border rounded-2xl p-4 sm:p-6 shadow-lg">
                     <form
                       onSubmit={handleSubmit}
                       className="space-y-3 sm:space-y-4">
@@ -291,9 +320,16 @@ export default function CareerSection() {
                           value={formData.email}
                           onChange={handleChange}
                           placeholder="Enter your email address"
-                          className="h-10 sm:h-12 text-xs sm:text-sm border-border focus:border-ring focus:ring-ring transition-all duration-300 hover:border-ring/50 rounded-xl bg-background shadow-sm"
+                          className={`h-10 sm:h-12 text-xs sm:text-sm border-border focus:border-ring focus:ring-ring transition-all duration-300 hover:border-ring/50 rounded-xl bg-background shadow-sm ${
+                            emailError ? "border-red-500" : ""
+                          }`}
                           required
                         />
+                        {emailError && (
+                          <p className="text-destructive text-xs">
+                            {emailError}
+                          </p>
+                        )}
                       </div>
 
                       <div className="space-y-2 sm:space-y-3">
