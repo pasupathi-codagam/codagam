@@ -175,9 +175,9 @@ export const ClientLogoCarousel: React.FC<ClientLogoCarouselProps> = ({
   // No need to duplicate logos - Marquee handles this automatically
 
   return (
-    <section className={`w-full py-12 md:py-16 lg:py-20 ${className}`}>
+    <section className={`w-full py-6 md:py-8 lg:py-10 ${className}`}>
       {/* Header */}
-      <div className="text-center mb-12 md:mb-16 w-full px-4">
+      <div className="text-center mb-6 md:mb-8 w-full px-4">
         <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-black mb-6">
           {title}
         </h2>

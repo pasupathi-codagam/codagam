@@ -23,7 +23,7 @@ export default function ClientSection() {
       aria-label="Client testimonials and partners section">
       <div className="w-full">
         {/* Client Logos Carousel */}
-        <div className="mb-6 sm:mb-8 lg:mb-10">
+        <div className="mb-4 sm:mb-6 lg:mb-8">
           <ClientLogoCarousel
             title="Our Partners"
             subtitle="We're proud to work with these industry-leading companies that trust us to deliver exceptional results"

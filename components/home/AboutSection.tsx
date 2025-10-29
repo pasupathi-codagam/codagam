@@ -129,13 +129,13 @@ const AboutSection = memo(() => {
     <>
       <section
         id="about-section"
-        className="bg-white py-8 sm:py-12 lg:py-16 px-4 sm:px-6 lg:px-8"
+        className="bg-white pt-4 sm:pt-6 lg:pt-8 pb-6 sm:pb-8 lg:pb-10 px-4 sm:px-6 lg:px-8"
         role="main"
         aria-label="About Codagam section">
         <div className="w-full">
           <div className="max-w-7xl mx-auto">
             {/* Header Section */}
-            <div className="text-center mb-8 sm:mb-12 lg:mb-16">
+            <div className="text-center mb-6 sm:mb-8 lg:mb-10">
               <div className="inline-flex items-center px-4 py-2 bg-gray-50 mb-8 border border-gray-100">
                 <div className="w-2 h-2 bg-gray-500 rounded-full animate-pulse mr-3"></div>
                 <span className="text-gray-700 text-sm font-semibold">
@@ -170,7 +170,7 @@ const AboutSection = memo(() => {
             </div>
 
             {/* Why Choose Us Section */}
-            <div className="bg-gray-50 rounded-3xl p-6 sm:p-8 lg:p-10 mb-8 sm:mb-12 lg:mb-16">
+            <div className="bg-gray-50 rounded-3xl p-4 sm:p-6 lg:p-8 mb-6 sm:mb-8 lg:mb-10">
               <div className="grid lg:grid-cols-2 gap-8 sm:gap-10 lg:gap-12 items-center">
                 {/* Left Side - Image */}
                 <div className="order-2 lg:order-1">

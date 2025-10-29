@@ -351,11 +351,11 @@ export default function ProductsSection() {
     <>
       <section
         id="products-section"
-        className="flex items-center pt-4 sm:pt-6 lg:pt-8 pb-8 sm:pb-12 lg:pb-16 px-4 sm:px-6 lg:px-8"
+        className="flex items-center pt-4 sm:pt-6 lg:pt-8 pb-2 sm:pb-4 lg:pb-6 px-4 sm:px-6 lg:px-8"
         role="main"
         aria-label="Products section">
         <div className="w-full">
-          <div className="text-center mb-8 sm:mb-12 lg:mb-16 px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-6 sm:mb-8 lg:mb-10 px-4 sm:px-6 lg:px-8">
             <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 leading-tight mb-6">
               Our Products
             </h2>
