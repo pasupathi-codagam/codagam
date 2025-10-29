@@ -69,7 +69,6 @@ const ProductCard = memo(
                 sizes="(max-width: 1024px) 100vw, 50vw"
               />
             </div>
-            <div className="absolute inset-0 bg-gradient-to-l from-transparent via-transparent to-white/10 lg:bg-gradient-to-l lg:from-transparent lg:via-transparent lg:to-white/20"></div>
           </div>
         </div>
       </Card>
@@ -306,7 +305,7 @@ export default function ProductsSection() {
           <div>
             <div className="relative">
               <Carousel
-                className="bg-muted p-3 sm:p-4 lg:p-6 rounded-xl sm:rounded-2xl"
+                className="bg-gray-200 dark:bg-muted p-3 sm:p-4 lg:p-6 rounded-xl sm:rounded-2xl"
                 opts={{
                   align: "start",
                   loop: false,

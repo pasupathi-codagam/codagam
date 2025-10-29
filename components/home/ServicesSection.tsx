@@ -155,7 +155,7 @@ export default function ServicesSection() {
         <div>
           <div className="relative">
             <Carousel
-              className="bg-muted p-3 sm:p-4 lg:p-6 rounded-xl sm:rounded-2xl"
+              className="bg-gray-200 dark:bg-muted p-3 sm:p-4 lg:p-6 rounded-xl sm:rounded-2xl"
               opts={{
                 align: "start",
                 loop: false,
