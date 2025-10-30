@@ -169,13 +169,15 @@ export function Footer() {
         delayMs={120}
         durationMs={700}
         className="w-full">
-        <div className="border-t border-border pt-4 pb-4">
+        <div className="pt-4 pb-4">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="flex justify-center items-center text-xs sm:text-sm text-muted-foreground gap-2">
-              <p>
-                &copy; 2025 Codagam Software Labs Private Limited. All rights
-                reserved.
-              </p>
+            <div className="border-t border-border pt-4 pb-4">
+              <div className="flex justify-center items-center text-xs sm:text-sm text-muted-foreground gap-2">
+                <p>
+                  &copy; 2025 Codagam Software Labs Private Limited. All rights
+                  reserved.
+                </p>
+              </div>
             </div>
           </div>
         </div>
