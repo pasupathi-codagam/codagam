@@ -289,13 +289,13 @@ export default function ProductsSection() {
     <>
       <section
         id="products-section"
-        className="flex items-center pt-4 sm:pt-6 lg:pt-8 pb-2 sm:pb-4 lg:pb-6 px-4 sm:px-6 lg:px-8"
+        className="w-full flex items-center pt-4 sm:pt-6 lg:pt-8 pb-2 sm:pb-4 lg:pb-6"
         role="main"
         aria-label="Products section">
         <div className="w-full">
-          <div className="max-w-7xl mx-auto">
+          <div className="w-full">
             {/* Navigation Link */}
-            <div className="text-center mb-6 sm:mb-8 px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-6 sm:mb-8">
               <div className="inline-flex items-center px-4 sm:px-6 py-2 sm:py-3 bg-linear-to-r from-muted to-accent border border-border rounded-full">
                 <span className="text-foreground text-xs sm:text-sm font-semibold uppercase tracking-wider">
                   Products
@@ -303,26 +303,26 @@ export default function ProductsSection() {
               </div>
             </div>
 
-            <div className="text-center mb-6 sm:mb-8 lg:mb-10 px-4 sm:px-6 lg:px-8">
-              <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-foreground mb-4 px-4">
+            <div className="text-center mb-6 sm:mb-8 lg:mb-10">
+              <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-foreground mb-4">
                 Solutions that drive results and transform businesses
               </h2>
-              <p className="text-sm sm:text-base lg:text-lg text-muted-foreground leading-relaxed max-w-4xl mx-auto px-4">
+              <p className="text-sm sm:text-base lg:text-lg text-muted-foreground leading-relaxed max-w-4xl mx-auto">
                 Discover our innovative products designed to accelerate your
                 business growth and digital transformation.
               </p>
             </div>
           </div>
 
-          <div>
-            <div className="relative">
+          <div className="w-full">
+            <div className="relative w-full">
               <Carousel
-                className="bg-gray-200 dark:bg-muted p-3 sm:p-4 lg:p-6 rounded-xl sm:rounded-2xl"
+                className="w-full bg-gray-200 dark:bg-muted p-3 sm:p-4 lg:p-6"
                 opts={{
                   align: "start",
                   loop: false,
                 }}>
-                <CarouselContent className="gap-3 sm:gap-4 lg:gap-6 xl:gap-8 pb-3 sm:pb-4 lg:pb-6">
+                <CarouselContent className="w-full gap-3 sm:gap-4 lg:gap-6 xl:gap-8 pb-3 sm:pb-4 lg:pb-6">
                   {productItems.map((item) => (
                     <CarouselItem
                       key={item.id}
