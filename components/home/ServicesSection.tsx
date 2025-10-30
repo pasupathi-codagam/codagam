@@ -14,7 +14,7 @@ import {
 const ServiceCard = memo(
   ({ item }: Omit<ServiceCardProps, "index" | "currentIndex">) => (
     <div className="px-4 sm:px-6 lg:px-8 xl:px-16">
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-0 items-stretch min-h-[350px] sm:min-h-[400px] md:min-h-[450px] lg:min-h-[500px] group-hover:scale-[1.02] transition-all duration-500 ease-out group">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-0 items-stretch min-h-[350px] sm:min-h-[400px] md:min-h-[450px] lg:min-h-[500px] transition-all duration-500 ease-out group">
         {/* Image Background - Left Side */}
         <div className="order-1 lg:order-1">
           <div className="relative h-full min-h-[250px] sm:min-h-[300px] md:min-h-[350px] lg:min-h-[400px] overflow-hidden rounded-t-2xl lg:rounded-l-3xl lg:rounded-t-none group-hover:shadow-xl transition-all duration-500">
@@ -42,7 +42,7 @@ const ServiceCard = memo(
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="flex-1 px-0">
-                  <p className="text-xs sm:text-sm lg:text-base text-muted-foreground leading-relaxed group-hover:text-foreground transition-colors duration-500">
+                  <p className="text-xs sm:text-sm lg:text-base text-foreground leading-relaxed transition-colors duration-500">
                     {item.description}
                   </p>
                 </CardContent>
