@@ -164,7 +164,7 @@ export function ContactForm({
           disabled={isSubmitting}
           size="sm"
           variant="black"
-          className="h-10 sm:h-12 text-xs sm:text-sm">
+          className="h-10 sm:h-12 text-xs sm:text-sm border border-border shadow-sm">
           {isSubmitting ? "Sending..." : "Send Message"}
         </Button>
         {submitMessage && (
@@ -195,9 +195,7 @@ export function ContactForm({
               respond as soon as possible.
             </DialogDescription>
           </DialogHeader>
-          <div className="mt-4 sm:mt-6">
-            {formContent}
-          </div>
+          <div className="mt-4 sm:mt-6">{formContent}</div>
         </DialogContent>
       </Dialog>
     );

@@ -53,7 +53,7 @@ const ProductCard = memo(
                     onCardClick(item);
                   }}
                   aria-label={`Learn more about ${item.label}`}>
-                  <Plus className="w-4 h-4 sm:w-5 sm:h-5 text-white transition-transform duration-300" />
+                  <Plus className="w-4 h-4 sm:w-5 sm:h-5 text-white dark:text-black transition-transform duration-300" />
                 </Button>
               </div>
             </div>

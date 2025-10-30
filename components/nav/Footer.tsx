@@ -128,7 +128,7 @@ export function Footer() {
                   target="_blank"
                   aria-label="Visit Codagam on Instagram"
                   className="flex items-center justify-center w-8 h-8 sm:w-10 sm:h-10 hover:scale-110 transition-transform duration-300">
-                  <Instagram className="h-5 w-5 sm:h-6 sm:w-6 text-pink-600" />
+                  <Instagram className="h-5 w-5 sm:h-6 sm:w-6 text-[#E4405F]" />
                 </Link>
                 <Link
                   href="https://www.facebook.com/codagam"
@@ -136,7 +136,7 @@ export function Footer() {
                   target="_blank"
                   aria-label="Visit Codagam on Facebook"
                   className="flex items-center justify-center w-8 h-8 sm:w-10 sm:h-10 hover:scale-110 transition-transform duration-300">
-                  <FacebookIcon className="h-5 w-5 sm:h-6 sm:w-6 text-primary" />
+                  <FacebookIcon className="h-5 w-5 sm:h-6 sm:w-6 text-[#1877F2]" />
                 </Link>
                 <Link
                   href="https://twitter.com/codagam"
@@ -144,7 +144,7 @@ export function Footer() {
                   target="_blank"
                   aria-label="Visit Codagam on X (Twitter)"
                   className="flex items-center justify-center w-8 h-8 sm:w-10 sm:h-10 hover:scale-110 transition-transform duration-300">
-                  <X className="h-5 w-5 sm:h-6 sm:w-6 text-foreground" />
+                  <X className="h-5 w-5 sm:h-6 sm:w-6 text-black dark:text-white" />
                 </Link>
                 <Link
                   href="https://linkedin.com/company/codagam"
@@ -152,7 +152,7 @@ export function Footer() {
                   target="_blank"
                   aria-label="Visit Codagam on LinkedIn"
                   className="flex items-center justify-center w-8 h-8 sm:w-10 sm:h-10 hover:scale-110 transition-transform duration-300">
-                  <Linkedin className="h-5 w-5 sm:h-6 sm:w-6 text-primary" />
+                  <Linkedin className="h-5 w-5 sm:h-6 sm:w-6 text-[#0A66C2]" />
                 </Link>
               </div>
             </div>
