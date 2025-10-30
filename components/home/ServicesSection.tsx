@@ -1,6 +1,13 @@
 "use client";
 
-import React, { useCallback, useMemo, memo, useEffect, useState } from "react";
+import React, {
+  useCallback,
+  useMemo,
+  memo,
+  useEffect,
+  useState,
+  useRef,
+} from "react";
 import SectionReveal from "@/components/shared/animation";
 import Image from "next/image";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -70,6 +77,7 @@ export default function ServicesSection() {
   const [carouselApi, setCarouselApi] = useState<CarouselApi | undefined>(
     undefined
   );
+  const autoplayRef = useRef<number | null>(null);
   // Memoized gallery items data
   const galleryItems = useMemo(
     (): GalleryItemType[] => [
@@ -141,14 +149,26 @@ export default function ServicesSection() {
     []
   );
 
+  const stopAutoplay = useCallback(() => {
+    if (autoplayRef.current !== null) {
+      clearInterval(autoplayRef.current);
+      autoplayRef.current = null;
+    }
+  }, []);
+
+  const startAutoplay = useCallback(() => {
+    if (!carouselApi || autoplayRef.current !== null) return;
+    autoplayRef.current = window.setInterval(() => {
+      carouselApi.scrollNext();
+    }, 3500);
+  }, [carouselApi]);
+
   // Auto-advance using shadcn Carousel API (no external plugin)
   useEffect(() => {
     if (!carouselApi) return;
-    const intervalId = setInterval(() => {
-      carouselApi.scrollNext();
-    }, 3500);
-    return () => clearInterval(intervalId);
-  }, [carouselApi]);
+    startAutoplay();
+    return () => stopAutoplay();
+  }, [carouselApi, startAutoplay, stopAutoplay]);
 
   return (
     <section
@@ -187,7 +207,10 @@ export default function ServicesSection() {
           delayMs={120}
           durationMs={700}
           className="w-full">
-          <div className="relative w-full">
+          <div
+            className="relative w-full"
+            onMouseEnter={stopAutoplay}
+            onMouseLeave={startAutoplay}>
             <Carousel
               className="w-full bg-gray-200 dark:bg-muted p-3 sm:p-4 lg:p-6"
               aria-label="Services carousel"
