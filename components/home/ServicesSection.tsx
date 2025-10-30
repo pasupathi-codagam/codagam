@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useCallback, useMemo, memo } from "react";
+import React, { useCallback, useMemo, memo, useEffect, useState } from "react";
 import SectionReveal from "@/components/shared/animation";
 import Image from "next/image";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -11,6 +11,7 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
+import { type CarouselApi } from "@/components/ui/carousel";
 import {
   GalleryItem as GalleryItemType,
   ServiceCardProps,
@@ -66,6 +67,9 @@ const ServiceCard = memo(
 ServiceCard.displayName = "ServiceCard";
 
 export default function ServicesSection() {
+  const [carouselApi, setCarouselApi] = useState<CarouselApi | undefined>(
+    undefined
+  );
   // Memoized gallery items data
   const galleryItems = useMemo(
     (): GalleryItemType[] => [
@@ -137,6 +141,15 @@ export default function ServicesSection() {
     []
   );
 
+  // Auto-advance using shadcn Carousel API (no external plugin)
+  useEffect(() => {
+    if (!carouselApi) return;
+    const intervalId = setInterval(() => {
+      carouselApi.scrollNext();
+    }, 3500);
+    return () => clearInterval(intervalId);
+  }, [carouselApi]);
+
   return (
     <section
       id="services-section"
@@ -180,8 +193,9 @@ export default function ServicesSection() {
               aria-label="Services carousel"
               opts={{
                 align: "start",
-                loop: false,
-              }}>
+                loop: true,
+              }}
+              setApi={setCarouselApi}>
               <CarouselContent className="w-full gap-3 sm:gap-4 lg:gap-6 xl:gap-8 pb-3 sm:pb-4 lg:pb-6">
                 {galleryItems.map((item) => (
                   <CarouselItem

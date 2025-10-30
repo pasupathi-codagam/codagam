@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useCallback, useMemo, memo } from "react";
+import React, { useState, useCallback, useMemo, memo, useEffect } from "react";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Card, CardTitle } from "@/components/ui/card";
@@ -13,6 +13,7 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
+import { type CarouselApi } from "@/components/ui/carousel";
 import {
   ProductItem as ProductItemType,
   ProductCardProps,
@@ -147,6 +148,9 @@ export default function ProductsSection() {
   const [selectedProduct, setSelectedProduct] =
     useState<ProductItemType | null>(null);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [carouselApi, setCarouselApi] = useState<CarouselApi | undefined>(
+    undefined
+  );
 
   // Memoized product items data
   const productItems = useMemo(
@@ -286,6 +290,15 @@ export default function ProductsSection() {
     setSelectedProduct(null);
   }, []);
 
+  // Auto-advance using shadcn Carousel API (no external plugin)
+  useEffect(() => {
+    if (!carouselApi) return;
+    const intervalId = setInterval(() => {
+      carouselApi.scrollNext();
+    }, 3500);
+    return () => clearInterval(intervalId);
+  }, [carouselApi]);
+
   return (
     <>
       <section
@@ -330,8 +343,9 @@ export default function ProductsSection() {
                 aria-label="Products carousel"
                 opts={{
                   align: "start",
-                  loop: false,
-                }}>
+                  loop: true,
+                }}
+                setApi={setCarouselApi}>
                 <CarouselContent className="w-full gap-3 sm:gap-4 lg:gap-6 xl:gap-8 pb-3 sm:pb-4 lg:pb-6">
                   {productItems.map((item) => (
                     <CarouselItem
