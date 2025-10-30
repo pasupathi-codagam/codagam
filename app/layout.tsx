@@ -1,9 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
 
-import ScrollToTopButton from "@/components/shared/ScrollToTopButton";
-import { Footer } from "@/components/nav/Footer";
-import Navbar from "@/components/nav/Navbar";
+import LayoutFrame from "@/app/home/Layout";
 import { ThemeProvider } from "@/components/shared/themeSwitch/theme-provider";
 
 export const viewport: Viewport = {
@@ -61,10 +59,7 @@ export default function RootLayout({
           defaultTheme="system"
           enableSystem
           disableTransitionOnChange>
-          <Navbar />
-          <main className="flex-1">{children}</main>
-          <ScrollToTopButton />
-          <Footer />
+          <LayoutFrame>{children}</LayoutFrame>
         </ThemeProvider>
       </body>
     </html>

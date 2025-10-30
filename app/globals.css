@@ -48,12 +48,14 @@
 
 html {
   scroll-behavior: smooth;
+  overflow-x: hidden;
 }
 
 body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
     "Helvetica Neue", Arial, sans-serif;
   overflow-y: auto;
+  overflow-x: hidden;
 }
 
 /* (removed unused Apple-style typography helpers) */
