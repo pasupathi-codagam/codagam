@@ -139,13 +139,13 @@ export default function ServicesSection() {
   return (
     <section
       id="services-section"
-      className="w-full flex items-center pt-4 sm:pt-6 lg:pt-8 pb-6 sm:pb-8 lg:pb-10"
+      className="flex items-center pt-4 sm:pt-6 lg:pt-8 pb-6 sm:pb-8 lg:pb-10 px-4 sm:px-6 lg:px-8"
       role="main"
       aria-label="Services section">
       <div className="w-full">
-        <div className="w-full">
+        <div className="max-w-7xl mx-auto">
           {/* Navigation Link */}
-          <div className="text-center mb-6 sm:mb-8">
+          <div className="text-center mb-6 sm:mb-8 px-4 sm:px-6 lg:px-8">
             <div className="inline-flex items-center px-4 sm:px-6 py-2 sm:py-3 bg-linear-to-r from-muted to-accent border border-border rounded-full">
               <span className="text-foreground text-xs sm:text-sm font-semibold uppercase tracking-wider">
                 Services
@@ -153,26 +153,26 @@ export default function ServicesSection() {
             </div>
           </div>
 
-          <div className="text-center mb-6 sm:mb-8 lg:mb-10">
-            <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-foreground mb-4">
+          <div className="text-center mb-6 sm:mb-8 lg:mb-10 px-4 sm:px-6 lg:px-8">
+            <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-foreground mb-4 px-4">
               Empowering your digital journey with cutting-edge solutions
             </h2>
-            <p className="text-sm sm:text-base lg:text-lg text-muted-foreground leading-relaxed max-w-4xl mx-auto">
+            <p className="text-sm sm:text-base lg:text-lg text-muted-foreground leading-relaxed max-w-4xl mx-auto px-4">
               Our comprehensive suite of services is designed to accelerate your
               digital transformation and drive sustainable growth.
             </p>
           </div>
         </div>
 
-        <div className="w-full">
-          <div className="relative w-full">
+        <div>
+          <div className="relative">
             <Carousel
-              className="w-full bg-gray-200 dark:bg-muted p-3 sm:p-4 lg:p-6"
+              className="bg-gray-200 dark:bg-muted p-3 sm:p-4 lg:p-6 rounded-xl sm:rounded-2xl"
               opts={{
                 align: "start",
                 loop: false,
               }}>
-              <CarouselContent className="w-full gap-3 sm:gap-4 lg:gap-6 xl:gap-8 pb-3 sm:pb-4 lg:pb-6">
+              <CarouselContent className="gap-3 sm:gap-4 lg:gap-6 xl:gap-8 pb-3 sm:pb-4 lg:pb-6">
                 {galleryItems.map((item) => (
                   <CarouselItem
                     key={item.id}
