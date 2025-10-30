@@ -58,7 +58,7 @@ export default function RootLayout({
         className={`min-h-screen bg-background text-foreground font-sans antialiased`}>
         <ThemeProvider
           attribute="class"
-          defaultTheme="light"
+          defaultTheme="system"
           enableSystem
           disableTransitionOnChange>
           <Navbar />
