@@ -124,21 +124,33 @@ export function Footer() {
               <div className="flex items-center flex-wrap gap-2 sm:gap-3 justify-center sm:justify-start">
                 <Link
                   href="https://www.instagram.com/codagam"
+                  rel="noopener noreferrer"
+                  target="_blank"
+                  aria-label="Visit Codagam on Instagram"
                   className="flex items-center justify-center w-8 h-8 sm:w-10 sm:h-10 hover:scale-110 transition-transform duration-300">
                   <Instagram className="h-5 w-5 sm:h-6 sm:w-6 text-pink-600" />
                 </Link>
                 <Link
                   href="https://www.facebook.com/codagam"
+                  rel="noopener noreferrer"
+                  target="_blank"
+                  aria-label="Visit Codagam on Facebook"
                   className="flex items-center justify-center w-8 h-8 sm:w-10 sm:h-10 hover:scale-110 transition-transform duration-300">
                   <FacebookIcon className="h-5 w-5 sm:h-6 sm:w-6 text-primary" />
                 </Link>
                 <Link
                   href="https://twitter.com/codagam"
+                  rel="noopener noreferrer"
+                  target="_blank"
+                  aria-label="Visit Codagam on X (Twitter)"
                   className="flex items-center justify-center w-8 h-8 sm:w-10 sm:h-10 hover:scale-110 transition-transform duration-300">
                   <X className="h-5 w-5 sm:h-6 sm:w-6 text-foreground" />
                 </Link>
                 <Link
                   href="https://linkedin.com/company/codagam"
+                  rel="noopener noreferrer"
+                  target="_blank"
+                  aria-label="Visit Codagam on LinkedIn"
                   className="flex items-center justify-center w-8 h-8 sm:w-10 sm:h-10 hover:scale-110 transition-transform duration-300">
                   <Linkedin className="h-5 w-5 sm:h-6 sm:w-6 text-primary" />
                 </Link>

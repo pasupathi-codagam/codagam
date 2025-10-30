@@ -80,13 +80,6 @@ export interface ProductCardProps {
   onCardClick: (product: ProductItem) => void;
 }
 
-export interface NavigationButtonProps {
-  direction: "prev" | "next";
-  onClick: () => void;
-  disabled: boolean;
-  ariaLabel: string;
-}
-
 export interface ProductDetailsDialogProps {
   selectedProduct: ProductItem | null;
   isOpen: boolean;
