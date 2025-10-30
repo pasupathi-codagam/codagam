@@ -145,7 +145,7 @@ export default function ServicesSection() {
       aria-label="Services section">
       <div className="w-full">
         <SectionReveal
-          variant="slide-right"
+          variant="slide-left"
           delayMs={80}
           durationMs={700}
           className="w-full">
@@ -170,7 +170,7 @@ export default function ServicesSection() {
         </SectionReveal>
 
         <SectionReveal
-          variant="fade-up"
+          variant="slide-up"
           delayMs={120}
           durationMs={700}
           className="w-full">

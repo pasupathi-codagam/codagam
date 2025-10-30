@@ -295,7 +295,7 @@ export default function ProductsSection() {
         aria-label="Products section">
         <div className="w-full">
           <SectionReveal
-            variant="slide-left"
+            variant="slide-right"
             delayMs={80}
             durationMs={700}
             className="w-full">
@@ -320,8 +320,8 @@ export default function ProductsSection() {
           </SectionReveal>
 
           <SectionReveal
-            variant="fade-up"
-            delayMs={100}
+            variant="zoom-in"
+            delayMs={120}
             durationMs={700}
             className="w-full">
             <div className="relative w-full">

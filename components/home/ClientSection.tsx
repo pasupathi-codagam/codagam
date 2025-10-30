@@ -24,8 +24,8 @@ export default function ClientSection() {
       aria-label="Client testimonials and partners section">
       <SectionReveal
         variant="scale"
-        delayMs={60}
-        durationMs={650}
+        delayMs={70}
+        durationMs={700}
         className="w-full">
         {/* Client Logos Carousel */}
         <div className="mb-4 sm:mb-6 lg:mb-8">

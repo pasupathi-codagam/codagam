@@ -135,9 +135,9 @@ const AboutSection = memo(() => {
         aria-label="About Codagam section">
         <div className="w-full">
           <SectionReveal
-            variant="fade"
+            variant="fade-down"
             durationMs={700}
-            delayMs={60}
+            delayMs={70}
             className="max-w-7xl mx-auto">
             {/* Navigation Link */}
             <div className="text-center mb-6 sm:mb-8">
@@ -164,17 +164,23 @@ const AboutSection = memo(() => {
               </p>
 
               {/* Stats Grid */}
-              <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 lg:gap-8 max-w-4xl mx-auto px-4">
-                {stats.map((stat, index) => (
-                  <StatsCard
-                    key={index}
-                    icon={stat.icon}
-                    number={stat.number}
-                    label={stat.label}
-                    color={stat.color}
-                  />
-                ))}
-              </div>
+              <SectionReveal
+                variant="slide-up"
+                delayMs={100}
+                durationMs={650}
+                className="w-full">
+                <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 lg:gap-8 max-w-4xl mx-auto px-4">
+                  {stats.map((stat, index) => (
+                    <StatsCard
+                      key={index}
+                      icon={stat.icon}
+                      number={stat.number}
+                      label={stat.label}
+                      color={stat.color}
+                    />
+                  ))}
+                </div>
+              </SectionReveal>
             </div>
 
             {/* Why Choose Us Section */}
