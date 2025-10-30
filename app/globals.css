@@ -56,26 +56,7 @@ body {
   overflow-y: auto;
 }
 
-/* Apple-style typography */
-.ps-headline-eyebrow {
-  font-size: 0.875rem;
-  font-weight: 500;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: #6b7280;
-}
-
-.ps-headline-elevated {
-  font-weight: 700;
-  line-height: 1.1;
-  color: #111827;
-}
-
-.ps-header-copy {
-  font-size: 1.125rem;
-  line-height: 1.6;
-  color: #4b5563;
-}
+/* (removed unused Apple-style typography helpers) */
 
 /* Enhanced button hover effects */
 .transition-all {
@@ -178,12 +159,6 @@ body {
   animation-timing-function: linear;
 }
 
-/* Handwriting font for signature */
-.font-handwriting {
-  font-family: "Brush Script MT", "Lucida Handwriting", cursive;
-  font-style: italic;
-}
-
 /* Apple-like Animation System */
 :root {
   --apple-ease-out: cubic-bezier(0.25, 0.46, 0.45, 0.94);
@@ -224,100 +199,11 @@ body {
   --sidebar-ring: oklch(0.708 0 0);
 }
 
-/* Scroll-triggered animations */
-.scroll-animate {
-  opacity: 0;
-  transform: translateY(30px);
-  transition: opacity 0.8s var(--apple-ease-out-expo),
-    transform 0.8s var(--apple-ease-out-expo);
-}
+/* (removed unused scroll-animate utility classes) */
 
-.scroll-animate.animate-in {
-  opacity: 1;
-  transform: translateY(0);
-}
+/* (removed custom line-clamp helpers; rely on Tailwind utilities) */
 
-/* Additional scroll animation variants */
-.scroll-animate-fade {
-  opacity: 0;
-  transition: opacity 0.6s var(--apple-ease-out-expo);
-}
-
-.scroll-animate-fade.animate-in {
-  opacity: 1;
-}
-
-.scroll-animate-slide-up {
-  opacity: 0;
-  transform: translateY(30px);
-  transition: opacity 0.6s var(--apple-ease-out-expo),
-    transform 0.6s var(--apple-ease-out-expo);
-}
-
-.scroll-animate-slide-up.animate-in {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.scroll-animate-slide-down {
-  opacity: 0;
-  transform: translateY(-30px);
-  transition: opacity 0.6s var(--apple-ease-out-expo),
-    transform 0.6s var(--apple-ease-out-expo);
-}
-
-.scroll-animate-slide-down.animate-in {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.scroll-animate-scale {
-  opacity: 0;
-  transform: scale(0.95);
-  transition: opacity 0.6s var(--apple-ease-out-expo),
-    transform 0.6s var(--apple-ease-out-expo);
-}
-
-.scroll-animate-scale.animate-in {
-  opacity: 1;
-  transform: scale(1);
-}
-
-/* Elements that should be visible by default (like hero content) */
-.scroll-animate-visible {
-  opacity: 1;
-  transform: translateY(0) scale(1);
-  transition: opacity 0.8s var(--apple-ease-out-expo),
-    transform 0.8s var(--apple-ease-out-expo);
-}
-
-/* Line clamp utilities */
-.line-clamp-3 {
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-
-.line-clamp-4 {
-  display: -webkit-box;
-  -webkit-line-clamp: 4;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-
-/* Reduced motion for accessibility */
-@media (prefers-reduced-motion: reduce) {
-  .scroll-animate,
-  .scroll-animate-fade,
-  .scroll-animate-slide-up,
-  .scroll-animate-slide-down,
-  .scroll-animate-scale,
-  .scroll-animate-visible {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
-}
+/* (removed reduced-motion overrides for removed utilities) */
 
 .dark {
   --background: oklch(0.145 0 0);

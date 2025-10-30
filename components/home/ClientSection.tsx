@@ -5,7 +5,7 @@ import SectionReveal from "@/components/shared/animation";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ButtonClickHandler } from "@/models/interfaces";
-import { ClientLogoCarousel } from "@/components/shared";
+import { ClientLogoCarousel } from "@/components/shared/ClientLogoCarousel";
 
 export default function ClientSection() {
   // Optimized event handlers with useCallback

@@ -16,7 +16,7 @@ import {
   Wrench,
   X,
 } from "lucide-react";
-import { ContactForm } from "@/components/shared";
+import { ContactForm } from "@/components/shared/ContactForm";
 import { Button } from "@/components/ui/button";
 
 export function Footer() {
