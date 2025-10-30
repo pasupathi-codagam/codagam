@@ -208,7 +208,7 @@ export default function ServicesSection() {
           durationMs={700}
           className="w-full">
           <div
-            className="relative w-full"
+            className="relative w-full cursor-pointer"
             onMouseEnter={stopAutoplay}
             onMouseLeave={startAutoplay}>
             <Carousel
