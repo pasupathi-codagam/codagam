@@ -96,7 +96,9 @@ export function Footer() {
                 <ArrowRight className="h-3 w-3 sm:h-4 sm:w-4 mr-2 text-primary" />
                 Quick Links
               </h4>
-              <nav className="flex flex-col space-y-1 items-center sm:items-start">
+              <nav
+                aria-label="Footer quick links"
+                className="flex flex-col space-y-1 items-center sm:items-start">
                 {navLinks.map((link) => (
                   <Button
                     key={link.href}

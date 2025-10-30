@@ -327,6 +327,7 @@ export default function ProductsSection() {
             <div className="relative w-full">
               <Carousel
                 className="w-full bg-gray-200 dark:bg-muted p-3 sm:p-4 lg:p-6"
+                aria-label="Products carousel"
                 opts={{
                   align: "start",
                   loop: false,
