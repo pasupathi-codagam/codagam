@@ -12,6 +12,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import SectionReveal from "@/components/shared/animation";
 import { Brain, Award, Users, Zap } from "lucide-react";
 import {
   ContactFormDialogProps,
@@ -133,7 +134,11 @@ const AboutSection = memo(() => {
         role="main"
         aria-label="About Codagam section">
         <div className="w-full">
-          <div className="max-w-7xl mx-auto">
+          <SectionReveal
+            variant="fade"
+            durationMs={700}
+            delayMs={60}
+            className="max-w-7xl mx-auto">
             {/* Navigation Link */}
             <div className="text-center mb-6 sm:mb-8">
               <div className="inline-flex items-center px-4 sm:px-6 py-2 sm:py-3 bg-linear-to-r from-muted to-accent border border-border rounded-full">
@@ -237,7 +242,7 @@ const AboutSection = memo(() => {
                 </div>
               </div>
             </div>
-          </div>
+          </SectionReveal>
         </div>
       </section>
 

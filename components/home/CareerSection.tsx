@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useCallback, useMemo, memo } from "react";
+import SectionReveal from "@/components/shared/animation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -200,7 +201,11 @@ export default function CareerSection() {
       className="pt-4 sm:pt-6 lg:pt-8 pb-6 sm:pb-8 lg:pb-10 px-4 sm:px-6 lg:px-8"
       role="main"
       aria-label="Career opportunities section">
-      <div className="max-w-7xl mx-auto">
+      <SectionReveal
+        variant="fade-up"
+        delayMs={80}
+        durationMs={700}
+        className="max-w-7xl mx-auto">
         {/* Navigation Link */}
         <div className="text-center mb-6 sm:mb-8">
           <div className="inline-flex items-center px-4 sm:px-6 py-2 sm:py-3 bg-linear-to-r from-muted to-accent border border-border rounded-full">
@@ -384,7 +389,7 @@ export default function CareerSection() {
             </Collapsible>
           </div>
         </div>
-      </div>
+      </SectionReveal>
     </section>
   );
 }

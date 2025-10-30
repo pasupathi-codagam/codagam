@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useCallback, useMemo, memo } from "react";
+import SectionReveal from "@/components/shared/animation";
 import Image from "next/image";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
@@ -143,7 +144,11 @@ export default function ServicesSection() {
       role="main"
       aria-label="Services section">
       <div className="w-full">
-        <div className="w-full">
+        <SectionReveal
+          variant="slide-right"
+          delayMs={80}
+          durationMs={700}
+          className="w-full">
           {/* Navigation Link */}
           <div className="text-center mb-6 sm:mb-8">
             <div className="inline-flex items-center px-4 sm:px-6 py-2 sm:py-3 bg-linear-to-r from-muted to-accent border border-border rounded-full">
@@ -162,9 +167,13 @@ export default function ServicesSection() {
               digital transformation and drive sustainable growth.
             </p>
           </div>
-        </div>
+        </SectionReveal>
 
-        <div className="w-full">
+        <SectionReveal
+          variant="fade-up"
+          delayMs={120}
+          durationMs={700}
+          className="w-full">
           <div className="relative w-full">
             <Carousel
               className="w-full bg-gray-200 dark:bg-muted p-3 sm:p-4 lg:p-6"
@@ -185,7 +194,7 @@ export default function ServicesSection() {
               <CarouselNext className="right-3 sm:right-4 lg:right-6 xl:right-8 bottom-3 sm:bottom-4 lg:bottom-6 xl:bottom-8 h-12 w-12 sm:h-14 sm:w-14 lg:h-16 lg:w-16 rounded-full bg-card/95 backdrop-blur-sm border border-border/50 hover:bg-card hover:scale-110 transition-all duration-300" />
             </Carousel>
           </div>
-        </div>
+        </SectionReveal>
       </div>
     </section>
   );

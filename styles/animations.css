@@ -271,3 +271,122 @@
   transform: translateX(-100%);
   transition: all 0.5s ease-in-out;
 }
+
+/* SectionReveal base styles */
+.sr-root {
+  position: relative;
+  opacity: 0;
+  will-change: transform, opacity, filter;
+  transition-property: opacity, transform, filter;
+  transition-timing-function: var(--apple-ease-out-expo);
+  transition-duration: 650ms;
+}
+
+.sr-root.is-visible {
+  opacity: 1;
+  filter: none;
+}
+
+/* Variants */
+.sr-fade-up {
+  transform: translateY(16px) scale(0.995);
+  filter: blur(1px);
+}
+.sr-fade-up.is-visible {
+  transform: translateY(0) scale(1);
+}
+
+.sr-fade {
+  transform: none;
+  filter: blur(2px);
+}
+.sr-fade.is-visible {
+  filter: none;
+}
+
+.sr-slide-left {
+  transform: translateX(-24px);
+}
+.sr-slide-left.is-visible {
+  transform: translateX(0);
+}
+
+.sr-slide-right {
+  transform: translateX(24px);
+}
+.sr-slide-right.is-visible {
+  transform: translateX(0);
+}
+
+.sr-scale {
+  transform: scale(0.97);
+}
+.sr-scale.is-visible {
+  transform: scale(1);
+}
+
+/* Subtle animated auras inspired by modern landing pages */
+.sr-aura::before,
+.sr-aura::after {
+  content: "";
+  position: absolute;
+  pointer-events: none;
+  inset: auto;
+  width: 32rem;
+  height: 32rem;
+  border-radius: 9999px;
+  background: radial-gradient(
+    closest-side,
+    rgba(59, 130, 246, 0.1),
+    transparent 70%
+  );
+  filter: blur(24px);
+  opacity: 0.6;
+  z-index: 0;
+  animation: srFloat 12s ease-in-out infinite alternate;
+}
+
+.sr-root::before {
+  top: -6rem;
+  left: -8rem;
+}
+
+.sr-root::after {
+  right: -8rem;
+  bottom: -6rem;
+  background: radial-gradient(
+    closest-side,
+    rgba(168, 85, 247, 0.1),
+    transparent 70%
+  );
+  animation-delay: 1.2s;
+}
+
+@keyframes srFloat {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  100% {
+    transform: translate3d(12px, -14px, 0) scale(1.04);
+  }
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .sr-root,
+  .sr-root.is-visible,
+  .sr-fade-up,
+  .sr-slide-left,
+  .sr-slide-right,
+  .sr-scale {
+    opacity: 1;
+    transform: none;
+    filter: none;
+    transition: none;
+  }
+
+  .sr-aura::before,
+  .sr-aura::after {
+    display: none;
+  }
+}

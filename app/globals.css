@@ -1,5 +1,6 @@
 @import "tailwindcss";
 @import "tw-animate-css";
+@import "../styles/animations.css";
 
 @custom-variant dark (&:is(.dark *));
 
@@ -315,12 +316,12 @@ body {
   body {
     @apply bg-background text-foreground;
   }
-  
+
   /* Ensure dark mode works properly */
   .dark {
     color-scheme: dark;
   }
-  
+
   .light {
     color-scheme: light;
   }
