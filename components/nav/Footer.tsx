@@ -46,11 +46,6 @@ export function Footer() {
       href: "#career-section",
       icon: User,
     },
-    {
-      label: "Contact",
-      href: "#client-section",
-      icon: User,
-    },
   ];
 
   const handleNavClick = (href: string) => {

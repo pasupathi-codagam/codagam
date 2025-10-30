@@ -281,19 +281,17 @@ export default function CareerSection() {
                       variant="outline"
                       className="w-full h-14 sm:h-16 text-base sm:text-lg font-semibold rounded-2xl border-2 border-border hover:border-ring hover:bg-accent hover:shadow-md transition-all duration-300 group"
                       aria-label="Toggle application form">
-                      <div className="flex items-center justify-between w-full px-4 sm:px-6">
-                        <div className="flex items-center space-x-3 sm:space-x-4">
-                          <div className="w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                            <Send className="w-5 h-5 sm:w-6 sm:h-6 text-primary" />
-                          </div>
-                          <span className="text-foreground font-medium text-sm sm:text-base">
-                            Apply Now
-                          </span>
-                        </div>
+                      <div className="relative flex items-center justify-center w-full px-12 sm:px-14">
+                        {/* Centered icon + label */}
+                        <span className="inline-flex items-center gap-2 text-foreground font-medium text-sm sm:text-base">
+                          <Send className="w-5 h-5 sm:w-6 sm:h-6 text-primary" />
+                          Apply Now
+                        </span>
+                        {/* Right chevron */}
                         {isOpen ? (
-                          <ChevronUp className="w-4 h-4 sm:w-5 sm:h-5 text-muted-foreground group-hover:text-foreground transition-colors duration-300" />
+                          <ChevronUp className="absolute right-4 sm:right-6 w-4 h-4 sm:w-5 sm:h-5 text-muted-foreground group-hover:text-foreground transition-colors duration-300" />
                         ) : (
-                          <ChevronDown className="w-4 h-4 sm:w-5 sm:h-5 text-muted-foreground group-hover:text-foreground transition-colors duration-300" />
+                          <ChevronDown className="absolute right-4 sm:right-6 w-4 h-4 sm:w-5 sm:h-5 text-muted-foreground group-hover:text-foreground transition-colors duration-300" />
                         )}
                       </div>
                     </Button>
