@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useCallback, useMemo, memo } from "react";
+import React, { useState, useCallback, memo } from "react";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -13,11 +13,11 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import SectionReveal from "@/components/shared/animation";
-import { Brain, Award, Users, Zap } from "lucide-react";
 import {
   ContactFormDialogProps,
   ButtonClickHandler,
 } from "@/models/interfaces";
+import { aboutStats } from "@/lib/content/about";
 
 // Stats card component
 const StatsCard = memo(
@@ -79,36 +79,7 @@ ContactFormDialog.displayName = "ContactFormDialog";
 const AboutSection = memo(() => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
-  // Stats data
-  const stats = useMemo(
-    () => [
-      {
-        icon: Brain,
-        number: "500+",
-        label: "AI Solutions",
-        color: "from-blue-500 to-blue-600",
-      },
-      {
-        icon: Award,
-        number: "50+",
-        label: "Innovations",
-        color: "from-purple-500 to-purple-600",
-      },
-      {
-        icon: Users,
-        number: "100+",
-        label: "Happy Clients",
-        color: "from-green-500 to-green-600",
-      },
-      {
-        icon: Zap,
-        number: "4+",
-        label: "Years Experience",
-        color: "from-yellow-500 to-orange-500",
-      },
-    ],
-    []
-  );
+  const stats = aboutStats;
 
   const handleContactClick: ButtonClickHandler = useCallback(() => {
     setIsDialogOpen(true);

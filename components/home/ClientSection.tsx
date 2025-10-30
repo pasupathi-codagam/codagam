@@ -5,9 +5,12 @@ import SectionReveal from "@/components/shared/animation";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ButtonClickHandler } from "@/models/interfaces";
-import { ClientLogoCarousel } from "@/components/shared/ClientLogoCarousel";
+import { getClientSectionContent } from "@/lib/content/clients";
+import { Marquee } from "@/components/ui/marquee";
+import Image from "next/image";
 
 export default function ClientSection() {
+  const { title, subtitle, logos } = getClientSectionContent();
   // Optimized event handlers with useCallback
   const handleRequestCallback: ButtonClickHandler = useCallback(() => {
     const element = document.getElementById("footer-section");
@@ -27,13 +30,40 @@ export default function ClientSection() {
         delayMs={70}
         durationMs={700}
         className="w-full">
-        {/* Client Logos Carousel */}
+        {/* Header */}
+        <div className="text-center mb-4 sm:mb-6 md:mb-8 w-full px-4">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-4 sm:mb-6">
+            {title}
+          </h2>
+          <p className="text-sm sm:text-base md:text-lg lg:text-xl text-muted-foreground leading-relaxed">
+            {subtitle}
+          </p>
+        </div>
+
+        {/* Client Logos Marquee */}
         <div className="mb-4 sm:mb-6 lg:mb-8">
-          <ClientLogoCarousel
-            title="Our Partners"
-            subtitle="We're proud to work with these industry-leading companies that trust us to deliver exceptional results"
-            className=""
-          />
+          <div className="relative w-full">
+            <Marquee
+              pauseOnHover
+              className="[--duration:60s] smooth-marquee w-full">
+              {logos.map((client, index) => (
+                <div
+                  key={`${client.name}-${index}`}
+                  className="flex-shrink-0 mx-2 sm:mx-4 md:mx-6 lg:mx-8">
+                  <div className="relative w-32 sm:w-40 md:w-48 lg:w-56 xl:w-64 h-20 sm:h-24 md:h-28 lg:h-32 xl:h-36 flex items-center justify-center group transition-all duration-300">
+                    <Image
+                      src={client.logo}
+                      alt={client.alt}
+                      width={client.width || 200}
+                      height={client.height || 120}
+                      className="max-w-[120px] sm:max-w-[150px] md:max-w-[180px] lg:max-w-[200px] xl:max-w-[220px] max-h-[60px] sm:max-h-[80px] md:max-h-[100px] lg:max-h-[120px] xl:max-h-[140px] object-contain"
+                      sizes="(max-width: 640px) 120px, (max-width: 768px) 150px, (max-width: 1024px) 180px, (max-width: 1280px) 200px, 220px"
+                    />
+                  </div>
+                </div>
+              ))}
+            </Marquee>
+          </div>
         </div>
 
         {/* Call to Action */}

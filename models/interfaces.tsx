@@ -129,6 +129,17 @@ export interface ClientLogo {
   alt: string;
 }
 
+export interface ClientLogoWithSize extends ClientLogo {
+  width?: number;
+  height?: number;
+}
+
+export interface ClientSectionContent {
+  title: string;
+  subtitle: string;
+  logos: ClientLogoWithSize[];
+}
+
 export interface ClientLogoCardProps {
   client: ClientLogo;
   index: number;
