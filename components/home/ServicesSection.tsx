@@ -1,24 +1,10 @@
 "use client";
 
-import React, {
-  useCallback,
-  useMemo,
-  memo,
-  useEffect,
-  useState,
-  useRef,
-} from "react";
+import React, { useCallback, useMemo, memo } from "react";
 import SectionReveal from "@/components/shared/animation";
 import Image from "next/image";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from "@/components/ui/carousel";
-import { type CarouselApi } from "@/components/ui/carousel";
+import { Marquee } from "@/components/ui/marquee";
 import {
   GalleryItem as GalleryItemType,
   ServiceCardProps,
@@ -74,10 +60,6 @@ const ServiceCard = memo(
 ServiceCard.displayName = "ServiceCard";
 
 export default function ServicesSection() {
-  const [carouselApi, setCarouselApi] = useState<CarouselApi | undefined>(
-    undefined
-  );
-  const autoplayRef = useRef<number | null>(null);
   // Memoized gallery items data
   const galleryItems = useMemo(
     (): GalleryItemType[] => [
@@ -149,26 +131,7 @@ export default function ServicesSection() {
     []
   );
 
-  const stopAutoplay = useCallback(() => {
-    if (autoplayRef.current !== null) {
-      clearInterval(autoplayRef.current);
-      autoplayRef.current = null;
-    }
-  }, []);
-
-  const startAutoplay = useCallback(() => {
-    if (!carouselApi || autoplayRef.current !== null) return;
-    autoplayRef.current = window.setInterval(() => {
-      carouselApi.scrollNext();
-    }, 3500);
-  }, [carouselApi]);
-
-  // Auto-advance using shadcn Carousel API (no external plugin)
-  useEffect(() => {
-    if (!carouselApi) return;
-    startAutoplay();
-    return () => stopAutoplay();
-  }, [carouselApi, startAutoplay, stopAutoplay]);
+  // marquee provides continuous motion
 
   return (
     <section
@@ -207,30 +170,18 @@ export default function ServicesSection() {
           delayMs={120}
           durationMs={700}
           className="w-full">
-          <div
-            className="relative w-full cursor-pointer"
-            onMouseEnter={stopAutoplay}
-            onMouseLeave={startAutoplay}>
-            <Carousel
+          <div className="relative w-full">
+            <Marquee
               className="w-full bg-gray-200 dark:bg-muted p-3 sm:p-4 lg:p-6"
-              aria-label="Services carousel"
-              opts={{
-                align: "start",
-                loop: true,
-              }}
-              setApi={setCarouselApi}>
-              <CarouselContent className="w-full gap-3 sm:gap-4 lg:gap-6 xl:gap-8 pb-3 sm:pb-4 lg:pb-6">
-                {galleryItems.map((item) => (
-                  <CarouselItem
-                    key={item.id}
-                    className="shrink-0 w-full max-w-4xl lg:max-w-5xl">
-                    <ServiceCard item={item} />
-                  </CarouselItem>
-                ))}
-              </CarouselContent>
-              <CarouselPrevious className="right-16 sm:right-20 lg:right-24 xl:right-28 bottom-3 sm:bottom-4 lg:bottom-6 xl:bottom-8 h-12 w-12 sm:h-14 sm:w-14 lg:h-16 lg:w-16 rounded-full bg-card/95 backdrop-blur-sm border border-border/50 hover:bg-card hover:scale-110 transition-all duration-300" />
-              <CarouselNext className="right-3 sm:right-4 lg:right-6 xl:right-8 bottom-3 sm:bottom-4 lg:bottom-6 xl:bottom-8 h-12 w-12 sm:h-14 sm:w-14 lg:h-16 lg:w-16 rounded-full bg-card/95 backdrop-blur-sm border border-border/50 hover:bg-card hover:scale-110 transition-all duration-300" />
-            </Carousel>
+              pauseOnHover>
+              {galleryItems.map((item) => (
+                <div
+                  key={item.id}
+                  className="shrink-0 w-full max-w-4xl lg:max-w-5xl px-4 sm:px-6 lg:px-8 xl:px-10">
+                  <ServiceCard item={item} />
+                </div>
+              ))}
+            </Marquee>
           </div>
         </SectionReveal>
       </div>
