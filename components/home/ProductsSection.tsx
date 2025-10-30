@@ -291,7 +291,7 @@ export default function ProductsSection() {
       <section
         id="products-section"
         className="w-full flex items-center pt-4 sm:pt-6 lg:pt-8 pb-2 sm:pb-4 lg:pb-6"
-        role="main"
+        role="region"
         aria-label="Products section">
         <div className="w-full">
           <SectionReveal

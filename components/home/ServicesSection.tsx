@@ -141,7 +141,7 @@ export default function ServicesSection() {
     <section
       id="services-section"
       className="w-full flex items-center pt-4 sm:pt-6 lg:pt-8 pb-6 sm:pb-8 lg:pb-10"
-      role="main"
+      role="region"
       aria-label="Services section">
       <div className="w-full">
         <SectionReveal

@@ -199,7 +199,7 @@ export default function CareerSection() {
     <section
       id="career-section"
       className="pt-4 sm:pt-6 lg:pt-8 pb-6 sm:pb-8 lg:pb-10 px-4 sm:px-6 lg:px-8"
-      role="main"
+      role="region"
       aria-label="Career opportunities section">
       <SectionReveal
         variant="zoom-in"

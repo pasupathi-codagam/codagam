@@ -20,7 +20,7 @@ export default function ClientSection() {
     <section
       id="client-section"
       className="pt-2 sm:pt-4 lg:pt-6 pb-4 sm:pb-6 lg:pb-8"
-      role="main"
+      role="region"
       aria-label="Client testimonials and partners section">
       <SectionReveal
         variant="scale"
