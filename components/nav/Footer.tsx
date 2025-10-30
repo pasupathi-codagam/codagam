@@ -83,7 +83,7 @@ export function Footer() {
                   className="object-contain rounded w-16 h-10 sm:w-20 sm:h-12 md:w-24 md:h-16"
                 />
               </div>
-              <p className="text-xs sm:text-sm text-muted-foreground text-center sm:text-left">
+              <p className="text-xs sm:text-sm text-black dark:text-white text-center sm:text-left">
                 <strong>Mobile:</strong> +91 75984 54546
                 <br />
                 <strong>Email:</strong> support@codagam.com
@@ -171,20 +171,11 @@ export function Footer() {
         className="w-full">
         <div className="border-t border-border pt-4 pb-4">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="flex flex-col sm:flex-row justify-center sm:justify-between items-center text-xs sm:text-sm text-muted-foreground gap-2">
-              <p>&copy; 2024 Codagam. All rights reserved.</p>
-              <div className="flex gap-3 sm:gap-4">
-                <Link
-                  href="/privacy"
-                  className="hover:text-primary transition text-xs sm:text-sm">
-                  Privacy Policy
-                </Link>
-                <Link
-                  href="/terms"
-                  className="hover:text-primary transition text-xs sm:text-sm">
-                  Terms of Service
-                </Link>
-              </div>
+            <div className="flex justify-center items-center text-xs sm:text-sm text-muted-foreground gap-2">
+              <p>
+                &copy; 2025 Codagam Software Labs Private Limited. All rights
+                reserved.
+              </p>
             </div>
           </div>
         </div>
