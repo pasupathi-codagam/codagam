@@ -121,14 +121,11 @@ const AboutSection = memo(() => {
 
             {/* Header Section */}
             <div className="text-center mb-6 sm:mb-8 lg:mb-10">
-              <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-foreground mb-4 px-4">
-                Empowering <span className="text-foreground">businesses</span>{" "}
-                with
-                <br />
-                <span className="text-foreground">innovative solutions</span>
-              </h1>
+              <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-foreground mb-4">
+                Empowering businesses with innovative solutions
+              </h2>
 
-              <p className="text-sm sm:text-base lg:text-lg text-muted-foreground leading-relaxed max-w-4xl mx-auto mb-6 sm:mb-8 px-4">
+              <p className="text-sm sm:text-base lg:text-lg text-muted-foreground leading-relaxed max-w-4xl mx-auto">
                 At Codagam, we pride ourselves on delivering transformative
                 technology solutions. Our team of experts is dedicated to
                 driving positive change and fostering sustainable growth.
