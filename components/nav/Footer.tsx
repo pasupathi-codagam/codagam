@@ -64,13 +64,13 @@ export function Footer() {
   return (
     <footer
       id="footer-section"
-      className="border-t border-border bg-background px-4 pb-4 pt-10 text-foreground sm:px-6 sm:pb-6 sm:pt-12 lg:px-8 lg:pb-8 lg:pt-16">
+      className="border-t border-border bg-background px-4 text-foreground sm:px-6 lg:px-8">
       <SectionReveal
         variant="fade-up"
         delayMs={90}
         durationMs={700}
         className="w-full">
-        <div className="mx-auto w-full max-w-7xl">
+        <div className="mx-auto w-full max-w-7xl py-10 sm:py-12 lg:py-16">
           <div className="grid grid-cols-1 gap-6 text-center sm:grid-cols-2 sm:text-left lg:grid-cols-4 lg:gap-8">
             {/* Company Info */}
             <div>
@@ -171,10 +171,10 @@ export function Footer() {
         delayMs={120}
         durationMs={700}
         className="w-full">
-        <div className="pb-4 pt-4">
-          <div className="mx-auto w-full max-w-7xl">
-            <div className="border-t border-border pb-4 pt-4">
-              <div className="flex items-center justify-center gap-2 text-xs text-muted-foreground sm:text-sm">
+        <div className="py-2">
+          <div className="mx-auto w-full max-w-7xl ">
+            <div className="border-t border-border">
+              <div className="py-2 flex items-center justify-center gap-2 text-xs text-muted-foreground sm:text-sm">
                 <p>
                   &copy; 2025 Codagam Software Labs Private Limited. All rights
                   reserved.

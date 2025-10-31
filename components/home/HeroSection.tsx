@@ -75,7 +75,7 @@ const HeroSection: React.FC<HeroSectionProps> = memo(() => {
             className="w-full">
             <div className="relative order-2 lg:order-2">
               <video
-                src="/videos/h.mp4"
+                src="/videos/hero.mp4"
                 autoPlay
                 loop
                 muted

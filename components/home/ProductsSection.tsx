@@ -26,11 +26,11 @@ import { productItemsContent } from "@/lib/content/products";
 // Memoized product card component
 const ProductCard = memo(
   ({ item, onCardClick }: Omit<ProductCardProps, "index" | "currentIndex">) => (
-    <div className="px-4 sm:px-6 lg:px-8 xl:px-16">
+    <div className="px-3 sm:px-4 lg:px-6 xl:px-8">
       <Card
         className="h-full border-0 bg-card transition-all duration-500 hover:scale-105 rounded-2xl sm:rounded-3xl overflow-hidden cursor-pointer group"
         onClick={() => onCardClick(item)}>
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-0 items-stretch min-h-[350px] sm:min-h-[400px] md:min-h-[450px] lg:min-h-[500px]">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-0 items-stretch min-h-[340px] sm:min-h-[380px] md:min-h-[420px] lg:min-h-[460px]">
           {/* Content Section - Left Side */}
           <div className="order-2 lg:order-1 p-4 sm:p-6 lg:p-8 flex flex-col justify-center">
             <div className="flex-1 flex flex-col justify-center">
@@ -62,8 +62,8 @@ const ProductCard = memo(
           </div>
 
           {/* Image Section - Right Side */}
-          <div className="order-1 lg:order-2 relative h-full min-h-[250px] sm:min-h-[300px] md:min-h-[350px] lg:min-h-[400px] flex items-center justify-center p-3 sm:p-4 lg:p-6">
-            <div className="relative w-3/4 h-3/4 flex items-center justify-center">
+          <div className="order-1 lg:order-2 relative h-full min-h-[240px] sm:min-h-[300px] md:min-h-[360px] lg:min-h-[460px] flex items-center justify-center p-3 sm:p-4 lg:p-6">
+            <div className="relative w-4/5 h-4/5 flex items-center justify-center">
               <Image
                 src={item.image}
                 alt={item.alt}
@@ -198,7 +198,7 @@ export default function ProductsSection() {
     <>
       <section
         id="products-section"
-        className="w-full flex items-center pt-4 sm:pt-6 lg:pt-8 pb-2 sm:pb-4 lg:pb-6"
+        className="w-full flex items-center py-4 sm:py-6 lg:py-8"
         role="region"
         aria-label="Products section">
         <div className="w-full">
@@ -244,11 +244,11 @@ export default function ProductsSection() {
                   loop: true,
                 }}
                 setApi={setCarouselApi}>
-                <CarouselContent className="w-full gap-3 sm:gap-4 lg:gap-6 xl:gap-8 pb-3 sm:pb-4 lg:pb-6">
+                <CarouselContent className="w-full gap-3 sm:gap-4 lg:gap-5 xl:gap-6 py-3 sm:py-4 lg:py-5">
                   {productItems.map((item) => (
                     <CarouselItem
                       key={item.id}
-                      className="shrink-0 w-full max-w-4xl lg:max-w-5xl">
+                      className="shrink-0 basis-full sm:basis-3/4 lg:basis-1/2 xl:basis-[45%]">
                       <ProductCard item={item} onCardClick={handleCardClick} />
                     </CarouselItem>
                   ))}
