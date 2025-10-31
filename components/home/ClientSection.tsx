@@ -49,7 +49,7 @@ export default function ClientSection() {
               {logos.map((client, index) => (
                 <div
                   key={`${client.name}-${index}`}
-                  className="flex-shrink-0 mx-2 sm:mx-4 md:mx-6 lg:mx-8">
+                  className="shrink-0 mx-2 sm:mx-4 md:mx-6 lg:mx-8">
                   <div className="relative w-32 sm:w-40 md:w-48 lg:w-56 xl:w-64 h-20 sm:h-24 md:h-28 lg:h-32 xl:h-36 flex items-center justify-center group transition-all duration-300">
                     <Image
                       src={client.logo}
