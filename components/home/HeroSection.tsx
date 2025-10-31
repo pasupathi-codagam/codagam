@@ -1,6 +1,7 @@
 "use client";
 
 import React, { memo, useCallback } from "react";
+import Image from "next/image";
 import SectionReveal from "@/components/shared/animation";
 import { Button } from "@/components/ui/button";
 import { HeroSectionProps, ButtonClickHandler } from "@/models/interfaces";
@@ -67,25 +68,22 @@ const HeroSection: React.FC<HeroSectionProps> = memo(() => {
             </div>
           </SectionReveal>
 
-          {/* Right Side - Video */}
+          {/* Right Side - Visual */}
           <SectionReveal
             variant="slide-up"
             delayMs={100}
             durationMs={700}
             className="w-full">
             <div className="relative order-2 lg:order-2">
-              <video
-                src="/videos/hero.mp4"
-                autoPlay
-                loop
-                muted
-                playsInline
-                className="h-[260px] w-full rounded-3xl object-cover shadow-2xl sm:h-[320px] md:h-[360px] lg:h-[420px] xl:h-[480px]"
-                aria-label="Codagam team and technology solutions"
-                preload="metadata">
-                <track kind="captions" />
-                Your browser does not support the video tag.
-              </video>
+              <div className="relative h-[360px] w-full rounded-3xl sm:h-[460px] md:h-[520px] lg:h-[600px] xl:h-[680px]">
+                <Image
+                  src="/images/hero3.png"
+                  alt="Illustration of Codagam's cloud and data solutions"
+                  fill
+                  priority
+                  className="object-contain"
+                />
+              </div>
             </div>
           </SectionReveal>
         </div>
