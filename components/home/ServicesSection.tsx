@@ -15,10 +15,10 @@ import { servicesGalleryItems } from "@/lib/content/services";
 const ServiceCard = memo(
   ({ item }: Omit<ServiceCardProps, "index" | "currentIndex">) => (
     <div className="px-4 sm:px-6 lg:px-8 xl:px-16">
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-0 items-stretch min-h-[350px] sm:min-h-[400px] md:min-h-[450px] lg:min-h-[500px] transition-all duration-500 ease-out group rounded-2xl overflow-hidden lg:rounded-none lg:overflow-visible">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-0 items-stretch lg:min-h-[500px] transition-all duration-500 ease-out group rounded-2xl overflow-hidden lg:rounded-none lg:overflow-visible">
         {/* Image Background - Left Side */}
         <div className="order-1 lg:order-1">
-          <div className="relative h-full min-h-[250px] sm:min-h-[300px] md:min-h-[350px] lg:min-h-[400px] overflow-hidden rounded-t-2xl lg:rounded-l-3xl lg:rounded-t-none group-hover:shadow-xl transition-all duration-500">
+          <div className="relative h-full min-h-[220px] sm:min-h-[260px] md:min-h-[320px] lg:min-h-[400px] overflow-hidden rounded-t-2xl lg:rounded-l-3xl lg:rounded-t-none group-hover:shadow-xl transition-all duration-500">
             <Image
               src={item.image}
               alt={item.alt}
@@ -32,8 +32,8 @@ const ServiceCard = memo(
 
         {/* Content Card - Right Side */}
         <div className="order-2 lg:order-2">
-          <Card className="relative overflow-hidden border-0 shadow-lg bg-card h-full min-h-[350px] sm:min-h-[400px] md:min-h-[450px] lg:min-h-[500px] group-hover:shadow-xl group-hover:bg-accent transition-all duration-500 rounded-none rounded-bl-2xl rounded-br-2xl lg:rounded-bl-none lg:rounded-tr-3xl lg:rounded-br-3xl cursor-pointer">
-            <div className="p-4 sm:p-6 lg:p-8 flex flex-col justify-center h-full">
+          <Card className="relative overflow-hidden border-0 shadow-lg bg-card h-full min-h-0 lg:min-h-[500px] group-hover:shadow-xl group-hover:bg-accent transition-all duration-500 rounded-none rounded-bl-2xl rounded-br-2xl lg:rounded-bl-none lg:rounded-tr-3xl lg:rounded-br-3xl cursor-pointer">
+          <div className="p-4 sm:p-6 lg:p-8 flex flex-col justify-center h-full">
               <div className="flex-1 flex flex-col justify-center">
                 <CardHeader className="pb-4 sm:pb-6 px-0">
                   <CardTitle className="text-lg sm:text-xl lg:text-2xl font-bold text-foreground leading-tight group-hover:text-primary transition-colors duration-500">
