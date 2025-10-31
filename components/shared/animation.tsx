@@ -70,25 +70,22 @@ export function SectionReveal({
         opacity: 0,
         y: prefersReducedMotion ? 0 : 24,
         scale: prefersReducedMotion ? 1 : 0.992,
-        filter: "blur(1px)",
       },
-      visible: { opacity: 1, y: 0, scale: 1, filter: "none" },
+      visible: { opacity: 1, y: 0, scale: 1 },
     },
     "fade-down": {
       hidden: {
         opacity: 0,
         y: prefersReducedMotion ? 0 : -24,
         scale: prefersReducedMotion ? 1 : 0.992,
-        filter: "blur(1px)",
       },
-      visible: { opacity: 1, y: 0, scale: 1, filter: "none" },
+      visible: { opacity: 1, y: 0, scale: 1 },
     },
     fade: {
       hidden: {
         opacity: 0,
-        filter: prefersReducedMotion ? "none" : "blur(2px)",
       },
-      visible: { opacity: 1, filter: "none" },
+      visible: { opacity: 1 },
     },
     "slide-left": {
       hidden: { opacity: 0, x: prefersReducedMotion ? 0 : -36 },
@@ -110,9 +107,8 @@ export function SectionReveal({
       hidden: {
         opacity: 0,
         scale: prefersReducedMotion ? 1 : 0.9,
-        filter: prefersReducedMotion ? "none" : "blur(1px)",
       },
-      visible: { opacity: 1, scale: 1, filter: "none" },
+      visible: { opacity: 1, scale: 1 },
     },
   };
 

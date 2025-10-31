@@ -64,14 +64,14 @@ export function Footer() {
   return (
     <footer
       id="footer-section"
-      className="bg-background text-foreground pt-4 sm:pt-6 lg:pt-8 xl:pt-10 pb-2 border-t border-border">
+      className="border-t border-border bg-background px-4 pb-4 pt-10 text-foreground sm:px-6 sm:pb-6 sm:pt-12 lg:px-8 lg:pb-8 lg:pt-16">
       <SectionReveal
         variant="fade-up"
         delayMs={90}
         durationMs={700}
         className="w-full">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 lg:gap-8 text-center sm:text-left">
+        <div className="mx-auto w-full max-w-7xl">
+          <div className="grid grid-cols-1 gap-6 text-center sm:grid-cols-2 sm:text-left lg:grid-cols-4 lg:gap-8">
             {/* Company Info */}
             <div>
               <div className="mb-3 flex justify-center sm:justify-start">
@@ -156,10 +156,10 @@ export function Footer() {
 
             {/* Contact Form */}
             <div>
-              <h4 className="font-semibold mb-3 sm:mb-4 text-sm sm:text-base text-foreground text-center sm:text-left">
+              <h4 className="mb-3 text-sm font-semibold text-foreground sm:mb-4 sm:text-base">
                 Get in Touch
               </h4>
-              <ContactForm showTitle={false} className="w-full mb-4" />
+              <ContactForm showTitle={false} className="w-full" />
             </div>
           </div>
         </div>
@@ -171,10 +171,10 @@ export function Footer() {
         delayMs={120}
         durationMs={700}
         className="w-full">
-        <div className="pt-4 pb-4">
-          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="border-t border-border pt-4 pb-4">
-              <div className="flex justify-center items-center text-xs sm:text-sm text-muted-foreground gap-2">
+        <div className="pb-4 pt-4">
+          <div className="mx-auto w-full max-w-7xl">
+            <div className="border-t border-border pb-4 pt-4">
+              <div className="flex items-center justify-center gap-2 text-xs text-muted-foreground sm:text-sm">
                 <p>
                   &copy; 2025 Codagam Software Labs Private Limited. All rights
                   reserved.

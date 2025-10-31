@@ -13,6 +13,12 @@ import { ChevronDown, ChevronUp, Send } from "lucide-react";
 import { careerBenefits } from "@/lib/content/career";
 import { CareerApplicationForm } from "@/components/shared/CareerApplicationForm";
 
+const iconColorMap: Record<string, string> = {
+  blue: "text-blue-500",
+  green: "text-green-500",
+  purple: "text-purple-500",
+};
+
 // Memoized benefit card component with collapsible
 const BenefitCard = memo(
   ({
@@ -27,38 +33,38 @@ const BenefitCard = memo(
     <div className="space-y-3 sm:space-y-4">
       <Button
         variant="outline"
-        className={`w-full h-14 sm:h-16 text-sm sm:text-base lg:text-lg font-semibold rounded-2xl border-2 transition-all duration-300 group ${
+        className={`group flex h-14 w-full items-center justify-between rounded-2xl border-2 px-4 text-sm font-semibold transition-all duration-300 sm:h-16 sm:px-6 sm:text-base lg:text-lg ${
           isOpen
             ? "border-ring bg-accent shadow-md"
             : "border-border hover:border-ring hover:bg-accent hover:shadow-sm"
         }`}
         onClick={onToggle}
         aria-label={`Toggle ${benefit.title} details`}>
-        <div className="flex items-center justify-between w-full px-4 sm:px-6">
-          <div className="flex items-center space-x-3 sm:space-x-4">
-            <div className="w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-              <benefit.icon
-                className={`w-5 h-5 sm:w-6 sm:h-6 text-${benefit.color}-600`}
-              />
-            </div>
-            <span className="text-foreground font-medium text-sm sm:text-base">
-              {benefit.title}
-            </span>
+        <div className="flex items-center space-x-3 sm:space-x-4">
+          <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-muted transition-transform duration-300 group-hover:scale-105 sm:h-11 sm:w-11">
+            <benefit.icon
+              className={`h-5 w-5 ${
+                iconColorMap[benefit.color] ?? "text-primary"
+              }`}
+            />
           </div>
-          {isOpen ? (
-            <ChevronUp className="w-4 h-4 sm:w-5 sm:h-5 text-muted-foreground group-hover:text-foreground transition-colors duration-300" />
-          ) : (
-            <ChevronDown className="w-4 h-4 sm:w-5 sm:h-5 text-muted-foreground group-hover:text-foreground transition-colors duration-300" />
-          )}
+          <span className="text-sm font-medium text-foreground sm:text-base">
+            {benefit.title}
+          </span>
         </div>
+        {isOpen ? (
+          <ChevronUp className="h-4 w-4 text-muted-foreground transition-colors duration-300 group-hover:text-foreground sm:h-5 sm:w-5" />
+        ) : (
+          <ChevronDown className="h-4 w-4 text-muted-foreground transition-colors duration-300 group-hover:text-foreground sm:h-5 sm:w-5" />
+        )}
       </Button>
 
       <div
         className={`overflow-hidden transition-all duration-500 ease-in-out ${
           isOpen ? "max-h-[200px] opacity-100" : "max-h-0 opacity-0"
         }`}>
-        <div className="bg-linear-to-br from-background to-muted border border-border rounded-2xl p-4 sm:p-6 shadow-sm">
-          <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
+        <div className="rounded-2xl border border-border/40 bg-card p-4 shadow-sm sm:p-6">
+          <p className="text-sm leading-relaxed text-muted-foreground sm:text-base">
             {benefit.description}
           </p>
         </div>
@@ -78,14 +84,14 @@ export default function CareerSection() {
   return (
     <section
       id="career-section"
-      className="pt-4 sm:pt-6 lg:pt-8 pb-6 sm:pb-8 lg:pb-10 px-4 sm:px-6 lg:px-8 overflow-x-hidden"
+      className="overflow-x-hidden bg-background px-4 py-12 sm:px-6 sm:py-16 lg:px-8 lg:py-20"
       role="region"
       aria-label="Career opportunities section">
       <SectionReveal
         variant="zoom-in"
         delayMs={80}
         durationMs={700}
-        className="max-w-7xl mx-auto">
+        className="mx-auto w-full max-w-7xl">
         {/* Navigation Link */}
         <div className="text-center mb-6 sm:mb-8">
           <div className="inline-flex items-center px-4 sm:px-6 py-2 sm:py-3 bg-linear-to-r from-muted to-accent border border-border rounded-full">
@@ -96,19 +102,19 @@ export default function CareerSection() {
         </div>
 
         {/* Header */}
-        <div className="text-center mb-6 sm:mb-8 lg:mb-10">
-          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-foreground leading-tight mb-4">
+        <div className="mb-6 text-center sm:mb-8 lg:mb-12">
+          <h2 className="mb-4 text-2xl font-bold leading-tight text-foreground sm:text-3xl lg:text-4xl">
             Join our team
           </h2>
 
-          <p className="text-sm sm:text-base lg:text-lg text-muted-foreground max-w-3xl mx-auto leading-relaxed px-4">
+          <p className="mx-auto max-w-3xl text-sm leading-relaxed text-muted-foreground sm:text-base lg:text-lg">
             We&apos;re looking for passionate individuals who want to build the
             future of technology. Join us in creating innovative solutions that
             make a real impact.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 lg:gap-10 items-start">
+        <div className="grid grid-cols-1 items-start gap-8 sm:gap-10 lg:grid-cols-2 lg:gap-14">
           {/* Benefits Section */}
           <SectionReveal
             variant="slide-right"

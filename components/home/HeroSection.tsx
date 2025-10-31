@@ -16,80 +16,78 @@ const HeroSection: React.FC<HeroSectionProps> = memo(() => {
   return (
     <section
       id="hero-section"
-      className="min-h-screen bg-background flex items-center py-4 sm:py-8 md:py-12 lg:py-16 px-4 sm:px-6 lg:px-8 overflow-x-hidden"
+      className="relative flex min-h-[calc(100vh-64px)] items-center overflow-x-hidden bg-background px-4 py-12 sm:px-6 sm:py-16 lg:px-8 lg:py-20"
       role="region"
       aria-label="Hero section">
-      <div className="w-full">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-12 lg:gap-16 items-center">
-            {/* Left Side - Content */}
-            <SectionReveal
-              variant="fade-down"
-              delayMs={60}
-              durationMs={700}
-              className="w-full">
-              <div className="px-4 sm:px-6 lg:px-8 xl:px-16 space-y-6 sm:space-y-8 order-1 lg:order-1">
-                {/* Brand */}
-                <div className="space-y-2 sm:space-y-3 text-center lg:text-left">
-                  <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-primary leading-none">
-                    Codagam
-                  </h1>
-                  <p className="text-base sm:text-lg lg:text-xl text-muted-foreground font-medium">
-                    Consult | Code | Collaborate
-                  </p>
-                </div>
-
-                {/* Main Headline */}
-                <div className="space-y-3 sm:space-y-4 text-center lg:text-left">
-                  <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-semibold text-foreground leading-tight">
-                    Digital Transformation
-                    <br />
-                    <span className="text-muted-foreground">
-                      for Modern Business
-                    </span>
-                  </h2>
-                  <p className="text-sm sm:text-base lg:text-lg text-muted-foreground leading-relaxed max-w-2xl mx-auto lg:mx-0">
-                    We help you establish and upscale your business online so
-                    that you don&apos;t miss any chance of serving a customer.
-                  </p>
-                </div>
-
-                {/* CTA */}
-                <div className="pt-2 text-center lg:text-left">
-                  <Button
-                    onClick={handleGetStarted}
-                    variant="black"
-                    size="lg"
-                    className="px-6 sm:px-8 py-3 sm:py-4 text-base sm:text-lg font-medium transition-all duration-300 hover:scale-105 w-full sm:w-auto border border-border shadow-sm"
-                    aria-label="Get started with Codagam services">
-                    Get Started
-                  </Button>
-                </div>
+      <div className="mx-auto w-full max-w-7xl">
+        <div className="grid grid-cols-1 items-center gap-10 sm:gap-12 lg:grid-cols-2 lg:gap-16">
+          {/* Left Side - Content */}
+          <SectionReveal
+            variant="fade-down"
+            delayMs={60}
+            durationMs={700}
+            className="w-full">
+            <div className="order-1 space-y-6 sm:space-y-8 lg:order-1 lg:pr-6 xl:pr-10">
+              {/* Brand */}
+              <div className="space-y-2 sm:space-y-3 text-center lg:text-left">
+                <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-primary leading-none">
+                  Codagam
+                </h1>
+                <p className="text-base sm:text-lg lg:text-xl text-muted-foreground font-medium">
+                  Consult | Code | Collaborate
+                </p>
               </div>
-            </SectionReveal>
 
-            {/* Right Side - Video */}
-            <SectionReveal
-              variant="slide-up"
-              delayMs={100}
-              durationMs={700}
-              className="w-full">
-              <div className="relative order-2 lg:order-2">
-                <video
-                  src="/videos/h.mp4"
-                  autoPlay
-                  loop
-                  muted
-                  playsInline
-                  className="w-full h-[300px] sm:h-[400px] md:h-[450px] lg:h-[500px] object-cover"
-                  aria-label="Codagam team and technology solutions"
-                  preload="metadata">
-                  <track kind="captions" />
-                  Your browser does not support the video tag.
-                </video>
+              {/* Main Headline */}
+              <div className="space-y-3 sm:space-y-4 text-center lg:text-left">
+                <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-semibold text-foreground leading-tight">
+                  Digital Transformation
+                  <br />
+                  <span className="text-muted-foreground">
+                    for Modern Business
+                  </span>
+                </h2>
+                <p className="mx-auto max-w-2xl text-sm text-muted-foreground leading-relaxed sm:text-base lg:text-lg lg:mx-0">
+                  We help you establish and upscale your business online so that
+                  you don&apos;t miss any chance of serving a customer.
+                </p>
               </div>
-            </SectionReveal>
-          </div>
+
+              {/* CTA */}
+              <div className="pt-2 text-center lg:text-left">
+                <Button
+                  onClick={handleGetStarted}
+                  variant="black"
+                  size="lg"
+                  className="w-full min-w-[180px] px-6 py-3 text-base font-medium shadow-sm transition-all duration-300 hover:scale-[1.02] sm:w-auto sm:px-8 sm:py-4 sm:text-lg"
+                  aria-label="Get started with Codagam services">
+                  Get Started
+                </Button>
+              </div>
+            </div>
+          </SectionReveal>
+
+          {/* Right Side - Video */}
+          <SectionReveal
+            variant="slide-up"
+            delayMs={100}
+            durationMs={700}
+            className="w-full">
+            <div className="relative order-2 lg:order-2">
+              <video
+                src="/videos/h.mp4"
+                autoPlay
+                loop
+                muted
+                playsInline
+                className="h-[260px] w-full rounded-3xl object-cover shadow-2xl sm:h-[320px] md:h-[360px] lg:h-[420px] xl:h-[480px]"
+                aria-label="Codagam team and technology solutions"
+                preload="metadata">
+                <track kind="captions" />
+                Your browser does not support the video tag.
+              </video>
+            </div>
+          </SectionReveal>
         </div>
       </div>
     </section>

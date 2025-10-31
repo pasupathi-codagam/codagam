@@ -32,8 +32,8 @@ const StatsCard = memo(
     label: string;
     color: string;
   }) => (
-    <Card className="group relative overflow-hidden border-0 shadow-lg hover:shadow-2xl transition-all duration-500 bg-card">
-      <CardContent className="p-8 text-center">
+    <Card className="group relative overflow-hidden border border-border/40 bg-card shadow-md transition-all duration-500 hover:-translate-y-1 hover:shadow-xl">
+      <CardContent className="p-6 text-center sm:p-7 lg:p-8">
         <div
           className={`w-16 h-16 mx-auto mb-4 bg-linear-to-r ${color} rounded-2xl flex items-center justify-center group-hover:scale-110 transition-all duration-500`}>
           <Icon className="w-8 h-8 text-white" />
@@ -101,15 +101,15 @@ const AboutSection = memo(() => {
     <>
       <section
         id="about-section"
-        className="pt-4 sm:pt-6 lg:pt-8 pb-6 sm:pb-8 lg:pb-10 px-4 sm:px-6 lg:px-8 overflow-x-hidden"
+        className="overflow-x-hidden bg-background px-4 py-12 sm:px-6 sm:py-16 lg:px-8 lg:py-20"
         role="region"
         aria-label="About Codagam section">
-        <div className="w-full">
+        <div className="mx-auto w-full max-w-7xl">
           <SectionReveal
             variant="fade-down"
             durationMs={700}
             delayMs={70}
-            className="max-w-7xl mx-auto">
+            className="mx-auto flex w-full flex-col gap-12">
             {/* Navigation Link */}
             <div className="text-center mb-6 sm:mb-8">
               <div className="inline-flex items-center px-4 sm:px-6 py-2 sm:py-3 bg-linear-to-r from-muted to-accent border border-border rounded-full">
@@ -120,7 +120,7 @@ const AboutSection = memo(() => {
             </div>
 
             {/* Header Section */}
-            <div className="text-center mb-6 sm:mb-8 lg:mb-10">
+            <div className="mb-10 text-center sm:mb-12 lg:mb-16">
               <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-foreground mb-4">
                 Empowering businesses with innovative solutions
               </h2>
@@ -137,7 +137,7 @@ const AboutSection = memo(() => {
                 delayMs={100}
                 durationMs={650}
                 className="w-full">
-                <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 lg:gap-8 max-w-4xl mx-auto px-4">
+                <div className="mx-auto grid max-w-4xl grid-cols-2 gap-3 px-2 sm:gap-6 sm:px-0 lg:grid-cols-4 lg:gap-8">
                   {stats.map((stat, index) => (
                     <StatsCard
                       key={index}
@@ -152,8 +152,8 @@ const AboutSection = memo(() => {
             </div>
 
             {/* Why Choose Us Section */}
-            <div className="rounded-2xl sm:rounded-3xl p-4 sm:p-6 lg:p-8 mb-6 sm:mb-8 lg:mb-10">
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 lg:gap-12 items-center">
+            <div className="mb-10 rounded-3xl border border-border/40 bg-card p-4 shadow-sm sm:p-6 lg:p-10">
+              <div className="grid grid-cols-1 items-center gap-8 sm:gap-10 lg:grid-cols-2 lg:gap-14">
                 {/* Left Side - Image */}
                 <div className="order-2 lg:order-1">
                   <div className="relative h-48 sm:h-64 md:h-80 lg:h-96 rounded-xl sm:rounded-2xl overflow-hidden">
