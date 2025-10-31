@@ -15,7 +15,7 @@ import { servicesGalleryItems } from "@/lib/content/services";
 const ServiceCard = memo(
   ({ item }: Omit<ServiceCardProps, "index" | "currentIndex">) => (
     <div className="px-4 sm:px-6 lg:px-8 xl:px-16">
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-0 items-stretch min-h-[350px] sm:min-h-[400px] md:min-h-[450px] lg:min-h-[500px] transition-all duration-500 ease-out group">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-0 items-stretch min-h-[350px] sm:min-h-[400px] md:min-h-[450px] lg:min-h-[500px] transition-all duration-500 ease-out group rounded-2xl overflow-hidden lg:rounded-none lg:overflow-visible">
         {/* Image Background - Left Side */}
         <div className="order-1 lg:order-1">
           <div className="relative h-full min-h-[250px] sm:min-h-[300px] md:min-h-[350px] lg:min-h-[400px] overflow-hidden rounded-t-2xl lg:rounded-l-3xl lg:rounded-t-none group-hover:shadow-xl transition-all duration-500">
@@ -32,9 +32,7 @@ const ServiceCard = memo(
 
         {/* Content Card - Right Side */}
         <div className="order-2 lg:order-2">
-          <Card
-            className="relative overflow-hidden border-0 shadow-lg bg-card h-full min-h-[350px] sm:min-h-[400px] md:min-h-[450px] lg:min-h-[500px] group-hover:shadow-xl group-hover:bg-accent transition-all duration-500 rounded-b-2xl lg:rounded-r-3xl lg:rounded-b-none cursor-pointer"
-            style={{ borderRadius: "0 1.5rem 1.5rem 0" }}>
+          <Card className="relative overflow-hidden border-0 shadow-lg bg-card h-full min-h-[350px] sm:min-h-[400px] md:min-h-[450px] lg:min-h-[500px] group-hover:shadow-xl group-hover:bg-accent transition-all duration-500 rounded-none rounded-bl-2xl rounded-br-2xl lg:rounded-bl-none lg:rounded-tr-3xl lg:rounded-br-3xl cursor-pointer">
             <div className="p-4 sm:p-6 lg:p-8 flex flex-col justify-center h-full">
               <div className="flex-1 flex flex-col justify-center">
                 <CardHeader className="pb-4 sm:pb-6 px-0">
@@ -102,14 +100,14 @@ export default function ServicesSection() {
           delayMs={120}
           durationMs={700}
           className="w-full">
-          <div className="relative w-full">
+          <div className="relative w-full overflow-x-hidden">
             <Marquee
               className="w-full bg-gray-200 dark:bg-muted p-3 sm:p-4 lg:p-6"
               pauseOnHover>
               {galleryItems.map((item) => (
                 <div
                   key={item.id}
-                  className="shrink-0 w-full max-w-4xl lg:max-w-5xl px-4 sm:px-6 lg:px-8 xl:px-10">
+                  className="shrink-0 w-[calc(100vw-2rem)] sm:w-full max-w-[420px] sm:max-w-2xl lg:max-w-5xl px-4 sm:px-6 lg:px-8 xl:px-10 mx-auto">
                   <ServiceCard item={item} />
                 </div>
               ))}

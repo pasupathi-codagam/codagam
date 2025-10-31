@@ -16,7 +16,7 @@ const HeroSection: React.FC<HeroSectionProps> = memo(() => {
   return (
     <section
       id="hero-section"
-      className="min-h-screen bg-background flex items-center py-4 sm:py-8 md:py-12 lg:py-16 px-4 sm:px-6 lg:px-8"
+      className="min-h-screen bg-background flex items-center py-4 sm:py-8 md:py-12 lg:py-16 px-4 sm:px-6 lg:px-8 overflow-x-hidden"
       role="region"
       aria-label="Hero section">
       <div className="w-full">

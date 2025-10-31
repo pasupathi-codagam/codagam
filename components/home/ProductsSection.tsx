@@ -233,7 +233,7 @@ export default function ProductsSection() {
             durationMs={700}
             className="w-full">
             <div
-              className="relative w-full cursor-pointer"
+              className="relative w-full cursor-pointer overflow-x-hidden"
               onMouseEnter={stopAutoplay}
               onMouseLeave={startAutoplay}>
               <Carousel

@@ -42,7 +42,7 @@ export default function ClientSection() {
 
         {/* Client Logos Marquee */}
         <div className="mb-4 sm:mb-6 lg:mb-8">
-          <div className="relative w-full">
+          <div className="relative w-full overflow-x-hidden">
             <Marquee
               pauseOnHover
               className="[--duration:60s] smooth-marquee w-full">
