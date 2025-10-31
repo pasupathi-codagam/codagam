@@ -48,6 +48,8 @@ const Navbar = () => {
             onClick={toggleMobileMenu}
             variant="ghost"
             size="icon"
+            aria-expanded={isMobileMenuOpen}
+            aria-controls="mobile-menu"
             className="md:hidden text-muted-foreground hover:text-foreground hover:bg-accent w-10 h-10">
             {isMobileMenuOpen ? (
               <X className="h-5 w-5 sm:h-6 sm:w-6" />
@@ -59,12 +61,13 @@ const Navbar = () => {
 
         {/* Mobile Navigation */}
         <div
-          className={`md:hidden transition-all duration-300 ease-in-out ${
+          id="mobile-menu"
+          className={`md:hidden fixed top-14 sm:top-16 right-4 z-40 w-11/12 max-w-xs bg-background shadow-lg transition-all duration-300 ease-in-out ${
             isMobileMenuOpen
-              ? "border-t border-border py-3 sm:py-4"
-              : "max-h-0 overflow-hidden opacity-0"
+              ? "translate-x-0 opacity-100 pointer-events-auto"
+              : "translate-x-full opacity-0 pointer-events-none"
           }`}>
-          <div className="flex flex-col space-y-3">
+          <div className="flex flex-col space-y-3 px-4 py-4">
             <NavLinks onLinkClick={() => setIsMobileMenuOpen(false)} />
             <div className="flex justify-center pt-2">
               <ThemeToggle />
