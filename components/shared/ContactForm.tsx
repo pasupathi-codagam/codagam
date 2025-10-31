@@ -114,7 +114,8 @@ export function ContactForm({
       <form
         key="contact-form"
         className="flex flex-col space-y-2 sm:space-y-3"
-        onSubmit={handleSubmit}>
+        onSubmit={handleSubmit}
+        autoComplete="on">
         <input
           key="name-input"
           type="text"
@@ -123,6 +124,7 @@ export function ContactForm({
           value={formData.name}
           onChange={handleChange}
           className="border border-border rounded px-3 py-2 text-xs sm:text-sm h-10 sm:h-12"
+          autoComplete="name"
           required
         />
         <input
@@ -135,6 +137,7 @@ export function ContactForm({
           className={`border border-border rounded px-3 py-2 text-xs sm:text-sm h-10 sm:h-12 ${
             emailError ? "border-red-500" : ""
           }`}
+          autoComplete="email"
           required
         />
         {emailError && <p className="text-destructive text-xs">{emailError}</p>}
@@ -148,6 +151,7 @@ export function ContactForm({
           className="border border-border rounded px-3 py-2 text-xs sm:text-sm h-10 sm:h-12"
           maxLength={10}
           pattern="[0-9]{10}"
+          autoComplete="tel"
           required
         />
         <textarea
