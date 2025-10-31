@@ -32,8 +32,8 @@ const ServiceCard = memo(
 
         {/* Content Card - Right Side */}
         <div className="order-2 lg:order-2">
-          <Card className="relative overflow-hidden border-0 shadow-lg bg-card h-full min-h-0 lg:min-h-[500px] group-hover:shadow-xl group-hover:bg-accent transition-all duration-500 rounded-none rounded-bl-2xl rounded-br-2xl lg:rounded-bl-none lg:rounded-tr-3xl lg:rounded-br-3xl cursor-pointer">
-          <div className="p-4 sm:p-6 lg:p-8 flex flex-col justify-center h-full">
+          <Card className="relative overflow-hidden border-0 shadow-lg bg-card h-full min-h-0 lg:min-h-[500px] group-hover:shadow-xl transition-all duration-500 rounded-none rounded-bl-2xl rounded-br-2xl lg:rounded-bl-none lg:rounded-tr-3xl lg:rounded-br-3xl cursor-pointer">
+            <div className="p-4 sm:p-6 lg:p-8 flex flex-col justify-center h-full">
               <div className="flex-1 flex flex-col justify-center">
                 <CardHeader className="pb-4 sm:pb-6 px-0">
                   <CardTitle className="text-lg sm:text-xl lg:text-2xl font-bold text-foreground leading-tight group-hover:text-primary transition-colors duration-500">
@@ -47,8 +47,6 @@ const ServiceCard = memo(
                 </CardContent>
               </div>
             </div>
-            {/* Hover overlay effect */}
-            <div className="absolute inset-0 bg-linear-to-r from-blue-500/5 to-purple-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
           </Card>
         </div>
       </div>
