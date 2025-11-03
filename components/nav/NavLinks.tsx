@@ -71,17 +71,31 @@ const NavLinks: React.FC<NavLinksProps> = ({ onLinkClick }) => {
     onLinkClick?.(); // Close mobile menu if callback provided
   };
 
+  // Check if this is mobile menu (has onLinkClick callback)
+  const isMobileMenu = !!onLinkClick;
+
   return (
-    <div className="w-full flex flex-col sm:flex-row space-y-1 sm:space-y-0 sm:space-x-1 md:space-x-2 lg:space-x-3">
+    <div
+      className={`w-full flex ${
+        isMobileMenu ? "flex-col" : "flex-col sm:flex-row"
+      } ${
+        isMobileMenu
+          ? "space-y-2"
+          : "space-y-1 sm:space-y-0 sm:space-x-1 md:space-x-2 lg:space-x-3"
+      }`}>
       {navItems.map((item) => (
         <Button
           key={item.key}
           onClick={() => handleNavClick(item.key)}
           variant="ghost"
-          className={`relative text-sm sm:text-base font-medium transition-all duration-300 py-2 sm:py-1 ${
+          className={`relative text-sm sm:text-base font-medium transition-all duration-300 ${
+            isMobileMenu
+              ? "py-3 px-4 justify-start w-full text-left hover:bg-accent rounded-md"
+              : "py-2 sm:py-1 hover:bg-transparent"
+          } ${
             activeSection === item.key
-              ? "text-primary"
-              : "text-muted-foreground hover:text-primary"
+              ? "text-blue-900 dark:text-blue-900"
+              : "text-muted-foreground hover:text-blue-900 dark:hover:text-blue-900"
           }`}>
           {item.label}
         </Button>

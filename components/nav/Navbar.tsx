@@ -1,25 +1,30 @@
 "use client";
 
-import React, { useState } from "react";
-import { Menu, X } from "lucide-react";
+import React, { useState, useCallback } from "react";
+import { Menu } from "lucide-react";
 import NavLinks from "./NavLinks";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/shared/themeSwitch/theme-toggle";
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
 
 const Navbar = () => {
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [mobileSheetOpen, setMobileSheetOpen] = useState(false);
 
   const handleLogoClick = () => {
     const element = document.getElementById("hero-section");
     if (element) {
       element.scrollIntoView({ behavior: "smooth" });
     }
-    setIsMobileMenuOpen(false);
+    setMobileSheetOpen(false);
   };
 
-  const toggleMobileMenu = () => {
-    setIsMobileMenuOpen(!isMobileMenuOpen);
-  };
+  const closeMobileSheet = useCallback(() => setMobileSheetOpen(false), []);
 
   return (
     <nav
@@ -31,8 +36,8 @@ const Navbar = () => {
           <Button
             onClick={handleLogoClick}
             variant="ghost"
-            className="flex items-center space-x-2 p-1">
-            <span className="text-base sm:text-lg md:text-xl font-bold text-primary">
+            className="flex items-center space-x-2 p-1 hover:bg-transparent">
+            <span className="text-base sm:text-lg md:text-xl font-bold text-blue-900 dark:text-blue-900">
               Codagam
             </span>
           </Button>
@@ -43,36 +48,28 @@ const Navbar = () => {
             <ThemeToggle />
           </div>
 
-          {/* Mobile Menu Button */}
-          <Button
-            onClick={toggleMobileMenu}
-            variant="ghost"
-            size="icon"
-            aria-expanded={isMobileMenuOpen}
-            aria-controls="mobile-menu"
-            className="md:hidden text-muted-foreground hover:text-foreground hover:bg-accent w-10 h-10">
-            {isMobileMenuOpen ? (
-              <X className="h-5 w-5 sm:h-6 sm:w-6" />
-            ) : (
-              <Menu className="h-5 w-5 sm:h-6 sm:w-6" />
-            )}
-          </Button>
-        </div>
-
-        {/* Mobile Navigation */}
-        <div
-          id="mobile-menu"
-          className={`md:hidden fixed top-14 sm:top-16 right-4 z-40 w-11/12 max-w-xs bg-background shadow-lg transition-all duration-300 ease-in-out ${
-            isMobileMenuOpen
-              ? "translate-x-0 opacity-100 pointer-events-auto"
-              : "translate-x-full opacity-0 pointer-events-none"
-          }`}>
-          <div className="flex flex-col space-y-3 px-4 py-4">
-            <NavLinks onLinkClick={() => setIsMobileMenuOpen(false)} />
-            <div className="flex justify-center pt-2">
-              <ThemeToggle />
-            </div>
-          </div>
+          {/* Mobile Menu Sheet */}
+          <Sheet open={mobileSheetOpen} onOpenChange={setMobileSheetOpen}>
+            <SheetTrigger asChild className="md:hidden">
+              <Button variant="ghost" size="icon">
+                <Menu className="h-5 w-5 sm:h-6 sm:w-6" />
+                <span className="sr-only">Toggle menu</span>
+              </Button>
+            </SheetTrigger>
+            <SheetContent side="right" className="w-[280px] sm:w-[340px] p-4">
+              <SheetHeader>
+                <SheetTitle>Menu</SheetTitle>
+              </SheetHeader>
+              <div className="flex flex-col gap-4 mt-4">
+                <nav className="flex flex-col gap-4">
+                  <NavLinks onLinkClick={closeMobileSheet} />
+                </nav>
+                <div className="flex justify-center pt-4 border-t border-border">
+                  <ThemeToggle />
+                </div>
+              </div>
+            </SheetContent>
+          </Sheet>
         </div>
       </div>
     </nav>
