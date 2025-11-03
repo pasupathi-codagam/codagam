@@ -6,8 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ButtonClickHandler } from "@/models/interfaces";
 import { getClientSectionContent } from "@/lib/content/clients";
-import { Marquee } from "@/components/ui/marquee";
-import Image from "next/image";
+import ClientLogoCarousel from "@/components/shared/ClientLogoCarousel";
 
 export default function ClientSection() {
   const { title, subtitle, logos } = getClientSectionContent();
@@ -40,30 +39,14 @@ export default function ClientSection() {
           </p>
         </div>
 
-        {/* Client Logos Marquee */}
+        {/* Client Logos Carousel */}
         <div className="mb-4 sm:mb-6 lg:mb-8">
-          <div className="relative w-full overflow-x-hidden">
-            <Marquee
-              pauseOnHover
-              className="[--duration:60s] smooth-marquee w-full">
-              {logos.map((client, index) => (
-                <div
-                  key={`${client.name}-${index}`}
-                  className="shrink-0 mx-2 sm:mx-4 md:mx-6 lg:mx-8">
-                  <div className="relative w-32 sm:w-40 md:w-48 lg:w-56 xl:w-64 h-20 sm:h-24 md:h-28 lg:h-32 xl:h-36 flex items-center justify-center group transition-all duration-300">
-                    <Image
-                      src={client.logo}
-                      alt={client.alt}
-                      width={client.width || 200}
-                      height={client.height || 120}
-                      className="max-w-[120px] sm:max-w-[150px] md:max-w-[180px] lg:max-w-[200px] xl:max-w-[220px] max-h-[60px] sm:max-h-[80px] md:max-h-[100px] lg:max-h-[120px] xl:max-h-[140px] object-contain"
-                      sizes="(max-width: 640px) 120px, (max-width: 768px) 150px, (max-width: 1024px) 180px, (max-width: 1280px) 200px, 220px"
-                    />
-                  </div>
-                </div>
-              ))}
-            </Marquee>
-          </div>
+          <ClientLogoCarousel
+            logos={logos}
+            pauseOnHover={true}
+            duration="60s"
+            repeat={2}
+          />
         </div>
 
         {/* Call to Action */}

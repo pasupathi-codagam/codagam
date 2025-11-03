@@ -109,9 +109,9 @@ const AboutSection = memo(() => {
             variant="fade-down"
             durationMs={700}
             delayMs={70}
-            className="mx-auto flex w-full flex-col gap-12">
+            className="mx-auto flex w-full flex-col gap-6 sm:gap-8 lg:gap-10">
             {/* Navigation Link */}
-            <div className="text-center mb-6 sm:mb-8">
+            <div className="text-center mb-4 sm:mb-6">
               <div className="inline-flex items-center px-4 sm:px-6 py-2 sm:py-3 bg-linear-to-r from-muted to-accent border border-border rounded-full">
                 <span className="text-foreground text-xs sm:text-sm font-semibold uppercase tracking-wider">
                   About Codagam
@@ -120,8 +120,8 @@ const AboutSection = memo(() => {
             </div>
 
             {/* Header Section */}
-            <div className="mb-10 text-center sm:mb-12 lg:mb-16">
-              <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-foreground mb-4">
+            <div className="mb-4 text-center sm:mb-6">
+              <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-foreground mb-3 sm:mb-4">
                 Empowering businesses with innovative solutions
               </h2>
 
@@ -130,29 +130,29 @@ const AboutSection = memo(() => {
                 technology solutions. Our team of experts is dedicated to
                 driving positive change and fostering sustainable growth.
               </p>
-
-              {/* Stats Grid */}
-              <SectionReveal
-                variant="slide-up"
-                delayMs={100}
-                durationMs={650}
-                className="w-full">
-                <div className="mx-auto grid max-w-4xl grid-cols-2 gap-3 px-2 sm:gap-6 sm:px-0 lg:grid-cols-4 lg:gap-8">
-                  {stats.map((stat, index) => (
-                    <StatsCard
-                      key={index}
-                      icon={stat.icon}
-                      number={stat.number}
-                      label={stat.label}
-                      color={stat.color}
-                    />
-                  ))}
-                </div>
-              </SectionReveal>
             </div>
 
+            {/* Stats Grid */}
+            <SectionReveal
+              variant="slide-up"
+              delayMs={100}
+              durationMs={650}
+              className="w-full mb-4 sm:mb-6">
+              <div className="mx-auto grid max-w-4xl grid-cols-2 gap-3 px-2 sm:gap-6 sm:px-0 lg:grid-cols-4 lg:gap-8">
+                {stats.map((stat, index) => (
+                  <StatsCard
+                    key={index}
+                    icon={stat.icon}
+                    number={stat.number}
+                    label={stat.label}
+                    color={stat.color}
+                  />
+                ))}
+              </div>
+            </SectionReveal>
+
             {/* Why Choose Us Section */}
-            <div className="mb-10 rounded-3xl border border-border/40 bg-card p-4 shadow-sm sm:p-6 lg:p-10">
+            <div className="rounded-3xl border border-border/40 bg-card p-4 shadow-sm sm:p-6 lg:p-10">
               <div className="grid grid-cols-1 items-center gap-8 sm:gap-10 lg:grid-cols-2 lg:gap-14">
                 {/* Left Side - Image */}
                 <div className="order-2 lg:order-1">

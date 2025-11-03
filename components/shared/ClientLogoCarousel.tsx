@@ -1,0 +1,50 @@
+"use client";
+
+import React from "react";
+import Image from "next/image";
+import { Marquee } from "@/components/ui/marquee";
+import { ClientLogoWithSize } from "@/models/interfaces";
+
+interface ClientLogoCarouselProps {
+  logos: ClientLogoWithSize[];
+  pauseOnHover?: boolean;
+  duration?: string;
+  repeat?: number;
+}
+
+export default function ClientLogoCarousel({
+  logos,
+  pauseOnHover = true,
+  duration = "60s",
+  repeat = 2,
+}: ClientLogoCarouselProps) {
+  if (!logos || logos.length === 0) {
+    return null;
+  }
+
+  return (
+    <div className="relative w-full overflow-x-hidden min-h-[60px] sm:min-h-[80px] lg:min-h-[100px]">
+      <Marquee
+        pauseOnHover={pauseOnHover}
+        repeat={repeat}
+        className={`[--duration:${duration}] smooth-marquee w-full`}>
+        {logos.map((client, index) => (
+          <div
+            key={`${client.name}-${index}`}
+            className="shrink-0 mx-2 sm:mx-4 md:mx-6 lg:mx-8 xl:mx-10">
+            <div className="relative w-24 sm:w-32 md:w-40 lg:w-48 xl:w-56 h-12 sm:h-16 md:h-20 lg:h-24 xl:h-28 flex items-center justify-center group transition-all duration-300 grayscale hover:grayscale-0 opacity-60 hover:opacity-100">
+              <Image
+                src={client.logo}
+                alt={client.alt}
+                width={client.width || 200}
+                height={client.height || 120}
+                className="w-full h-full max-w-full max-h-full object-contain"
+                sizes="(max-width: 640px) 96px, (max-width: 768px) 128px, (max-width: 1024px) 160px, (max-width: 1280px) 192px, 224px"
+              />
+            </div>
+          </div>
+        ))}
+      </Marquee>
+    </div>
+  );
+}
