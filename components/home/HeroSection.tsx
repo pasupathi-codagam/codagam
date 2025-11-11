@@ -100,7 +100,7 @@ const HeroSection: React.FC<HeroSectionProps> = memo(() => {
       </div>
 
       {/* Client Logo Carousel - Below Hero Content, Full Width */}
-      <div className="w-full pt-10 sm:pt-10 lg:pt-12 pb-10 sm:pb-10 lg:pb-12 ">
+      <div className="w-full pt-10 sm:pt-10 lg:pt-12 pb-10 sm:pb-10 lg:pb-32 ">
         <ClientLogoCarousel
           logos={clientContent?.logos || []}
           pauseOnHover={true}

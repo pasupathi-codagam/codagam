@@ -64,7 +64,7 @@ export default function ServicesSection() {
   return (
     <section
       id="services-section"
-      className="w-full flex items-center pt-4 sm:pt-6 lg:pt-8 pb-6 sm:pb-8 lg:pb-10"
+      className="w-full flex items-center pt-0 pb-6 sm:pt-0 sm:pb-8 lg:pt-0 lg:pb-10"
       role="region"
       aria-label="Services section">
       <div className="w-full">

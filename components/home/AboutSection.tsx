@@ -101,7 +101,7 @@ const AboutSection = memo(() => {
     <>
       <section
         id="about-section"
-        className="overflow-x-hidden bg-background px-4 py-12 sm:px-6 sm:py-16 lg:px-8 lg:py-20"
+        className="overflow-x-hidden bg-background px-4 pt-0 pb-12 sm:px-6 sm:pb-16 lg:px-8 lg:pb-20"
         role="region"
         aria-label="About Codagam section">
         <div className="mx-auto w-full max-w-7xl">

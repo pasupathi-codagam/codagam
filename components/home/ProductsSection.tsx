@@ -198,7 +198,7 @@ export default function ProductsSection() {
     <>
       <section
         id="products-section"
-        className="w-full flex items-center py-4 sm:py-6 lg:py-8"
+        className="w-full flex items-center pt-0 pb-4 sm:pt-0 sm:pb-6 lg:pt-0 lg:pb-8"
         role="region"
         aria-label="Products section">
         <div className="w-full">
