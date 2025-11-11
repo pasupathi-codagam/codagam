@@ -94,8 +94,8 @@ const NavLinks: React.FC<NavLinksProps> = ({ onLinkClick }) => {
               : "py-2 sm:py-1 hover:bg-transparent"
           } ${
             activeSection === item.key
-              ? "text-slate-900 dark:text-slate-100"
-              : "text-muted-foreground hover:text-slate-900 dark:hover:text-slate-100"
+              ? "text-blue-900 dark:text-blue-900"
+              : "text-muted-foreground hover:text-blue-900 dark:hover:text-blue-900"
           }`}>
           {item.label}
         </Button>
