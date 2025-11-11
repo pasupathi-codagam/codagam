@@ -40,7 +40,7 @@ const HeroSection: React.FC<HeroSectionProps> = memo(() => {
                 <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-none text-blue-900 dark:text-blue-900">
                   Codagam
                 </h1>
-                <p className="inline-flex items-center gap-2 sm:gap-3 mt-1 sm:mt-1.5 text-sm sm:text-base lg:text-lg text-muted-foreground font-medium">
+                <p className="inline-flex items-center gap-2 sm:gap-4 mt-1 sm:mt-2 text-sm sm:text-base lg:text-lg text-muted-foreground font-medium">
                   <span>Consult</span>
                   <span className="text-primary">|</span>
                   <span>Code</span>
