@@ -30,24 +30,8 @@ export default function ClientSection() {
         durationMs={700}
         className="w-full">
         {/* Header */}
-        <div className="text-center mb-4 sm:mb-6 md:mb-8 w-full px-4">
-          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-4 sm:mb-6">
-            {title}
-          </h2>
-          <p className="text-sm sm:text-base md:text-lg lg:text-xl text-muted-foreground leading-relaxed">
-            {subtitle}
-          </p>
-        </div>
-
-        {/* Client Logos Carousel */}
-        <div className="mb-4 sm:mb-6 lg:mb-8">
-          <ClientLogoCarousel
-            logos={logos}
-            pauseOnHover={true}
-            duration="60s"
-            repeat={2}
-          />
-        </div>
+        
+        
 
         {/* Call to Action */}
         <div className="px-4 sm:px-6 lg:px-8">

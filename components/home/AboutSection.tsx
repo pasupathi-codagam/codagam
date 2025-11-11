@@ -121,7 +121,7 @@ const AboutSection = memo(() => {
 
             {/* Header Section */}
             <div className="mb-4 text-center sm:mb-6">
-              <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-foreground mb-3 sm:mb-4">
+              <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold  mb-3 sm:mb-4 text-blue-900">
                 Empowering businesses with innovative solutions
               </h2>
 

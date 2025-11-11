@@ -103,7 +103,7 @@ export default function CareerSection() {
 
         {/* Header */}
         <div className="mb-6 text-center sm:mb-8 lg:mb-12">
-          <h2 className="mb-4 text-2xl font-bold leading-tight text-foreground sm:text-3xl lg:text-4xl">
+          <h2 className="mb-4 text-2xl font-bold leading-tight text-blue-900 sm:text-3xl lg:text-4xl">
             Join our team
           </h2>
 
