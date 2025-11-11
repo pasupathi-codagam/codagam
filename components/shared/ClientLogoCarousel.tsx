@@ -32,12 +32,12 @@ export default function ClientLogoCarousel({
           <div
             key={`${client.name}-${index}`}
             className="shrink-0 mx-2 sm:mx-4 md:mx-6 lg:mx-8 xl:mx-10">
-            <div className="relative w-24 sm:w-32 md:w-40 lg:w-48 xl:w-56 h-12 sm:h-16 md:h-20 lg:h-24 xl:h-28 flex items-center justify-center group transition-all duration-300 grayscale hover:grayscale-0 opacity-60 hover:opacity-100">
+            <div className="relative w-20 sm:w-24 md:w-28 lg:w-32 xl:w-36 h-10 sm:h-12 md:h-14 lg:h-16 xl:h-18 flex items-center justify-center group transition-all duration-300 grayscale hover:grayscale-0 opacity-60 hover:opacity-100">
               <Image
                 src={client.logo}
                 alt={client.alt}
-                width={client.width || 200}
-                height={client.height || 120}
+                width={client.width || 160}
+                height={client.height || 100}
                 className="w-full h-full max-w-full max-h-full object-contain"
                 sizes="(max-width: 640px) 96px, (max-width: 768px) 128px, (max-width: 1024px) 160px, (max-width: 1280px) 192px, 224px"
               />
