@@ -90,6 +90,7 @@ const HeroSection: React.FC<HeroSectionProps> = memo(() => {
                   src="/images/hero3.png"
                   alt="Illustration of Codagam's cloud and data solutions"
                   fill
+                  sizes="(max-width: 1024px) 100vw, 50vw"
                   priority
                   className="object-contain"
                 />
@@ -100,7 +101,7 @@ const HeroSection: React.FC<HeroSectionProps> = memo(() => {
       </div>
 
       {/* Client Logo Carousel - Below Hero Content, Full Width */}
-      <div className="w-full pt-10 sm:pt-10 lg:pt-32  pb-10 sm:pb-10 lg:pb-20 ">
+      <div className="w-full pt-6 sm:pt-8 lg:pt-24 pb-10 sm:pb-10 lg:pb-20">
         <ClientLogoCarousel
           logos={clientContent?.logos || []}
           pauseOnHover={true}

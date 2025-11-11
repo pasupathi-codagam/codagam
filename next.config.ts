@@ -1,6 +1,9 @@
-import type { NextConfig } from "next";
+import path from "path";
+import { fileURLToPath } from "url";
 
-const nextConfig: NextConfig = {
+const configDir = path.dirname(fileURLToPath(import.meta.url));
+
+const nextConfig = {
   images: {
     remotePatterns: [
       {
@@ -10,6 +13,9 @@ const nextConfig: NextConfig = {
         pathname: "/uploads/**",
       },
     ],
+  },
+  turbopack: {
+    root: configDir,
   },
 };
 

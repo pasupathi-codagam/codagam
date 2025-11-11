@@ -5,7 +5,13 @@ import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Card, CardTitle } from "@/components/ui/card";
 import { Plus, ExternalLink } from "lucide-react";
-import { Dialog, DialogContent } from "@/components/ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import {
   Carousel,
   CarouselContent,
@@ -70,6 +76,8 @@ const ProductCard = memo(
                 fill
                 className="object-contain"
                 sizes="(max-width: 1024px) 100vw, 50vw"
+                priority={item.image === "/images/gt_logo.png"}
+                loading={item.image === "/images/gt_logo.png" ? "eager" : "lazy"}
               />
             </div>
           </div>
@@ -91,6 +99,16 @@ const ProductDetailsDialog = memo(
   }: ProductDetailsDialogProps) => (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="max-w-2xl p-8 rounded-3xl">
+        <DialogHeader>
+          <DialogTitle>
+            {selectedProduct ? selectedProduct.headline : "Product overview"}
+          </DialogTitle>
+          <DialogDescription>
+            {selectedProduct
+              ? `Key information about ${selectedProduct.label}.`
+              : "Review the product details."}
+          </DialogDescription>
+        </DialogHeader>
         {selectedProduct && (
           <div className="space-y-8">
             {/* Product Label */}
