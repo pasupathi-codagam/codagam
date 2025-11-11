@@ -29,13 +29,7 @@ export const clientLogosContent: ClientLogoWithSize[] = [
     width: 240,
     height: 240,
   },
-  {
-    name: "Gobi Today Wordmark",
-    logo: "/images/gobi_today_splash.png",
-    alt: "Gobi Today wordmark with flame emblem",
-    width: 320,
-    height: 200,
-  },
+  
 
   {
     name: "Codagam",
@@ -65,13 +59,7 @@ export const clientLogosContent: ClientLogoWithSize[] = [
     width: 240,
     height: 240,
   },
-  {
-    name: "Gobi Today Wordmark",
-    logo: "/images/gobi_today_splash.png",
-    alt: "Gobi Today wordmark with flame emblem",
-    width: 320,
-    height: 200,
-  },
+ 
 ];
 
 export function getClientSectionContent(): ClientSectionContent {
