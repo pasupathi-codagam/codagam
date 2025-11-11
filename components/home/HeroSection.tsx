@@ -37,7 +37,7 @@ const HeroSection: React.FC<HeroSectionProps> = memo(() => {
             <div className="order-1 space-y-4 sm:space-y-5 lg:order-1 lg:pr-6 xl:pr-10">
               {/* Brand */}
               <div className="text-center lg:text-left">
-                <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-none text-blue-900">
+                <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-none text-slate-900 dark:text-slate-100">
                   Codagam
                 </h1>
                 <p className="inline-flex items-center gap-2 sm:gap-3 mt-1 sm:mt-1.5 text-sm sm:text-base lg:text-lg text-muted-foreground font-medium">
@@ -51,7 +51,7 @@ const HeroSection: React.FC<HeroSectionProps> = memo(() => {
 
               {/* Main Headline */}
               <div className="space-y-2 sm:space-y-3 text-center lg:text-left">
-                <h2 className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-semibold text-foreground leading-tight">
+                <h2 className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-semibold text-slate-900 dark:text-slate-100 leading-tight">
                   Digital Transformation
                   <br />
                   <span className="text-muted-foreground">

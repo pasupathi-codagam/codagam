@@ -37,7 +37,7 @@ const Navbar = () => {
             onClick={handleLogoClick}
             variant="ghost"
             className="flex items-center space-x-2 p-1 hover:bg-transparent">
-            <span className="text-base sm:text-lg md:text-xl font-bold text-blue-900 dark:text-blue-900">
+            <span className="text-base sm:text-lg md:text-xl font-bold text-slate-900 dark:text-slate-100">
               Codagam
             </span>
           </Button>

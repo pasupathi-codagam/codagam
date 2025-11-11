@@ -17,7 +17,7 @@ const CodagamAnimation = () => {
   }, [redirectSeconds, router]);
 
   return (
-    <span className="text-5xl font-bold text-blue-900 dark:text-primary">
+    <span className="text-5xl font-bold text-slate-900 dark:text-primary">
       <Typewriter
         words={words}
         loop={1}
