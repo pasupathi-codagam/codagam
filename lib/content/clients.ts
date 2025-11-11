@@ -2,13 +2,6 @@ import { ClientLogoWithSize, ClientSectionContent } from "@/models/interfaces";
 
 export const clientLogosContent: ClientLogoWithSize[] = [
   {
-    name: "AAVA Foundation",
-    logo: "/images/AAVA_Foundation_Logo.png",
-    alt: "AAVA Foundation logo",
-    width: 256,
-    height: 256,
-  },
-  {
     name: "Codagam",
     logo: "/images/logo.png",
     alt: "Codagam wordmark",
@@ -43,13 +36,7 @@ export const clientLogosContent: ClientLogoWithSize[] = [
     width: 320,
     height: 200,
   },
-  {
-    name: "AAVA Foundation",
-    logo: "/images/AAVA_Foundation_Logo.png",
-    alt: "AAVA Foundation logo",
-    width: 256,
-    height: 256,
-  },
+
   {
     name: "Codagam",
     logo: "/images/logo.png",
