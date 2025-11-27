@@ -26,22 +26,27 @@ const StatsCard = memo(
     number,
     label,
     color,
+    hoverColor,
   }: {
     icon: React.ComponentType<{ className?: string }>;
     number: string;
     label: string;
     color: string;
+    hoverColor: string;
   }) => (
-    <Card className="group relative overflow-hidden border border-border/40 bg-card shadow-md transition-all duration-500 hover:-translate-y-1 hover:shadow-xl">
-      <CardContent className="p-4 text-center sm:p-5 lg:p-6">
+    <Card className="group relative overflow-hidden border border-border/40 bg-[#F6F6F6] shadow-md transition-all duration-500 hover:-translate-y-1 hover:shadow-xl hover:border-transparent">
+      <div className="hover-bg" style={{ backgroundColor: hoverColor }}></div>
+      <CardContent className="relative z-10 p-4 text-center sm:p-5 lg:p-6">
         <div
-          className={`w-16 h-16 mx-auto mb-3 bg-linear-to-r ${color} rounded-2xl flex items-center justify-center group-hover:scale-110 transition-all duration-500`}>
-          <Icon className="w-8 h-8 text-white" />
+          className={`w-16 h-16 mx-auto mb-3 bg-linear-to-r ${color} rounded-2xl flex items-center justify-center group-hover:scale-110 group-hover:bg-white/20 transition-all duration-500`}>
+          <Icon className="w-8 h-8 text-white group-hover:text-white" />
         </div>
-        <div className="text-3xl font-bold text-foreground mb-1.5 group-hover:scale-110 transition-transform duration-300">
+        <div className="text-3xl font-bold text-foreground mb-1.5 group-hover:scale-110 group-hover:text-white transition-all duration-300">
           {number}
         </div>
-        <div className="text-sm text-muted-foreground font-medium">{label}</div>
+        <div className="text-sm text-muted-foreground font-medium group-hover:text-white/90 transition-colors duration-300">
+          {label}
+        </div>
       </CardContent>
     </Card>
   )
@@ -146,14 +151,18 @@ const AboutSection = memo(() => {
                     number={stat.number}
                     label={stat.label}
                     color={stat.color}
+                    hoverColor={stat.hoverColor}
                   />
                 ))}
               </div>
             </SectionReveal>
 
             {/* Why Choose Us Section */}
-            <div className="rounded-3xl border border-border/40 bg-card p-4 shadow-sm sm:p-5 lg:p-6">
-              <div className="grid grid-cols-1 items-center gap-6 sm:gap-7 lg:grid-cols-2 lg:gap-8">
+            <div className="group relative overflow-hidden rounded-3xl border border-border/40 bg-[#F6F6F6] p-4 shadow-sm sm:p-5 lg:p-6 transition-all duration-500 hover:border-transparent hover:shadow-xl hover:-translate-y-1">
+              <div
+                className="hover-bg"
+                style={{ backgroundColor: "rgb(118, 70, 254)" }}></div>
+              <div className="relative z-10 grid grid-cols-1 items-center gap-6 sm:gap-7 lg:grid-cols-2 lg:gap-8">
                 {/* Left Side - Image */}
                 <div className="order-2 lg:order-1">
                   <div className="relative h-48 sm:h-64 md:h-80 lg:h-96 rounded-xl sm:rounded-2xl overflow-hidden">
@@ -172,10 +181,10 @@ const AboutSection = memo(() => {
                 {/* Right Side - Content */}
                 <div className="order-1 lg:order-2 space-y-3 sm:space-y-4 lg:space-y-5">
                   <div>
-                    <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold text-foreground mb-2 sm:mb-3">
+                    <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold text-foreground mb-2 sm:mb-3 group-hover:text-white transition-colors duration-300">
                       Why Us?
                     </h2>
-                    <p className="text-sm sm:text-base lg:text-lg text-muted-foreground leading-relaxed mb-3 sm:mb-4">
+                    <p className="text-sm sm:text-base lg:text-lg text-muted-foreground leading-relaxed mb-3 sm:mb-4 group-hover:text-white/90 transition-colors duration-300">
                       At Codagam, we pride ourselves on delivering
                       transformative technology solutions. Our team of experts
                       is dedicated to driving positive change and fostering
@@ -187,10 +196,10 @@ const AboutSection = memo(() => {
 
                   <div className="space-y-3 sm:space-y-4">
                     <div>
-                      <h3 className="text-base sm:text-lg font-semibold text-foreground mb-1.5">
+                      <h3 className="text-base sm:text-lg font-semibold text-foreground mb-1.5 group-hover:text-white transition-colors duration-300">
                         AI-Driven Excellence
                       </h3>
-                      <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
+                      <p className="text-sm sm:text-base text-muted-foreground leading-relaxed group-hover:text-white/90 transition-colors duration-300">
                         Our AI-driven solutions are designed for sustained best
                         practices, ensuring ethical standards while delivering
                         pragmatic results. From predictive analytics to
@@ -200,10 +209,10 @@ const AboutSection = memo(() => {
                     </div>
 
                     <div>
-                      <h3 className="text-base sm:text-lg font-semibold text-foreground mb-1.5">
+                      <h3 className="text-base sm:text-lg font-semibold text-foreground mb-1.5 group-hover:text-white transition-colors duration-300">
                         Innovation at the Forefront
                       </h3>
-                      <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
+                      <p className="text-sm sm:text-base text-muted-foreground leading-relaxed group-hover:text-white/90 transition-colors duration-300">
                         Our R&D team is at the forefront of technological
                         innovation, constantly exploring new ways to solve
                         pressing challenges. We invest in cutting-edge research
