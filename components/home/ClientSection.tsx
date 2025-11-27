@@ -38,7 +38,7 @@ export default function ClientSection() {
           <Card className="group relative overflow-hidden max-w-4xl mx-auto border-0 bg-[#F6F6F6] transition-all duration-700 rounded-2xl sm:rounded-3xl">
             <div 
               className="hover-bg-client" 
-              style={{ backgroundColor: "rgb(59, 130, 246)" }}
+              style={{ backgroundColor: "rgb(147, 51, 234)" }}
             ></div>
             <CardContent className="relative z-10 p-4 sm:p-6 lg:p-8 text-center">
               <CardHeader className="pb-3 sm:pb-4">

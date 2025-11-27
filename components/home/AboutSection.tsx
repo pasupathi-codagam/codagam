@@ -161,7 +161,7 @@ const AboutSection = memo(() => {
             <div className="group relative overflow-hidden rounded-3xl border border-border/40 bg-[#F6F6F6] p-4 shadow-sm sm:p-5 lg:p-6 transition-all duration-500 hover:border-transparent hover:shadow-xl hover:-translate-y-1">
               <div
                 className="hover-bg"
-                style={{ backgroundColor: "rgb(118, 70, 254)" }}></div>
+                style={{ backgroundColor: "rgb(79, 70, 229)" }}></div>
               <div className="relative z-10 grid grid-cols-1 items-center gap-6 sm:gap-7 lg:grid-cols-2 lg:gap-8">
                 {/* Left Side - Image */}
                 <div className="order-2 lg:order-1">
