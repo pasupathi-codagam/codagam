@@ -193,7 +193,14 @@ body {
   z-index: 0;
 }
 
-.group:hover .hover-bg-service {
+/* Service card group hover - only affects the hover-bg-service within the hovered service-card-group */
+.service-card-group:hover .hover-bg-service {
+  transform: translate(-50%, -50%) scale(1);
+}
+
+/* Fallback for any group that directly contains hover-bg-service */
+.group:hover > .hover-bg-service,
+.group:has(> .hover-bg-service):hover .hover-bg-service {
   transform: translate(-50%, -50%) scale(1);
 }
 
