@@ -33,12 +33,12 @@ const StatsCard = memo(
     color: string;
   }) => (
     <Card className="group relative overflow-hidden border border-border/40 bg-card shadow-md transition-all duration-500 hover:-translate-y-1 hover:shadow-xl">
-      <CardContent className="p-6 text-center sm:p-7 lg:p-8">
+      <CardContent className="p-4 text-center sm:p-5 lg:p-6">
         <div
-          className={`w-16 h-16 mx-auto mb-4 bg-linear-to-r ${color} rounded-2xl flex items-center justify-center group-hover:scale-110 transition-all duration-500`}>
+          className={`w-16 h-16 mx-auto mb-3 bg-linear-to-r ${color} rounded-2xl flex items-center justify-center group-hover:scale-110 transition-all duration-500`}>
           <Icon className="w-8 h-8 text-white" />
         </div>
-        <div className="text-3xl font-bold text-foreground mb-2 group-hover:scale-110 transition-transform duration-300">
+        <div className="text-3xl font-bold text-foreground mb-1.5 group-hover:scale-110 transition-transform duration-300">
           {number}
         </div>
         <div className="text-sm text-muted-foreground font-medium">{label}</div>
@@ -101,7 +101,7 @@ const AboutSection = memo(() => {
     <>
       <section
         id="about-section"
-        className="overflow-x-hidden bg-background px-4 pt-0 pb-12 sm:px-6 sm:pb-16 lg:px-8 lg:pb-20"
+        className="overflow-x-hidden bg-background px-4 pt-0 pb-8 sm:px-6 sm:pb-10 lg:px-8 lg:pb-12"
         role="region"
         aria-label="About Codagam section">
         <div className="mx-auto w-full max-w-7xl">
@@ -109,9 +109,9 @@ const AboutSection = memo(() => {
             variant="fade-down"
             durationMs={700}
             delayMs={70}
-            className="mx-auto flex w-full flex-col gap-6 sm:gap-8 lg:gap-10">
+            className="mx-auto flex w-full flex-col gap-4 sm:gap-5 lg:gap-6">
             {/* Navigation Link */}
-            <div className="text-center mb-4 sm:mb-6">
+            <div className="text-center mb-2 sm:mb-3">
               <div className="inline-flex items-center px-4 sm:px-6 py-2 sm:py-3 bg-linear-to-r from-muted to-accent border border-border rounded-full">
                 <span className="text-foreground text-xs sm:text-sm font-semibold uppercase tracking-wider">
                   About Codagam
@@ -120,8 +120,8 @@ const AboutSection = memo(() => {
             </div>
 
             {/* Header Section */}
-            <div className="mb-4 text-center sm:mb-6">
-              <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold  mb-3 sm:mb-4 text-blue-900 dark:text-blue-900">
+            <div className="mb-3 text-center sm:mb-4">
+              <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold  mb-2 sm:mb-3 text-blue-900 dark:text-blue-900">
                 Empowering businesses with innovative solutions
               </h2>
 
@@ -137,8 +137,8 @@ const AboutSection = memo(() => {
               variant="slide-up"
               delayMs={100}
               durationMs={650}
-              className="w-full mb-4 sm:mb-6">
-              <div className="mx-auto grid max-w-4xl grid-cols-2 gap-3 px-2 sm:gap-6 sm:px-0 lg:grid-cols-4 lg:gap-8">
+              className="w-full mb-3 sm:mb-4">
+              <div className="mx-auto grid max-w-4xl grid-cols-2 gap-3 px-2 sm:gap-4 sm:px-0 lg:grid-cols-4 lg:gap-5">
                 {stats.map((stat, index) => (
                   <StatsCard
                     key={index}
@@ -152,8 +152,8 @@ const AboutSection = memo(() => {
             </SectionReveal>
 
             {/* Why Choose Us Section */}
-            <div className="rounded-3xl border border-border/40 bg-card p-4 shadow-sm sm:p-6 lg:p-10">
-              <div className="grid grid-cols-1 items-center gap-8 sm:gap-10 lg:grid-cols-2 lg:gap-14">
+            <div className="rounded-3xl border border-border/40 bg-card p-4 shadow-sm sm:p-5 lg:p-6">
+              <div className="grid grid-cols-1 items-center gap-6 sm:gap-7 lg:grid-cols-2 lg:gap-8">
                 {/* Left Side - Image */}
                 <div className="order-2 lg:order-1">
                   <div className="relative h-48 sm:h-64 md:h-80 lg:h-96 rounded-xl sm:rounded-2xl overflow-hidden">
@@ -170,12 +170,12 @@ const AboutSection = memo(() => {
                 </div>
 
                 {/* Right Side - Content */}
-                <div className="order-1 lg:order-2 space-y-4 sm:space-y-6 lg:space-y-8">
+                <div className="order-1 lg:order-2 space-y-3 sm:space-y-4 lg:space-y-5">
                   <div>
-                    <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold text-foreground mb-3 sm:mb-4">
+                    <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold text-foreground mb-2 sm:mb-3">
                       Why Us?
                     </h2>
-                    <p className="text-sm sm:text-base lg:text-lg text-muted-foreground leading-relaxed mb-4 sm:mb-6">
+                    <p className="text-sm sm:text-base lg:text-lg text-muted-foreground leading-relaxed mb-3 sm:mb-4">
                       At Codagam, we pride ourselves on delivering
                       transformative technology solutions. Our team of experts
                       is dedicated to driving positive change and fostering
@@ -185,9 +185,9 @@ const AboutSection = memo(() => {
                     </p>
                   </div>
 
-                  <div className="space-y-4 sm:space-y-6">
+                  <div className="space-y-3 sm:space-y-4">
                     <div>
-                      <h3 className="text-base sm:text-lg font-semibold text-foreground mb-2">
+                      <h3 className="text-base sm:text-lg font-semibold text-foreground mb-1.5">
                         AI-Driven Excellence
                       </h3>
                       <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
@@ -200,7 +200,7 @@ const AboutSection = memo(() => {
                     </div>
 
                     <div>
-                      <h3 className="text-base sm:text-lg font-semibold text-foreground mb-2">
+                      <h3 className="text-base sm:text-lg font-semibold text-foreground mb-1.5">
                         Innovation at the Forefront
                       </h3>
                       <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
