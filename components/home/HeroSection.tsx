@@ -29,6 +29,14 @@ const HeroSection: React.FC<HeroSectionProps> = memo(() => {
     return () => clearInterval(interval);
   }, []);
 
+  // Preload all hero images on mount
+  useEffect(() => {
+    heroContents.forEach((content) => {
+      const img = new window.Image();
+      img.src = content.image;
+    });
+  }, []);
+
   return (
     <section
       id="hero-section"
@@ -37,25 +45,22 @@ const HeroSection: React.FC<HeroSectionProps> = memo(() => {
       aria-label="Hero section">
       {/* Main Content Container */}
       <div className="mx-auto w-full max-w-7xl px-4 py-6 sm:px-6 sm:py-8 lg:px-8 lg:py-10">
-        <div className="relative w-full overflow-hidden">
-          <AnimatePresence mode="wait" initial={false}>
+        <div className="relative w-full overflow-hidden min-h-[450px] sm:min-h-[500px] lg:min-h-[550px]">
+          <AnimatePresence initial={false}>
             <motion.div
               key={currentIndex}
-              initial={{ opacity: 0, x: 50 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -50 }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
               transition={{
-                duration: 0.6,
-                ease: [0.4, 0, 0.2, 1],
+                duration: 0.3,
+                ease: "easeInOut",
               }}
-              className="w-full">
+              className="absolute inset-0 w-full"
+              style={{ willChange: "opacity" }}>
               <div className="grid grid-cols-1 items-center gap-6 sm:gap-8 lg:grid-cols-2 lg:gap-8">
                 {/* Left Side - Content */}
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.2, duration: 0.5 }}
-                  className="order-1 space-y-4 sm:space-y-5 lg:order-1 lg:pr-6 xl:pr-10">
+                <div className="order-1 space-y-4 sm:space-y-5 lg:order-1 lg:pr-6 xl:pr-10">
                   {/* Brand */}
                   <div className="text-center lg:text-left">
                     <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-none text-blue-900 dark:text-blue-900">
@@ -72,32 +77,21 @@ const HeroSection: React.FC<HeroSectionProps> = memo(() => {
 
                   {/* Main Headline */}
                   <div className="space-y-2 sm:space-y-3 text-center lg:text-left">
-                    <motion.div
-                      initial={{ opacity: 0, y: 10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 0.3, duration: 0.5 }}>
+                    <div>
                       <p className="text-sm sm:text-base text-primary font-semibold mb-2">
                         {heroContents[currentIndex].subtitle}
                       </p>
                       <h2 className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-semibold leading-tight">
                         {heroContents[currentIndex].title}
                       </h2>
-                    </motion.div>
-                    <motion.p
-                      initial={{ opacity: 0, y: 10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 0.4, duration: 0.5 }}
-                      className="mx-auto max-w-2xl text-xs sm:text-base text-muted-foreground leading-relaxed lg:mx-0">
+                    </div>
+                    <p className="mx-auto max-w-2xl text-xs sm:text-base text-muted-foreground leading-relaxed lg:mx-0">
                       {heroContents[currentIndex].description}
-                    </motion.p>
+                    </p>
                   </div>
 
                   {/* CTA */}
-                  <motion.div
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.5, duration: 0.5 }}
-                    className="pt-1 text-center lg:text-left">
+                  <div className="pt-1 text-center lg:text-left">
                     <Button
                       onClick={handleGetStarted}
                       variant="black"
@@ -108,15 +102,11 @@ const HeroSection: React.FC<HeroSectionProps> = memo(() => {
                         Get Started
                       </span>
                     </Button>
-                  </motion.div>
-                </motion.div>
+                  </div>
+                </div>
 
                 {/* Right Side - Visual */}
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.95 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ delay: 0.3, duration: 0.6 }}
-                  className="relative order-2 lg:order-2">
+                <div className="relative order-2 lg:order-2">
                   <div className="relative h-[280px] w-full rounded-3xl sm:h-[320px] md:h-[360px] lg:h-[400px] xl:h-[450px]">
                     <Image
                       src={heroContents[currentIndex].image}
@@ -125,9 +115,10 @@ const HeroSection: React.FC<HeroSectionProps> = memo(() => {
                       sizes="(max-width: 1024px) 100vw, 50vw"
                       priority={currentIndex === 0}
                       className="object-contain"
+                      loading="eager"
                     />
                   </div>
-                </motion.div>
+                </div>
               </div>
             </motion.div>
           </AnimatePresence>
