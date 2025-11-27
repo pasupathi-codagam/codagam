@@ -12,7 +12,7 @@ export const heroContents: HeroContent[] = [
     subtitle: "Tailored Solutions",
     description:
       "We build scalable, high-performance software applications tailored to your business needs. From web applications to enterprise solutions, we deliver code that drives results.",
-    image: "/images/hero1.png",
+    image: "/images/Custom Software Development.png",
     imageAlt: "Custom software development solutions",
   },
   {
@@ -20,7 +20,7 @@ export const heroContents: HeroContent[] = [
     subtitle: "Modern Websites",
     description:
       "Create stunning, responsive websites that engage users and convert visitors into customers. Our modern web solutions are built with the latest technologies and best practices.",
-    image: "/images/hero2.png",
+    image: "/images/Web Development & Design.png",
     imageAlt: "Web development and design services",
   },
   {
@@ -28,7 +28,7 @@ export const heroContents: HeroContent[] = [
     subtitle: "Scalable Infrastructure",
     description:
       "Leverage the power of cloud computing with our DevOps expertise. We help you deploy, scale, and maintain applications with automated CI/CD pipelines and cloud infrastructure.",
-    image: "/images/hero3.png",
+    image: "/images/Cloud & DevOps Solutions.png",
     imageAlt: "Cloud and DevOps solutions",
   },
   {
@@ -36,8 +36,7 @@ export const heroContents: HeroContent[] = [
     subtitle: "Intelligent Automation",
     description:
       "Transform your business with AI-powered solutions. From predictive analytics to intelligent automation, we help you harness the power of machine learning and artificial intelligence.",
-    image: "/images/digitran.jpg",
+    image: "/images/AI & Machine Learning.png",
     imageAlt: "AI and machine learning solutions",
   },
 ];
-

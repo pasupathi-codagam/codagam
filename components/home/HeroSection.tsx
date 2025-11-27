@@ -97,7 +97,7 @@ const HeroSection: React.FC<HeroSectionProps> = memo(() => {
                       variant="black"
                       className="w-auto min-w-[120px] px-4 py-2 text-xs font-medium shadow-sm transition-all duration-300 hover:scale-[1.02] sm:min-w-[140px] sm:px-5 sm:py-2.5 sm:text-sm md:px-8 md:py-3 md:text-base group relative overflow-hidden"
                       aria-label="Get started with Codagam services">
-                      <div className="hover-bg-career bg-indigo-600"></div>
+                      <div className="hover-bg-career bg-blue-900"></div>
                       <span className="relative z-10 group-hover:text-white transition-colors duration-300">
                         Get Started
                       </span>
