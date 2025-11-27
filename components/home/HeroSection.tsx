@@ -51,7 +51,7 @@ const HeroSection: React.FC<HeroSectionProps> = memo(() => {
 
               {/* Main Headline */}
               <div className="space-y-2 sm:space-y-3 text-center lg:text-left">
-                <h2 className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-semibold text-blue-900 dark:text-blue-900 leading-tight">
+                <h2 className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-semibold leading-tight">
                   Digital Transformation
                   <br />
                   <span className="text-muted-foreground">

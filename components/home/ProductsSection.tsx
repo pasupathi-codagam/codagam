@@ -32,9 +32,9 @@ import { productItemsContent } from "@/lib/content/products";
 // Memoized product card component
 const ProductCard = memo(
   ({ item, onCardClick }: Omit<ProductCardProps, "index" | "currentIndex">) => (
-    <div className="px-3 sm:px-4 lg:px-6 xl:px-8">
+    <div className="px-4 sm:px-6 lg:px-8 xl:px-16">
       <Card
-        className="h-full border-0 bg-card transition-all duration-500 hover:scale-105 rounded-2xl sm:rounded-3xl overflow-hidden cursor-pointer group"
+        className="border-0 bg-card transition-all duration-500 hover:scale-105 rounded-2xl sm:rounded-3xl overflow-hidden cursor-pointer group"
         onClick={() => onCardClick(item)}>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-0 items-stretch min-h-[340px] sm:min-h-[380px] md:min-h-[420px] lg:min-h-[460px]">
           {/* Content Section - Left Side */}
@@ -77,7 +77,9 @@ const ProductCard = memo(
                 className="object-contain"
                 sizes="(max-width: 1024px) 100vw, 50vw"
                 priority={item.image === "/images/gt_logo.png"}
-                loading={item.image === "/images/gt_logo.png" ? "eager" : "lazy"}
+                loading={
+                  item.image === "/images/gt_logo.png" ? "eager" : "lazy"
+                }
               />
             </div>
           </div>
@@ -216,7 +218,7 @@ export default function ProductsSection() {
     <>
       <section
         id="products-section"
-        className="w-full flex items-center pt-0 pb-4 sm:pt-0 sm:pb-6 lg:pt-0 lg:pb-10"
+        className="w-full flex items-center pt-0 pb-2 sm:pt-0 sm:pb-3 lg:pt-0 lg:pb-4"
         role="region"
         aria-label="Products section">
         <div className="w-full">
@@ -226,7 +228,7 @@ export default function ProductsSection() {
             durationMs={700}
             className="w-full">
             {/* Navigation Link */}
-            <div className="text-center mb-6 sm:mb-8">
+            <div className="text-center mb-3 sm:mb-4">
               <div className="inline-flex items-center px-4 sm:px-6 py-2 sm:py-3 bg-linear-to-r from-muted to-accent border border-border rounded-full">
                 <span className="text-foreground text-xs sm:text-sm font-semibold uppercase tracking-wider">
                   Products
@@ -234,8 +236,8 @@ export default function ProductsSection() {
               </div>
             </div>
 
-            <div className="text-center mb-6 sm:mb-8 lg:mb-10">
-              <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-blue-900 dark:text-blue-900 mb-4">
+            <div className="text-center mb-3 sm:mb-4 lg:mb-5">
+              <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-blue-900 dark:text-blue-900 mb-3 sm:mb-4">
                 Solutions that drive results and transform businesses
               </h2>
               <p className="text-sm sm:text-base lg:text-lg text-muted-foreground leading-relaxed max-w-4xl mx-auto">
@@ -255,24 +257,37 @@ export default function ProductsSection() {
               onMouseEnter={stopAutoplay}
               onMouseLeave={startAutoplay}>
               <Carousel
-                className="w-full bg-gray-200 dark:bg-muted p-3 sm:p-4 lg:p-6"
+                className="w-full overflow-hidden max-w-full relative"
                 aria-label="Products carousel"
                 opts={{
                   align: "start",
                   loop: true,
                 }}
                 setApi={setCarouselApi}>
-                <CarouselContent className="w-full gap-3 sm:gap-4 lg:gap-5 xl:gap-6 py-3 sm:py-4 lg:py-5">
-                  {productItems.map((item) => (
-                    <CarouselItem
-                      key={item.id}
-                      className="shrink-0 basis-full sm:basis-3/4 lg:basis-1/2 xl:basis-[45%]">
-                      <ProductCard item={item} onCardClick={handleCardClick} />
-                    </CarouselItem>
-                  ))}
-                </CarouselContent>
-                <CarouselPrevious className="right-16 sm:right-20 lg:right-24 xl:right-28 bottom-3 sm:bottom-4 lg:bottom-6 xl:bottom-8 h-12 w-12 sm:h-14 sm:w-14 lg:h-16 lg:w-16 rounded-full bg-card/95 backdrop-blur-sm border border-border/50 hover:bg-card hover:scale-110 transition-all duration-300" />
-                <CarouselNext className="right-3 sm:right-4 lg:right-6 xl:right-8 bottom-3 sm:bottom-4 lg:bottom-6 xl:bottom-8 h-12 w-12 sm:h-14 sm:w-14 lg:h-16 lg:w-16 rounded-full bg-card/95 backdrop-blur-sm border border-border/50 hover:bg-card hover:scale-110 transition-all duration-300" />
+                {/* Gray background area with top padding only */}
+                <div className="bg-gray-200 dark:bg-muted pt-3 sm:pt-4 lg:pt-6 px-3 sm:px-4 lg:px-6 pb-0">
+                  <div className="max-w-[1920px] mx-auto relative">
+                    <CarouselContent className="ml-0 flex! flex-nowrap! items-start gap-3 sm:gap-4 lg:gap-5 xl:gap-6">
+                      {productItems.map((item) => (
+                        <CarouselItem
+                          key={item.id}
+                          className="shrink-0 basis-full sm:basis-3/4 lg:basis-1/2 xl:basis-[45%] m-0">
+                          <ProductCard
+                            item={item}
+                            onCardClick={handleCardClick}
+                          />
+                        </CarouselItem>
+                      ))}
+                    </CarouselContent>
+                  </div>
+                </div>
+                {/* Navigation buttons outside gray area */}
+                <div className="max-w-[1920px] mx-auto px-3 sm:px-4 lg:px-6">
+                  <div className="flex justify-end items-center gap-2 mt-2 sm:mt-3 lg:mt-4 w-full mr-4 sm:mr-6 lg:mr-8">
+                    <CarouselPrevious className="relative! left-0! right-0! top-0! translate-y-0! translate-x-0! h-8 w-8 sm:h-9 sm:w-9 md:h-10 md:w-10 rounded-full bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 border-0 shadow-sm p-1.5 sm:p-2 text-gray-900 dark:text-gray-100" />
+                    <CarouselNext className="relative! left-0! right-0! top-0! translate-y-0! translate-x-0! h-8 w-8 sm:h-9 sm:w-9 md:h-10 md:w-10 rounded-full bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 border-0 shadow-sm p-1.5 sm:p-2 text-gray-900 dark:text-gray-100" />
+                  </div>
+                </div>
               </Carousel>
             </div>
           </SectionReveal>
