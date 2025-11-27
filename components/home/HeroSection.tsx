@@ -44,7 +44,7 @@ const HeroSection: React.FC<HeroSectionProps> = memo(() => {
       role="region"
       aria-label="Hero section">
       {/* Main Content Container */}
-      <div className="mx-auto w-full max-w-7xl px-4 py-6 sm:px-6 sm:py-8 lg:px-8 lg:py-10">
+      <div className="mx-auto w-full max-w-7xl px-4 pt-12 pb-6 sm:px-6 sm:pt-16 sm:pb-8 lg:px-8 lg:pt-20 lg:pb-10">
         <div className="relative w-full overflow-hidden min-h-[450px] sm:min-h-[500px] lg:min-h-[550px]">
           <AnimatePresence initial={false}>
             <motion.div
@@ -126,7 +126,7 @@ const HeroSection: React.FC<HeroSectionProps> = memo(() => {
       </div>
 
       {/* Client Logo Carousel - Below Hero Content, Full Width */}
-      <div className="w-full pt-6 sm:pt-8 lg:pt-24 pb-10 sm:pb-10 lg:pb-28">
+      <div className="w-full pt-6 sm:pt-8 lg:pt-16 pb-10 sm:pb-10 lg:pb-16">
         <ClientLogoCarousel
           logos={clientContent?.logos || []}
           pauseOnHover={true}
