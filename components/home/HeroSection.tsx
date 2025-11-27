@@ -87,7 +87,7 @@ const HeroSection: React.FC<HeroSectionProps> = memo(() => {
             <div className="relative order-2 lg:order-2">
               <div className="relative h-[280px] w-full rounded-3xl sm:h-[320px] md:h-[360px] lg:h-[400px] xl:h-[450px]">
                 <Image
-                  src="/images/hero3.png"
+                  src="/images/herosection.png"
                   alt="Illustration of Codagam's cloud and data solutions"
                   fill
                   sizes="(max-width: 1024px) 100vw, 50vw"
