@@ -1,21 +1,32 @@
 "use client";
 
-import React, { memo, useCallback } from "react";
+import React, { memo, useCallback, useEffect, useState } from "react";
 import Image from "next/image";
-import SectionReveal from "@/components/shared/animation";
+import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { HeroSectionProps, ButtonClickHandler } from "@/models/interfaces";
 import ClientLogoCarousel from "@/components/shared/ClientLogoCarousel";
 import { getClientSectionContent } from "@/lib/content/clients";
+import { heroContents } from "@/lib/content/hero";
 
 const HeroSection: React.FC<HeroSectionProps> = memo(() => {
   const clientContent = getClientSectionContent();
+  const [currentIndex, setCurrentIndex] = useState(0);
 
   const handleGetStarted: ButtonClickHandler = useCallback(() => {
     const element = document.getElementById("footer-section");
     if (element) {
       element.scrollIntoView({ behavior: "smooth" });
     }
+  }, []);
+
+  // Auto-rotate carousel
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentIndex((prev) => (prev + 1) % heroContents.length);
+    }, 5000);
+
+    return () => clearInterval(interval);
   }, []);
 
   return (
@@ -26,77 +37,97 @@ const HeroSection: React.FC<HeroSectionProps> = memo(() => {
       aria-label="Hero section">
       {/* Main Content Container */}
       <div className="mx-auto w-full max-w-7xl px-4 py-6 sm:px-6 sm:py-8 lg:px-8 lg:py-10">
-        {/* Hero Content Grid - Left Text & Right Image */}
-        <div className="grid grid-cols-1 items-center gap-6 sm:gap-8 lg:grid-cols-2 lg:gap-8 mb-6 sm:mb-8 lg:mb-10">
-          {/* Left Side - Content */}
-          <SectionReveal
-            variant="fade-down"
-            delayMs={60}
-            durationMs={700}
-            className="w-full">
-            <div className="order-1 space-y-4 sm:space-y-5 lg:order-1 lg:pr-6 xl:pr-10">
-              {/* Brand */}
-              <div className="text-center lg:text-left">
-                <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-none text-blue-900 dark:text-blue-900">
-                  Codagam
-                </h1>
-                <p className="inline-flex items-center gap-2 sm:gap-4 mt-1 sm:mt-2 text-sm sm:text-base lg:text-lg text-muted-foreground font-medium">
-                  <span>Consult</span>
-                  <span className="text-primary">|</span>
-                  <span>Code</span>
-                  <span className="text-primary">|</span>
-                  <span>Collaborate</span>
-                </p>
-              </div>
+        <div className="relative w-full overflow-hidden">
+          <AnimatePresence mode="wait" initial={false}>
+            <motion.div
+              key={currentIndex}
+              initial={{ opacity: 0, x: 50 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -50 }}
+              transition={{
+                duration: 0.6,
+                ease: [0.4, 0, 0.2, 1],
+              }}
+              className="w-full">
+              <div className="grid grid-cols-1 items-center gap-6 sm:gap-8 lg:grid-cols-2 lg:gap-8">
+                {/* Left Side - Content */}
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.2, duration: 0.5 }}
+                  className="order-1 space-y-4 sm:space-y-5 lg:order-1 lg:pr-6 xl:pr-10">
+                  {/* Brand */}
+                  <div className="text-center lg:text-left">
+                    <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-none text-blue-900 dark:text-blue-900">
+                      Codagam
+                    </h1>
+                    <p className="inline-flex items-center gap-2 sm:gap-4 mt-1 sm:mt-2 text-sm sm:text-base lg:text-lg text-muted-foreground font-medium">
+                      <span>Consult</span>
+                      <span className="text-primary">|</span>
+                      <span>Code</span>
+                      <span className="text-primary">|</span>
+                      <span>Collaborate</span>
+                    </p>
+                  </div>
 
-              {/* Main Headline */}
-              <div className="space-y-2 sm:space-y-3 text-center lg:text-left">
-                <h2 className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-semibold leading-tight">
-                  Digital Transformation
-                  <br />
-                  <span className="text-muted-foreground">
-                    for Modern Business
-                  </span>
-                </h2>
-                <p className="mx-auto max-w-2xl text-xs sm:text-base text-muted-foreground leading-relaxed lg:mx-0">
-                  We help you establish and upscale your business online so that
-                  you don&apos;t miss any chance of serving a customer.
-                </p>
-              </div>
+                  {/* Main Headline */}
+                  <div className="space-y-2 sm:space-y-3 text-center lg:text-left">
+                    <motion.div
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.3, duration: 0.5 }}>
+                      <p className="text-sm sm:text-base text-primary font-semibold mb-2">
+                        {heroContents[currentIndex].subtitle}
+                      </p>
+                      <h2 className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-semibold leading-tight">
+                        {heroContents[currentIndex].title}
+                      </h2>
+                    </motion.div>
+                    <motion.p
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.4, duration: 0.5 }}
+                      className="mx-auto max-w-2xl text-xs sm:text-base text-muted-foreground leading-relaxed lg:mx-0">
+                      {heroContents[currentIndex].description}
+                    </motion.p>
+                  </div>
 
-              {/* CTA */}
-              <div className="pt-1 text-center lg:text-left">
-                <Button
-                  onClick={handleGetStarted}
-                  variant="black"
-                  size="lg"
-                  className="w-full min-w-[180px] px-6 py-2.5 text-sm font-medium shadow-sm transition-all duration-300 hover:scale-[1.02] sm:w-auto sm:px-8 sm:py-3 sm:text-base"
-                  aria-label="Get started with Codagam services">
-                  Get Started
-                </Button>
-              </div>
-            </div>
-          </SectionReveal>
+                  {/* CTA */}
+                  <motion.div
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.5, duration: 0.5 }}
+                    className="pt-1 text-center lg:text-left">
+                    <Button
+                      onClick={handleGetStarted}
+                      variant="black"
+                      className="w-auto min-w-[120px] px-4 py-2 text-xs font-medium shadow-sm transition-all duration-300 hover:scale-[1.02] sm:min-w-[140px] sm:px-5 sm:py-2.5 sm:text-sm md:px-8 md:py-3 md:text-base"
+                      aria-label="Get started with Codagam services">
+                      Get Started
+                    </Button>
+                  </motion.div>
+                </motion.div>
 
-          {/* Right Side - Visual */}
-          <SectionReveal
-            variant="slide-up"
-            delayMs={100}
-            durationMs={700}
-            className="w-full">
-            <div className="relative order-2 lg:order-2">
-              <div className="relative h-[280px] w-full rounded-3xl sm:h-[320px] md:h-[360px] lg:h-[400px] xl:h-[450px]">
-                <Image
-                  src="/images/herosection.png"
-                  alt="Illustration of Codagam's cloud and data solutions"
-                  fill
-                  sizes="(max-width: 1024px) 100vw, 50vw"
-                  priority
-                  className="object-contain"
-                />
+                {/* Right Side - Visual */}
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: 0.3, duration: 0.6 }}
+                  className="relative order-2 lg:order-2">
+                  <div className="relative h-[280px] w-full rounded-3xl sm:h-[320px] md:h-[360px] lg:h-[400px] xl:h-[450px]">
+                    <Image
+                      src={heroContents[currentIndex].image}
+                      alt={heroContents[currentIndex].imageAlt}
+                      fill
+                      sizes="(max-width: 1024px) 100vw, 50vw"
+                      priority={currentIndex === 0}
+                      className="object-contain"
+                    />
+                  </div>
+                </motion.div>
               </div>
-            </div>
-          </SectionReveal>
+            </motion.div>
+          </AnimatePresence>
         </div>
       </div>
 
