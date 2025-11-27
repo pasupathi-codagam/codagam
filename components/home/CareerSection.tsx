@@ -33,30 +33,38 @@ const BenefitCard = memo(
     <div className="space-y-3 sm:space-y-4">
       <Button
         variant="outline"
-        className={`group flex h-14 w-full items-center justify-between rounded-2xl border-2 px-4 text-sm font-semibold transition-all duration-300 sm:h-16 sm:px-6 sm:text-base lg:text-lg ${
+        className={`group relative overflow-hidden flex h-14 w-full items-center justify-between rounded-2xl border-2 px-4 text-sm font-semibold transition-all duration-300 sm:h-16 sm:px-6 sm:text-base lg:text-lg bg-[#F6F6F6] ${
           isOpen
-            ? "border-ring bg-accent shadow-md"
-            : "border-border hover:border-ring hover:bg-accent hover:shadow-sm"
+            ? "border-ring shadow-md"
+            : "border-border hover:border-transparent hover:shadow-sm"
         }`}
         onClick={onToggle}
         aria-label={`Toggle ${benefit.title} details`}>
-        <div className="flex items-center space-x-3 sm:space-x-4">
-          <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-muted transition-transform duration-300 group-hover:scale-105 sm:h-11 sm:w-11">
+        {benefit.hoverColor && (
+          <div 
+            className="hover-bg-career" 
+            style={{ backgroundColor: benefit.hoverColor }}
+          ></div>
+        )}
+        <div className="relative z-10 flex items-center space-x-3 sm:space-x-4">
+          <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-muted transition-all duration-300 group-hover:scale-105 group-hover:bg-white/20 sm:h-11 sm:w-11">
             <benefit.icon
-              className={`h-5 w-5 ${
+              className={`h-5 w-5 transition-colors duration-300 ${
                 iconColorMap[benefit.color] ?? "text-primary"
-              }`}
+              } group-hover:text-white`}
             />
           </div>
-          <span className="text-sm font-medium text-foreground sm:text-base">
+          <span className="text-sm font-medium text-foreground sm:text-base group-hover:text-white transition-colors duration-300">
             {benefit.title}
           </span>
         </div>
-        {isOpen ? (
-          <ChevronUp className="h-4 w-4 text-muted-foreground transition-colors duration-300 group-hover:text-foreground sm:h-5 sm:w-5" />
-        ) : (
-          <ChevronDown className="h-4 w-4 text-muted-foreground transition-colors duration-300 group-hover:text-foreground sm:h-5 sm:w-5" />
-        )}
+        <div className="relative z-10">
+          {isOpen ? (
+            <ChevronUp className="h-4 w-4 text-muted-foreground transition-colors duration-300 group-hover:text-white sm:h-5 sm:w-5" />
+          ) : (
+            <ChevronDown className="h-4 w-4 text-muted-foreground transition-colors duration-300 group-hover:text-white sm:h-5 sm:w-5" />
+          )}
+        </div>
       </Button>
 
       <div

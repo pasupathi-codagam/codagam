@@ -71,6 +71,7 @@ export interface ProductItem {
   website: string;
   details: string;
   features: string[];
+  hoverColor?: string;
 }
 
 export interface ProductCardProps {
@@ -105,6 +106,7 @@ export interface GalleryItem {
   description: string;
   image: string;
   alt: string;
+  hoverColor?: string;
 }
 
 export interface ServiceCardProps {
@@ -182,6 +184,7 @@ export interface BenefitCard {
   bgColor: string;
   elementId: string;
   icon: React.ComponentType<{ className?: string }>;
+  hoverColor?: string;
 }
 
 export interface BenefitCardProps {

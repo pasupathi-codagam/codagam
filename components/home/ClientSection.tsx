@@ -35,22 +35,26 @@ export default function ClientSection() {
 
         {/* Call to Action */}
         <div className="px-4 sm:px-6 lg:px-8">
-          <Card className="max-w-4xl mx-auto border-0 transition-all duration-700 rounded-2xl sm:rounded-3xl">
-            <CardContent className="p-4 sm:p-6 lg:p-8 text-center">
+          <Card className="group relative overflow-hidden max-w-4xl mx-auto border-0 bg-[#F6F6F6] transition-all duration-700 rounded-2xl sm:rounded-3xl">
+            <div 
+              className="hover-bg-client" 
+              style={{ backgroundColor: "rgb(59, 130, 246)" }}
+            ></div>
+            <CardContent className="relative z-10 p-4 sm:p-6 lg:p-8 text-center">
               <CardHeader className="pb-3 sm:pb-4">
-                <CardTitle className="text-lg sm:text-xl lg:text-2xl font-bold text-foreground mb-2 sm:mb-3">
+                <CardTitle className="text-lg sm:text-xl lg:text-2xl font-bold text-foreground mb-2 sm:mb-3 group-hover:text-white transition-colors duration-300">
                   Ready to join our success stories?
                 </CardTitle>
               </CardHeader>
 
               <CardContent className="pb-3 sm:pb-4">
-                <p className="text-xs sm:text-sm lg:text-base text-muted-foreground mb-3 sm:mb-4 max-w-2xl mx-auto leading-relaxed">
+                <p className="text-xs sm:text-sm lg:text-base text-muted-foreground mb-3 sm:mb-4 max-w-2xl mx-auto leading-relaxed group-hover:text-white/90 transition-colors duration-300">
                   Let&apos;s discuss how we can help your business achieve its
                   goals with innovative technology solutions.
                 </p>
 
                 <Button
-                  className="px-6 sm:px-8 py-2 sm:py-3 text-sm sm:text-base font-semibold transition-all duration-500 hover:scale-110 w-full sm:w-auto"
+                  className="px-6 sm:px-8 py-2 sm:py-3 text-sm sm:text-base font-semibold transition-all duration-500 hover:scale-110 w-full sm:w-auto group-hover:bg-white group-hover:text-foreground"
                   onClick={handleRequestCallback}
                   variant="black"
                   size="lg"

@@ -34,19 +34,25 @@ const ProductCard = memo(
   ({ item, onCardClick }: Omit<ProductCardProps, "index" | "currentIndex">) => (
     <div className="px-4 sm:px-6 lg:px-8 xl:px-16">
       <Card
-        className="border-0 bg-card transition-all duration-500 hover:scale-105 rounded-2xl sm:rounded-3xl overflow-hidden cursor-pointer group"
+        className="relative overflow-hidden border-0 bg-[#F6F6F6] transition-all duration-500 rounded-2xl sm:rounded-3xl cursor-pointer group"
         onClick={() => onCardClick(item)}>
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-0 items-stretch min-h-[340px] sm:min-h-[380px] md:min-h-[420px] lg:min-h-[460px]">
+        {item.hoverColor && (
+          <div 
+            className="hover-bg-product" 
+            style={{ backgroundColor: item.hoverColor }}
+          ></div>
+        )}
+        <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-0 items-stretch min-h-[340px] sm:min-h-[380px] md:min-h-[420px] lg:min-h-[460px]">
           {/* Content Section - Left Side */}
           <div className="order-2 lg:order-1 p-4 sm:p-6 lg:p-8 flex flex-col justify-center">
             <div className="flex-1 flex flex-col justify-center">
-              <div className="text-xs sm:text-sm font-medium text-muted-foreground uppercase tracking-wider mb-3 sm:mb-4">
+              <div className="text-xs sm:text-sm font-medium text-muted-foreground uppercase tracking-wider mb-3 sm:mb-4 group-hover:text-white/80 transition-colors duration-500">
                 {item.label}
               </div>
-              <CardTitle className="text-lg sm:text-xl lg:text-2xl font-bold text-foreground leading-tight group-hover:text-primary transition-colors duration-500 mb-2 sm:mb-3">
+              <CardTitle className="text-lg sm:text-xl lg:text-2xl font-bold text-foreground leading-tight group-hover:text-white transition-colors duration-500 mb-2 sm:mb-3">
                 {item.headline}.
               </CardTitle>
-              <p className="text-muted-foreground text-xs sm:text-sm lg:text-base leading-relaxed mb-3 sm:mb-4">
+              <p className="text-muted-foreground text-xs sm:text-sm lg:text-base leading-relaxed mb-3 sm:mb-4 group-hover:text-white/90 transition-colors duration-500">
                 {item.description}
               </p>
 
@@ -55,13 +61,13 @@ const ProductCard = memo(
                 <Button
                   variant="black"
                   size="icon"
-                  className="rounded-full w-10 h-10 sm:w-12 sm:h-12 p-0 group-hover:scale-110 group-hover:rotate-90 transition-all duration-500 ease-out"
+                  className="rounded-full w-10 h-10 sm:w-12 sm:h-12 p-0 group-hover:scale-110 group-hover:rotate-90 group-hover:bg-white group-hover:text-foreground transition-all duration-500 ease-out"
                   onClick={(e) => {
                     e.stopPropagation();
                     onCardClick(item);
                   }}
                   aria-label={`Learn more about ${item.label}`}>
-                  <Plus className="w-4 h-4 sm:w-5 sm:h-5 text-white dark:text-black transition-transform duration-300" />
+                  <Plus className="w-4 h-4 sm:w-5 sm:h-5 text-white dark:text-black group-hover:text-foreground transition-colors duration-300" />
                 </Button>
               </div>
             </div>

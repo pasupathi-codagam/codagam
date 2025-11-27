@@ -19,6 +19,7 @@ export const productItemsContent: ProductItem[] = [
       "Real-time notifications",
       "Multi-vendor support",
     ],
+    hoverColor: "rgb(59, 130, 246)", // blue
   },
   {
     id: "aava-foundation",
@@ -38,6 +39,7 @@ export const productItemsContent: ProductItem[] = [
       "Community collaboration",
       "Volunteer engagement",
     ],
+    hoverColor: "rgb(34, 197, 94)", // green
   },
   {
     id: "custom-software",
@@ -57,6 +59,7 @@ export const productItemsContent: ProductItem[] = [
       "API development",
       "Database design",
     ],
+    hoverColor: "rgb(168, 85, 247)", // purple
   },
   {
     id: "digital-transformation",
@@ -76,6 +79,7 @@ export const productItemsContent: ProductItem[] = [
       "Customer experience optimization",
       "Technology integration",
     ],
+    hoverColor: "rgb(249, 115, 22)", // orange
   },
   {
     id: "ai-solutions",
@@ -95,6 +99,7 @@ export const productItemsContent: ProductItem[] = [
       "Natural language processing",
       "Computer vision",
     ],
+    hoverColor: "rgb(236, 72, 153)", // pink
   },
   {
     id: "cloud-services",
@@ -114,5 +119,6 @@ export const productItemsContent: ProductItem[] = [
       "Cloud security",
       "Performance optimization",
     ],
+    hoverColor: "rgb(14, 165, 233)", // cyan
   },
 ];
