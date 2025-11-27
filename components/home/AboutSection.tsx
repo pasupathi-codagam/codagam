@@ -34,8 +34,8 @@ const StatsCard = memo(
     color: string;
     hoverColor: string;
   }) => (
-    <Card className="group relative overflow-hidden border border-border/40 bg-[#F6F6F6] shadow-md transition-all duration-500 hover:-translate-y-1 hover:shadow-xl hover:border-transparent">
-      <div className="hover-bg" style={{ backgroundColor: hoverColor }}></div>
+    <Card className="group relative overflow-hidden border border-border/40 bg-gray-100 dark:bg-black shadow-md transition-all duration-500 hover:-translate-y-1 hover:shadow-xl hover:border-transparent">
+      <div className={`hover-bg ${hoverColor}`}></div>
       <CardContent className="relative z-10 p-4 text-center sm:p-5 lg:p-6">
         <div
           className={`w-16 h-16 mx-auto mb-3 bg-linear-to-r ${color} rounded-2xl flex items-center justify-center group-hover:scale-110 group-hover:bg-white/20 transition-all duration-500`}>
@@ -158,10 +158,8 @@ const AboutSection = memo(() => {
             </SectionReveal>
 
             {/* Why Choose Us Section */}
-            <div className="group relative overflow-hidden rounded-3xl border border-border/40 bg-[#F6F6F6] p-4 shadow-sm sm:p-5 lg:p-6 transition-all duration-500 hover:border-transparent hover:shadow-xl hover:-translate-y-1">
-              <div
-                className="hover-bg"
-                style={{ backgroundColor: "rgb(79, 70, 229)" }}></div>
+            <div className="group relative overflow-hidden rounded-3xl border border-border/40 bg-gray-100 dark:bg-black p-4 shadow-sm sm:p-5 lg:p-6 transition-all duration-500 hover:border-transparent hover:shadow-xl hover:-translate-y-1">
+              <div className="hover-bg bg-indigo-600"></div>
               <div className="relative z-10 grid grid-cols-1 items-center gap-6 sm:gap-7 lg:grid-cols-2 lg:gap-8">
                 {/* Left Side - Image */}
                 <div className="order-2 lg:order-1">

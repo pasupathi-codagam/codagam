@@ -41,10 +41,7 @@ const BenefitCard = memo(
         onClick={onToggle}
         aria-label={`Toggle ${benefit.title} details`}>
         {benefit.hoverColor && (
-          <div 
-            className="hover-bg-career" 
-            style={{ backgroundColor: benefit.hoverColor }}
-          ></div>
+          <div className={`hover-bg-career ${benefit.hoverColor}`}></div>
         )}
         <div className="relative z-10 flex items-center space-x-3 sm:space-x-4">
           <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-muted transition-all duration-300 group-hover:scale-105 group-hover:bg-white/20 sm:h-11 sm:w-11">
@@ -173,19 +170,20 @@ export default function CareerSection() {
                   <CollapsibleTrigger asChild>
                     <Button
                       variant="outline"
-                      className="w-full h-14 sm:h-16 text-base sm:text-lg font-semibold rounded-2xl border-2 border-border hover:border-ring hover:bg-accent hover:shadow-md transition-all duration-300 group"
+                      className="w-full h-14 sm:h-16 text-base sm:text-lg font-semibold rounded-2xl border-2 border-border hover:border-transparent hover:shadow-md transition-all duration-300 group relative overflow-hidden bg-[#F6F6F6]"
                       aria-label="Toggle application form">
-                      <div className="relative flex items-center justify-center w-full px-12 sm:px-14">
+                      <div className="hover-bg-career bg-blue-600"></div>
+                      <div className="relative z-10 flex items-center justify-center w-full px-12 sm:px-14">
                         {/* Centered icon + label */}
-                        <span className="inline-flex items-center gap-2 text-foreground font-medium text-sm sm:text-base">
-                          <Send className="w-5 h-5 sm:w-6 sm:h-6 text-primary" />
+                        <span className="inline-flex items-center gap-2 text-foreground font-medium text-sm sm:text-base group-hover:text-white transition-colors duration-300">
+                          <Send className="w-5 h-5 sm:w-6 sm:h-6 text-primary group-hover:text-white transition-colors duration-300" />
                           Apply Now
                         </span>
                         {/* Right chevron */}
                         {isOpen ? (
-                          <ChevronUp className="absolute right-4 sm:right-6 w-4 h-4 sm:w-5 sm:h-5 text-muted-foreground group-hover:text-foreground transition-colors duration-300" />
+                          <ChevronUp className="absolute right-4 sm:right-6 w-4 h-4 sm:w-5 sm:h-5 text-muted-foreground group-hover:text-white transition-colors duration-300" />
                         ) : (
-                          <ChevronDown className="absolute right-4 sm:right-6 w-4 h-4 sm:w-5 sm:h-5 text-muted-foreground group-hover:text-foreground transition-colors duration-300" />
+                          <ChevronDown className="absolute right-4 sm:right-6 w-4 h-4 sm:w-5 sm:h-5 text-muted-foreground group-hover:text-white transition-colors duration-300" />
                         )}
                       </div>
                     </Button>

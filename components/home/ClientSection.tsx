@@ -30,16 +30,11 @@ export default function ClientSection() {
         durationMs={700}
         className="w-full">
         {/* Header */}
-        
-        
 
         {/* Call to Action */}
         <div className="px-4 sm:px-6 lg:px-8">
-          <Card className="group relative overflow-hidden max-w-4xl mx-auto border-0 bg-[#F6F6F6] transition-all duration-700 rounded-2xl sm:rounded-3xl">
-            <div 
-              className="hover-bg-client" 
-              style={{ backgroundColor: "rgb(147, 51, 234)" }}
-            ></div>
+          <Card className="group relative overflow-hidden max-w-4xl mx-auto border-0 bg-gray-100 dark:bg-black transition-all duration-700 rounded-2xl sm:rounded-3xl">
+            <div className="hover-bg-client bg-purple-600"></div>
             <CardContent className="relative z-10 p-4 sm:p-6 lg:p-8 text-center">
               <CardHeader className="pb-3 sm:pb-4">
                 <CardTitle className="text-lg sm:text-xl lg:text-2xl font-bold text-foreground mb-2 sm:mb-3 group-hover:text-white transition-colors duration-300">
@@ -54,7 +49,7 @@ export default function ClientSection() {
                 </p>
 
                 <Button
-                  className="px-6 sm:px-8 py-2 sm:py-3 text-sm sm:text-base font-semibold transition-all duration-500 hover:scale-110 w-full sm:w-auto group-hover:bg-white group-hover:text-foreground"
+                  className="px-6 sm:px-8 py-2 sm:py-3 text-sm sm:text-base font-semibold transition-all duration-500 hover:scale-110 w-full sm:w-auto hover:bg-white hover:text-black dark:hover:bg-white dark:hover:text-black group-hover:bg-white group-hover:text-foreground"
                   onClick={handleRequestCallback}
                   variant="black"
                   size="lg"

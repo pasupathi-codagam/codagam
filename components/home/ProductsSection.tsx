@@ -38,8 +38,7 @@ const ProductCard = memo(
         onClick={() => onCardClick(item)}>
         {item.hoverColor && (
           <div 
-            className="hover-bg-product" 
-            style={{ backgroundColor: item.hoverColor }}
+            className={`hover-bg-product ${item.hoverColor}`}
           ></div>
         )}
         <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-0 items-stretch min-h-[340px] sm:min-h-[380px] md:min-h-[420px] lg:min-h-[460px]">

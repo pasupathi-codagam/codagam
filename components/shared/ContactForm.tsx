@@ -168,8 +168,11 @@ export function ContactForm({
           disabled={isSubmitting}
           size="sm"
           variant="black"
-          className="h-10 sm:h-12 text-xs sm:text-sm border border-border shadow-sm">
-          {isSubmitting ? "Sending..." : "Send Message"}
+          className="h-10 sm:h-12 text-xs sm:text-sm border border-border shadow-sm group relative overflow-hidden">
+          <div className="hover-bg-career bg-green-600"></div>
+          <span className="relative z-10 group-hover:text-white transition-colors duration-300">
+            {isSubmitting ? "Sending..." : "Send Message"}
+          </span>
         </Button>
         {submitMessage && (
           <p className="text-green-600 dark:text-green-400 text-xs mt-2">

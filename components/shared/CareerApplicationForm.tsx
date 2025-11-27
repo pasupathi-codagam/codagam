@@ -153,7 +153,7 @@ export function CareerApplicationForm({
           </div>
 
           <Button
-            className="w-full h-10 sm:h-12 text-sm sm:text-base font-semibold rounded-xl transition-all duration-500 hover:scale-105 shadow-lg hover:shadow-xl"
+            className="w-full h-10 sm:h-12 text-sm sm:text-base font-semibold rounded-xl transition-all duration-500 hover:scale-105 shadow-lg hover:shadow-xl group relative overflow-hidden"
             type="submit"
             variant="black"
             size="lg"
@@ -161,7 +161,10 @@ export function CareerApplicationForm({
             aria-label={
               isSubmitting ? "Submitting application" : "Submit application"
             }>
-            {isSubmitting ? "Submitting..." : "Submit Application"}
+            <div className="hover-bg-career bg-green-600"></div>
+            <span className="relative z-10 group-hover:text-white transition-colors duration-300">
+              {isSubmitting ? "Submitting..." : "Submit Application"}
+            </span>
           </Button>
 
           {submitMessage && (

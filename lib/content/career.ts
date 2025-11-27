@@ -10,7 +10,7 @@ export const careerBenefits = [
     bgColor: "blue-50/30",
     elementId: "benefit-1",
     icon: Lightbulb,
-    hoverColor: "rgb(99, 102, 241)", // indigo-500
+    hoverColor: "bg-indigo-500",
   },
   {
     id: "growth",
@@ -21,7 +21,7 @@ export const careerBenefits = [
     bgColor: "green-50/30",
     elementId: "benefit-2",
     icon: TrendingUp,
-    hoverColor: "rgb(132, 204, 22)", // lime-500
+    hoverColor: "bg-lime-500",
   },
   {
     id: "impact",
@@ -32,6 +32,6 @@ export const careerBenefits = [
     bgColor: "purple-50/30",
     elementId: "benefit-3",
     icon: Target,
-    hoverColor: "rgb(192, 38, 211)", // pink-600
+    hoverColor: "bg-pink-600",
   },
 ];
