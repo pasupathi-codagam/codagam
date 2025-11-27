@@ -32,7 +32,7 @@ const ServiceCard = memo(
 
         {/* Content Card - Right Side */}
         <div className="order-2 lg:order-2">
-          <Card className="relative overflow-hidden border-0 shadow-lg bg-[#F6F6F6] h-full min-h-0 lg:min-h-[500px] group-hover:shadow-xl transition-all duration-500 rounded-none rounded-bl-2xl rounded-br-2xl lg:rounded-bl-none lg:rounded-tr-3xl lg:rounded-br-3xl cursor-pointer">
+          <Card className="relative overflow-hidden border-0 shadow-lg bg-[#F6F6F6] dark:bg-black h-full min-h-0 lg:min-h-[500px] group-hover:shadow-xl transition-all duration-500 rounded-none rounded-bl-2xl rounded-br-2xl lg:rounded-bl-none lg:rounded-tr-3xl lg:rounded-br-3xl cursor-pointer">
             {item.hoverColor && (
               <div 
                 className={`hover-bg-service ${item.hoverColor}`}

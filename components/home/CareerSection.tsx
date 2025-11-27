@@ -33,7 +33,7 @@ const BenefitCard = memo(
     <div className="space-y-3 sm:space-y-4">
       <Button
         variant="outline"
-        className={`group relative overflow-hidden flex h-14 w-full items-center justify-between rounded-2xl border-2 px-4 text-sm font-semibold transition-all duration-300 sm:h-16 sm:px-6 sm:text-base lg:text-lg bg-[#F6F6F6] ${
+        className={`group relative overflow-hidden flex h-14 w-full items-center justify-between rounded-2xl border-2 px-4 text-sm font-semibold transition-all duration-300 sm:h-16 sm:px-6 sm:text-base lg:text-lg bg-[#F6F6F6] dark:bg-black ${
           isOpen
             ? "border-ring shadow-md"
             : "border-border hover:border-transparent hover:shadow-sm"
@@ -170,7 +170,7 @@ export default function CareerSection() {
                   <CollapsibleTrigger asChild>
                     <Button
                       variant="outline"
-                      className="w-full h-14 sm:h-16 text-base sm:text-lg font-semibold rounded-2xl border-2 border-border hover:border-transparent hover:shadow-md transition-all duration-300 group relative overflow-hidden bg-[#F6F6F6]"
+                      className="w-full h-14 sm:h-16 text-base sm:text-lg font-semibold rounded-2xl border-2 border-border hover:border-transparent hover:shadow-md transition-all duration-300 group relative overflow-hidden bg-[#F6F6F6] dark:bg-black"
                       aria-label="Toggle application form">
                       <div className="hover-bg-career bg-blue-600"></div>
                       <div className="relative z-10 flex items-center justify-center w-full px-12 sm:px-14">

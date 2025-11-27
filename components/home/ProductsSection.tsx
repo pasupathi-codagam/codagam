@@ -34,12 +34,10 @@ const ProductCard = memo(
   ({ item, onCardClick }: Omit<ProductCardProps, "index" | "currentIndex">) => (
     <div className="px-4 sm:px-6 lg:px-8 xl:px-16">
       <Card
-        className="relative overflow-hidden border-0 bg-[#F6F6F6] transition-all duration-500 rounded-2xl sm:rounded-3xl cursor-pointer group"
+        className="relative overflow-hidden border-0 bg-[#F6F6F6] dark:bg-black transition-all duration-500 rounded-2xl sm:rounded-3xl cursor-pointer group"
         onClick={() => onCardClick(item)}>
         {item.hoverColor && (
-          <div 
-            className={`hover-bg-product ${item.hoverColor}`}
-          ></div>
+          <div className={`hover-bg-product ${item.hoverColor}`}></div>
         )}
         <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-0 items-stretch min-h-[340px] sm:min-h-[380px] md:min-h-[420px] lg:min-h-[460px]">
           {/* Content Section - Left Side */}
