@@ -52,9 +52,16 @@ export function Footer() {
     if (href.startsWith("#")) {
       const element = document.getElementById(href.substring(1));
       if (element) {
-        const offsetTop = element.offsetTop - 80; // Account for navbar height
+        // Get actual navbar height dynamically
+        const navbar = document.querySelector('nav[aria-label="Primary navigation"]');
+        const navbarHeight = navbar ? navbar.getBoundingClientRect().height : 64;
+        
+        // Small gap (8px = 0.5rem = pt-2)
+        const smallGap = 8;
+        
+        const offsetTop = element.offsetTop - navbarHeight - smallGap;
         window.scrollTo({
-          top: offsetTop,
+          top: Math.max(0, offsetTop),
           behavior: "smooth",
         });
       }

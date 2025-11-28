@@ -60,10 +60,17 @@ const NavLinks: React.FC<NavLinksProps> = ({ onLinkClick }) => {
     const element = document.getElementById(elementId);
 
     if (element) {
-      // Modern scroll method with offset for navbar
-      const offsetTop = element.offsetTop - 80; // Account for navbar height
+      // Get actual navbar height dynamically
+      const navbar = document.querySelector('nav[aria-label="Primary navigation"]');
+      const navbarHeight = navbar ? navbar.getBoundingClientRect().height : 64;
+      
+      // Small gap (8px = 0.5rem = pt-2)
+      const smallGap = 8;
+      
+      // Modern scroll method with offset for navbar + small gap
+      const offsetTop = element.offsetTop - navbarHeight - smallGap;
       window.scrollTo({
-        top: offsetTop,
+        top: Math.max(0, offsetTop), // Ensure we don't scroll to negative position
         behavior: "smooth",
       });
     }
