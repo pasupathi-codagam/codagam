@@ -34,20 +34,15 @@ const ServiceCard = memo(
           {/* Content Card - Right Side */}
           <div className="order-2 lg:order-2">
             <Card className="relative overflow-hidden border-0 shadow-lg bg-[#F6F6F6] dark:bg-black h-full min-h-0 lg:min-h-[500px] group-hover:shadow-xl transition-all duration-500 rounded-none rounded-bl-2xl rounded-br-2xl lg:rounded-bl-none lg:rounded-tr-3xl lg:rounded-br-3xl cursor-pointer">
-              {item.hoverColor && (
-                <div 
-                  className={`hover-bg-service ${item.hoverColor}`}
-                ></div>
-              )}
               <div className="relative z-10 p-4 sm:p-6 lg:p-8 flex flex-col justify-center h-full">
                 <div className="flex-1 flex flex-col justify-center">
                   <CardHeader className="pb-4 sm:pb-6 px-0">
-                    <CardTitle className="text-lg sm:text-xl lg:text-2xl font-bold text-foreground leading-tight group-hover:text-white transition-colors duration-500">
+                    <CardTitle className="text-lg sm:text-xl lg:text-2xl font-bold text-foreground leading-tight">
                       {item.title}.
                     </CardTitle>
                   </CardHeader>
                   <CardContent className="flex-1 px-0">
-                    <p className="text-xs sm:text-sm lg:text-base text-foreground leading-relaxed group-hover:text-white/90 transition-colors duration-500">
+                    <p className="text-xs sm:text-sm lg:text-base text-foreground leading-relaxed">
                       {item.description}
                     </p>
                   </CardContent>
@@ -107,7 +102,7 @@ export default function ServicesSection() {
           className="w-full">
           <div className="relative w-full overflow-x-hidden">
             <Marquee
-              className="w-full bg-gray-200 dark:bg-muted p-3 sm:p-4 lg:p-6"
+              className="w-full bg-blue-950 dark:bg-muted p-3 sm:p-4 lg:p-6"
               pauseOnHover>
               {galleryItems.map((item) => (
                 <div
