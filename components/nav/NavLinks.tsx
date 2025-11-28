@@ -64,13 +64,19 @@ const NavLinks: React.FC<NavLinksProps> = ({ onLinkClick }) => {
       const navbar = document.querySelector('nav[aria-label="Primary navigation"]');
       const navbarHeight = navbar ? navbar.getBoundingClientRect().height : 64;
       
-      // Small gap (8px = 0.5rem = pt-2)
-      const smallGap = 8;
+      // Calculate scroll position using getBoundingClientRect for more accuracy
+      const rect = element.getBoundingClientRect();
+      const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+      const elementTop = rect.top + scrollTop;
       
-      // Modern scroll method with offset for navbar + small gap
-      const offsetTop = element.offsetTop - navbarHeight - smallGap;
+      // For about section, ensure we scroll to the very top (accounting for navbar)
+      // For other sections, use a small gap
+      const gap = sectionKey === 'about' ? 0 : 8;
+      
+      const offsetTop = elementTop - navbarHeight - gap;
+      
       window.scrollTo({
-        top: Math.max(0, offsetTop), // Ensure we don't scroll to negative position
+        top: Math.max(0, offsetTop),
         behavior: "smooth",
       });
     }

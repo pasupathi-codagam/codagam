@@ -50,16 +50,24 @@ export function Footer() {
 
   const handleNavClick = (href: string) => {
     if (href.startsWith("#")) {
-      const element = document.getElementById(href.substring(1));
+      const elementId = href.substring(1);
+      const element = document.getElementById(elementId);
       if (element) {
         // Get actual navbar height dynamically
         const navbar = document.querySelector('nav[aria-label="Primary navigation"]');
         const navbarHeight = navbar ? navbar.getBoundingClientRect().height : 64;
         
-        // Small gap (8px = 0.5rem = pt-2)
-        const smallGap = 8;
+        // Calculate scroll position using getBoundingClientRect for more accuracy
+        const rect = element.getBoundingClientRect();
+        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+        const elementTop = rect.top + scrollTop;
         
-        const offsetTop = element.offsetTop - navbarHeight - smallGap;
+        // For about section, ensure we scroll to the very top (accounting for navbar)
+        // For other sections, use a small gap
+        const gap = elementId === 'about-section' ? 0 : 8;
+        
+        const offsetTop = elementTop - navbarHeight - gap;
+        
         window.scrollTo({
           top: Math.max(0, offsetTop),
           behavior: "smooth",
