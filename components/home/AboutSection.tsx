@@ -34,17 +34,18 @@ const StatsCard = memo(
     color: string;
     hoverColor: string;
   }) => (
-    <Card className="group relative overflow-hidden border border-border/40 bg-gray-100 dark:bg-black shadow-md transition-all duration-500 hover:-translate-y-1 hover:shadow-xl hover:border-transparent">
+    <Card
+      className={`group relative overflow-hidden border border-border/40 ${hoverColor} shadow-md transition-all duration-500 hover:-translate-y-1 hover:shadow-xl hover:border-transparent hover:bg-white`}>
       <div className={`hover-bg ${hoverColor}`}></div>
       <CardContent className="relative z-10 p-4 text-center sm:p-5 lg:p-6">
         <div
           className={`w-16 h-16 mx-auto mb-3 bg-linear-to-r ${color} rounded-2xl flex items-center justify-center group-hover:scale-110 group-hover:bg-white/20 transition-all duration-500`}>
           <Icon className="w-8 h-8 text-white group-hover:text-white" />
         </div>
-        <div className="text-3xl font-bold text-foreground mb-1.5 group-hover:scale-110 group-hover:text-white transition-all duration-300">
+        <div className="text-3xl font-bold text-white mb-1.5 group-hover:scale-110 group-hover:text-foreground transition-all duration-300">
           {number}
         </div>
-        <div className="text-sm text-muted-foreground font-medium group-hover:text-white/90 transition-colors duration-300">
+        <div className="text-sm text-white/90 font-medium group-hover:text-muted-foreground transition-colors duration-300">
           {label}
         </div>
       </CardContent>
