@@ -1,5 +1,7 @@
 import { Lightbulb, TrendingUp, Target } from "lucide-react";
 
+export const applyImage = "/images/Codagam_Img (4).jpg";
+
 export const careerBenefits = [
   {
     id: "innovation",
@@ -11,6 +13,8 @@ export const careerBenefits = [
     elementId: "benefit-1",
     icon: Lightbulb,
     hoverColor: "bg-indigo-500",
+    image: "/images/Codagam_Img (1).jpg",
+    imageAlt: "Innovation First at Codagam",
   },
   {
     id: "growth",
@@ -22,6 +26,8 @@ export const careerBenefits = [
     elementId: "benefit-2",
     icon: TrendingUp,
     hoverColor: "bg-lime-500",
+    image: "/images/Codagam_Img (2).jpg",
+    imageAlt: "Growth Opportunities at Codagam",
   },
   {
     id: "impact",
@@ -33,5 +39,7 @@ export const careerBenefits = [
     elementId: "benefit-3",
     icon: Target,
     hoverColor: "bg-pink-600",
+    image: "/images/Codagam_Img (3).jpg",
+    imageAlt: "Meaningful Impact at Codagam",
   },
 ];

@@ -192,6 +192,8 @@ export interface BenefitCard {
   elementId: string;
   icon: React.ComponentType<{ className?: string }>;
   hoverColor?: string;
+  image?: string;
+  imageAlt?: string;
 }
 
 export interface BenefitCardProps {

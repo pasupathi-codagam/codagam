@@ -10,8 +10,9 @@ import {
 } from "@/components/ui/collapsible";
 import { BenefitCard as BenefitCardType } from "@/models/interfaces";
 import { ChevronDown, ChevronUp, Send } from "lucide-react";
-import { careerBenefits } from "@/lib/content/career";
+import { careerBenefits, applyImage } from "@/lib/content/career";
 import { CareerApplicationForm } from "@/components/shared/CareerApplicationForm";
+import Image from "next/image";
 
 const iconColorMap: Record<string, string> = {
   blue: "text-blue-500",
@@ -83,8 +84,33 @@ BenefitCard.displayName = "BenefitCard";
 export default function CareerSection() {
   const [isOpen, setIsOpen] = useState(false);
   const [openBenefit, setOpenBenefit] = useState<string | null>(null);
+  const [selectedBenefit, setSelectedBenefit] = useState<string | null>(null);
 
-  const benefits = careerBenefits as BenefitCardType[];
+  const benefits = React.useMemo(() => careerBenefits as BenefitCardType[], []);
+
+  const handleBenefitClick = (benefitId: string) => {
+    // Close form if open
+    setIsOpen(false);
+    // Toggle collapsible description on left
+    const newOpenBenefit = openBenefit === benefitId ? null : benefitId;
+    setOpenBenefit(newOpenBenefit);
+    // Always set selected benefit for right side image - always show image when clicked
+    setSelectedBenefit(benefitId);
+  };
+
+  const handleApplyClick = () => {
+    setIsOpen(!isOpen);
+    // Clear selected benefit when form opens
+    if (isOpen) {
+      setSelectedBenefit(null);
+    }
+  };
+
+  const selectedBenefitData = React.useMemo(() => {
+    if (!selectedBenefit) return null;
+    const found = benefits.find((b) => b.id === selectedBenefit);
+    return found || null;
+  }, [selectedBenefit, benefits]);
 
   return (
     <section
@@ -137,63 +163,81 @@ export default function CareerSection() {
                     key={benefit.id}
                     benefit={benefit}
                     isOpen={openBenefit === benefit.id}
-                    onToggle={() =>
-                      setOpenBenefit(
-                        openBenefit === benefit.id ? null : benefit.id
-                      )
-                    }
+                    onToggle={() => handleBenefitClick(benefit.id)}
                   />
                 ))}
+              </div>
+
+              {/* Apply Button - Moved to Left */}
+              <div className="space-y-3 sm:space-y-4 pt-4">
+                <Collapsible open={isOpen} onOpenChange={setIsOpen}>
+                  <div className="space-y-4 sm:space-y-6">
+                    <CollapsibleTrigger asChild>
+                      <Button
+                        variant="outline"
+                        className="w-full h-14 sm:h-16 text-base sm:text-lg font-semibold rounded-2xl border-2 border-border hover:border-transparent hover:shadow-md transition-all duration-300 group relative overflow-hidden bg-[#F6F6F6] dark:bg-black"
+                        onClick={handleApplyClick}
+                        aria-label="Toggle application form">
+                        <div className="hover-bg-career bg-blue-600"></div>
+                        <div className="relative z-10 flex items-center justify-center w-full px-12 sm:px-14">
+                          {/* Centered icon + label */}
+                          <span className="inline-flex items-center gap-2 text-foreground font-medium text-sm sm:text-base group-hover:text-white transition-colors duration-300">
+                            <Send className="w-5 h-5 sm:w-6 sm:h-6 text-primary group-hover:text-white transition-colors duration-300" />
+                            Apply Now
+                          </span>
+                          {/* Right chevron */}
+                          {isOpen ? (
+                            <ChevronUp className="absolute right-4 sm:right-6 w-4 h-4 sm:w-5 sm:h-5 text-muted-foreground group-hover:text-white transition-colors duration-300" />
+                          ) : (
+                            <ChevronDown className="absolute right-4 sm:right-6 w-4 h-4 sm:w-5 sm:h-5 text-muted-foreground group-hover:text-white transition-colors duration-300" />
+                          )}
+                        </div>
+                      </Button>
+                    </CollapsibleTrigger>
+                  </div>
+                </Collapsible>
               </div>
             </div>
           </SectionReveal>
 
-          {/* Application Form - Collapsible */}
+          {/* Right Side - Form or Image */}
           <SectionReveal
             variant="fade-up"
             delayMs={120}
             durationMs={700}
             className="w-full">
-            <div className="space-y-3 sm:space-y-4">
-              <div className="text-center">
-                <h3 className="text-xl sm:text-2xl lg:text-3xl font-bold text-foreground leading-tight mb-3 sm:mb-4">
-                  Ready to join us?
-                </h3>
-                <p className="text-sm sm:text-base lg:text-lg text-muted-foreground leading-relaxed mb-4 sm:mb-6">
-                  Send us your application and let&apos;s start the
-                  conversation.
-                </p>
-              </div>
-
-              <Collapsible open={isOpen} onOpenChange={setIsOpen}>
-                <div className="space-y-4 sm:space-y-6">
-                  <CollapsibleTrigger asChild>
-                    <Button
-                      variant="outline"
-                      className="w-full h-14 sm:h-16 text-base sm:text-lg font-semibold rounded-2xl border-2 border-border hover:border-transparent hover:shadow-md transition-all duration-300 group relative overflow-hidden bg-[#F6F6F6] dark:bg-black"
-                      aria-label="Toggle application form">
-                      <div className="hover-bg-career bg-blue-600"></div>
-                      <div className="relative z-10 flex items-center justify-center w-full px-12 sm:px-14">
-                        {/* Centered icon + label */}
-                        <span className="inline-flex items-center gap-2 text-foreground font-medium text-sm sm:text-base group-hover:text-white transition-colors duration-300">
-                          <Send className="w-5 h-5 sm:w-6 sm:h-6 text-primary group-hover:text-white transition-colors duration-300" />
-                          Apply Now
-                        </span>
-                        {/* Right chevron */}
-                        {isOpen ? (
-                          <ChevronUp className="absolute right-4 sm:right-6 w-4 h-4 sm:w-5 sm:h-5 text-muted-foreground group-hover:text-white transition-colors duration-300" />
-                        ) : (
-                          <ChevronDown className="absolute right-4 sm:right-6 w-4 h-4 sm:w-5 sm:h-5 text-muted-foreground group-hover:text-white transition-colors duration-300" />
-                        )}
-                      </div>
-                    </Button>
-                  </CollapsibleTrigger>
-
-                  <CollapsibleContent className="space-y-4 sm:space-y-6">
-                    <CareerApplicationForm />
-                  </CollapsibleContent>
+            <div className="h-full min-h-[500px] sm:min-h-[600px]">
+              {isOpen ? (
+                // Show Form when Apply is clicked
+                <div className="space-y-3 sm:space-y-4 h-full">
+                  <div className="text-center">
+                    <h3 className="text-xl sm:text-2xl lg:text-3xl font-bold text-foreground leading-tight mb-3 sm:mb-4">
+                      Ready to join us?
+                    </h3>
+                    <p className="text-sm sm:text-base lg:text-lg text-muted-foreground leading-relaxed mb-4 sm:mb-6">
+                      Send us your application and let&apos;s start the
+                      conversation.
+                    </p>
+                  </div>
+                  <CareerApplicationForm />
                 </div>
-              </Collapsible>
+              ) : selectedBenefitData && selectedBenefitData.image ? (
+                // Show only Image when a benefit is selected
+                <div 
+                  key={selectedBenefitData.id}
+                  className="h-full w-full rounded-2xl border border-border/40 bg-card shadow-lg overflow-hidden">
+                  <div className="relative w-full h-full min-h-[500px]">
+                    <Image
+                      src={selectedBenefitData.image}
+                      alt={selectedBenefitData.imageAlt || selectedBenefitData.title}
+                      fill
+                      className="object-cover"
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                      priority={false}
+                    />
+                  </div>
+                </div>
+              ) : null}
             </div>
           </SectionReveal>
         </div>
