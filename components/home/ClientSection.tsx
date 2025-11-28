@@ -33,23 +33,23 @@ export default function ClientSection() {
 
         {/* Call to Action */}
         <div className="px-4 sm:px-6 lg:px-8">
-          <Card className="group relative overflow-hidden max-w-4xl mx-auto border-0 bg-gray-100 dark:bg-black transition-all duration-700 rounded-2xl sm:rounded-3xl">
-            <div className="hover-bg-client bg-purple-600"></div>
+          <Card className="group relative overflow-hidden max-w-4xl mx-auto border-0 bg-blue-900 transition-all duration-700 rounded-2xl sm:rounded-3xl hover:bg-white">
+            <div className="hover-bg-client bg-blue-900"></div>
             <CardContent className="relative z-10 p-4 sm:p-6 lg:p-8 text-center">
               <CardHeader className="pb-3 sm:pb-4">
-                <CardTitle className="text-lg sm:text-xl lg:text-2xl font-bold text-foreground mb-2 sm:mb-3 group-hover:text-white transition-colors duration-300">
+                <CardTitle className="text-lg sm:text-xl lg:text-2xl font-bold text-white mb-2 sm:mb-3 transition-colors duration-300">
                   Ready to join our success stories?
                 </CardTitle>
               </CardHeader>
 
               <CardContent className="pb-3 sm:pb-4">
-                <p className="text-xs sm:text-sm lg:text-base text-muted-foreground mb-3 sm:mb-4 max-w-2xl mx-auto leading-relaxed group-hover:text-white/90 transition-colors duration-300">
+                <p className="text-xs sm:text-sm lg:text-base text-white/90 mb-3 sm:mb-4 max-w-2xl mx-auto leading-relaxed transition-colors duration-300">
                   Let&apos;s discuss how we can help your business achieve its
                   goals with innovative technology solutions.
                 </p>
 
                 <Button
-                  className="px-6 sm:px-8 py-2 sm:py-3 text-sm sm:text-base font-semibold transition-all duration-500 hover:scale-110 w-full sm:w-auto hover:bg-white hover:text-black dark:hover:bg-white dark:hover:text-black group-hover:bg-white group-hover:text-foreground"
+                  className="px-6 sm:px-8 py-2 sm:py-3 text-sm sm:text-base font-semibold transition-all duration-500 hover:scale-110 w-full sm:w-auto bg-white text-black hover:bg-white hover:text-black dark:hover:bg-white dark:hover:text-black"
                   onClick={handleRequestCallback}
                   variant="black"
                   size="lg"
