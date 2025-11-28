@@ -1,15 +1,53 @@
 "use client";
 
-import React, { useCallback } from "react";
+import React, { useCallback, memo } from "react";
 import SectionReveal from "@/components/shared/animation";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ButtonClickHandler } from "@/models/interfaces";
-import { getClientSectionContent } from "@/lib/content/clients";
+import { getClientSectionContent, aboutStats } from "@/lib/content/clients";
 import ClientLogoCarousel from "@/components/shared/ClientLogoCarousel";
+
+// Stats card component
+const StatsCard = memo(
+  ({
+    icon: Icon,
+    number,
+    label,
+    color,
+    hoverColor,
+  }: {
+    icon: React.ComponentType<{ className?: string }>;
+    number: string;
+    label: string;
+    color: string;
+    hoverColor: string;
+  }) => (
+    <Card
+      className={`group relative overflow-hidden border border-border/40 ${hoverColor} shadow-md transition-all duration-500 hover:-translate-y-1 hover:shadow-xl hover:border-transparent hover:bg-white`}>
+      <div className={`hover-bg ${hoverColor}`}></div>
+      <CardContent className="relative z-10 p-4 text-center sm:p-5 lg:p-6">
+        <div
+          className={`w-16 h-16 mx-auto mb-3 bg-linear-to-r ${color} rounded-2xl flex items-center justify-center group-hover:scale-110 group-hover:bg-white/20 transition-all duration-500`}>
+          <Icon className="w-8 h-8 text-white group-hover:text-white" />
+        </div>
+        <div className="text-3xl font-bold text-white mb-1.5 group-hover:scale-110 group-hover:text-foreground transition-all duration-300">
+          {number}
+        </div>
+        <div className="text-sm text-white/90 font-medium group-hover:text-muted-foreground transition-colors duration-300">
+          {label}
+        </div>
+      </CardContent>
+    </Card>
+  )
+);
+
+StatsCard.displayName = "StatsCard";
 
 export default function ClientSection() {
   const { title, subtitle, logos } = getClientSectionContent();
+  const stats = aboutStats;
+
   // Optimized event handlers with useCallback
   const handleRequestCallback: ButtonClickHandler = useCallback(() => {
     const element = document.getElementById("footer-section");
@@ -24,6 +62,28 @@ export default function ClientSection() {
       className="pt-2 sm:pt-4 lg:pt-6 pb-4 sm:pb-6 lg:pb-8"
       role="region"
       aria-label="Client testimonials and partners section">
+      <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
+        {/* Stats Grid */}
+        <SectionReveal
+          variant="slide-up"
+          delayMs={100}
+          durationMs={650}
+          className="w-full mb-6 sm:mb-8">
+          <div className="mx-auto grid max-w-4xl grid-cols-2 gap-3 px-2 sm:gap-4 sm:px-0 lg:grid-cols-4 lg:gap-5">
+            {stats.map((stat, index) => (
+              <StatsCard
+                key={index}
+                icon={stat.icon}
+                number={stat.number}
+                label={stat.label}
+                color={stat.color}
+                hoverColor={stat.hoverColor}
+              />
+            ))}
+          </div>
+        </SectionReveal>
+      </div>
+
       <SectionReveal
         variant="scale"
         delayMs={70}

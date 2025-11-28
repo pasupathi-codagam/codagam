@@ -57,6 +57,13 @@ export interface AboutSectionState {
   animatedElements: Set<string>;
 }
 
+export interface AboutSlide {
+  title: string;
+  description: string;
+  image: string;
+  imageAlt: string;
+}
+
 // ============================================================================
 // PRODUCTS SECTION INTERFACES
 // ============================================================================

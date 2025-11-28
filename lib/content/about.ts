@@ -1,32 +1,32 @@
-import { Brain, Award, Users, Zap } from "lucide-react";
+import type { AboutSlide } from "@/models/interfaces";
 
-export const aboutStats = [
+export const aboutSlides: AboutSlide[] = [
   {
-    icon: Brain,
-    number: "500+",
-    label: "AI Solutions",
-    color: "from-blue-500 to-blue-600",
-    hoverColor: "bg-blue-500",
+    title: "AI-Driven Excellence",
+    description:
+      "Our AI-driven solutions are designed for sustained best practices, ensuring ethical standards while delivering pragmatic results. From predictive analytics to intelligent automation, we empower businesses with cutting-edge AI capabilities.",
+    image: "/images/Codagam_Img (1).jpg",
+    imageAlt: "AI-Driven Excellence at Codagam",
   },
   {
-    icon: Award,
-    number: "50+",
-    label: "Innovations",
-    color: "from-purple-500 to-purple-600",
-    hoverColor: "bg-purple-500",
+    title: "Innovation at the Forefront",
+    description:
+      "Our R&D team is at the forefront of technological innovation, constantly exploring new ways to solve pressing challenges. We invest in cutting-edge research to develop products that not only meet current needs but anticipate future demands, ensuring our clients remain ahead of the curve.",
+    image: "/images/Codagam_Img (2).jpg",
+    imageAlt: "Innovation at Codagam",
   },
   {
-    icon: Users,
-    number: "100+",
-    label: "Happy Clients",
-    color: "from-green-500 to-green-600",
-    hoverColor: "bg-green-500",
+    title: "Transformative Technology Solutions",
+    description:
+      "At Codagam, we pride ourselves on delivering transformative technology solutions. Our team of experts is dedicated to driving positive change and fostering sustainable growth. With a focus on measurable impact and differentiation, we lead by example, ensuring your business not only survives but thrives.",
+    image: "/images/Codagam_Img (3).jpg",
+    imageAlt: "Transformative Technology Solutions",
   },
   {
-    icon: Zap,
-    number: "4+",
-    label: "Years Experience",
-    color: "from-yellow-500 to-orange-500",
-    hoverColor: "bg-orange-500",
+    title: "Expert Team & Excellence",
+    description:
+      "Our team of experts is dedicated to driving positive change and fostering sustainable growth. We combine deep technical expertise with business acumen to deliver solutions that make a real impact.",
+    image: "/images/Codagam_Img (4).jpg",
+    imageAlt: "Expert Team at Codagam",
   },
 ];

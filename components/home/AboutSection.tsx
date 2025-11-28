@@ -4,6 +4,11 @@ import React, { useState, useCallback, memo } from "react";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@/components/ui/collapsible";
 import { ContactForm } from "@/components/shared/ContactForm";
 import {
   Dialog,
@@ -13,47 +18,13 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import SectionReveal from "@/components/shared/animation";
+import { ChevronDown } from "lucide-react";
 import {
   ContactFormDialogProps,
   ButtonClickHandler,
+  AboutSlide,
 } from "@/models/interfaces";
-import { aboutStats } from "@/lib/content/about";
-
-// Stats card component
-const StatsCard = memo(
-  ({
-    icon: Icon,
-    number,
-    label,
-    color,
-    hoverColor,
-  }: {
-    icon: React.ComponentType<{ className?: string }>;
-    number: string;
-    label: string;
-    color: string;
-    hoverColor: string;
-  }) => (
-    <Card
-      className={`group relative overflow-hidden border border-border/40 ${hoverColor} shadow-md transition-all duration-500 hover:-translate-y-1 hover:shadow-xl hover:border-transparent hover:bg-white`}>
-      <div className={`hover-bg ${hoverColor}`}></div>
-      <CardContent className="relative z-10 p-4 text-center sm:p-5 lg:p-6">
-        <div
-          className={`w-16 h-16 mx-auto mb-3 bg-linear-to-r ${color} rounded-2xl flex items-center justify-center group-hover:scale-110 group-hover:bg-white/20 transition-all duration-500`}>
-          <Icon className="w-8 h-8 text-white group-hover:text-white" />
-        </div>
-        <div className="text-3xl font-bold text-white mb-1.5 group-hover:scale-110 group-hover:text-foreground transition-all duration-300">
-          {number}
-        </div>
-        <div className="text-sm text-white/90 font-medium group-hover:text-muted-foreground transition-colors duration-300">
-          {label}
-        </div>
-      </CardContent>
-    </Card>
-  )
-);
-
-StatsCard.displayName = "StatsCard";
+import { aboutSlides } from "@/lib/content/about";
 
 // Memoized contact form dialog
 const ContactFormDialog = memo(
@@ -82,10 +53,62 @@ const ContactFormDialog = memo(
 
 ContactFormDialog.displayName = "ContactFormDialog";
 
+// Memoized about item component with collapsible
+const AboutItem = memo(
+  ({
+    slide,
+    isOpen,
+    onToggle,
+  }: {
+    slide: AboutSlide;
+    isOpen: boolean;
+    onToggle: () => void;
+  }) => (
+    <div>
+      <Collapsible open={isOpen} onOpenChange={onToggle}>
+        <CollapsibleTrigger asChild>
+          <Button
+            variant="ghost"
+            className={`group flex h-10 sm:h-11 md:h-12 lg:h-14 w-full items-center justify-between rounded-lg px-3 sm:px-4 md:px-4 lg:px-5 text-xs sm:text-sm md:text-base font-semibold transition-colors ${
+              isOpen
+                ? "bg-gray-50 dark:bg-gray-800"
+                : "hover:bg-gray-50 dark:hover:bg-gray-800"
+            }`}
+            style={{ transitionDuration: "400ms" }}
+            aria-label={`Toggle ${slide.title} details`}>
+            <span className="text-sm sm:text-base md:text-lg font-semibold text-gray-900 dark:text-gray-100">
+              {slide.title}
+            </span>
+            <ChevronDown
+              className={`h-3.5 w-3.5 sm:h-4 sm:w-4 md:h-4 md:w-4 text-gray-600 dark:text-gray-400 transition-all group-hover:text-gray-900 dark:group-hover:text-gray-100 shrink-0 ${
+                isOpen ? "rotate-180" : "rotate-0"
+              }`}
+              style={{
+                transitionDuration: "400ms",
+                transitionTimingFunction: isOpen
+                  ? "cubic-bezier(0.12, 0, 0.38, 0)"
+                  : "cubic-bezier(0.2, 0, 0.68, 0)",
+              }}
+            />
+          </Button>
+        </CollapsibleTrigger>
+        <CollapsibleContent className="overflow-hidden data-[state=closed]:animate-collapsible-up data-[state=open]:animate-collapsible-down">
+          <div className="rounded-lg p-2 sm:p-2.5 md:p-3 mt-1 sm:mt-1.5">
+            <p className="text-sm sm:text-base md:text-base leading-relaxed text-gray-700 dark:text-gray-300 font-normal">
+              {slide.description}
+            </p>
+          </div>
+        </CollapsibleContent>
+      </Collapsible>
+    </div>
+  )
+);
+
+AboutItem.displayName = "AboutItem";
+
 const AboutSection = memo(() => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
-
-  const stats = aboutStats;
+  const [openItem, setOpenItem] = useState<string | null>("item-0");
 
   const handleContactClick: ButtonClickHandler = useCallback(() => {
     setIsDialogOpen(true);
@@ -138,89 +161,100 @@ const AboutSection = memo(() => {
               </p>
             </div>
 
-            {/* Stats Grid */}
-            <SectionReveal
-              variant="slide-up"
-              delayMs={100}
-              durationMs={650}
-              className="w-full mb-3 sm:mb-4">
-              <div className="mx-auto grid max-w-4xl grid-cols-2 gap-3 px-2 sm:gap-4 sm:px-0 lg:grid-cols-4 lg:gap-5">
-                {stats.map((stat, index) => (
-                  <StatsCard
-                    key={index}
-                    icon={stat.icon}
-                    number={stat.number}
-                    label={stat.label}
-                    color={stat.color}
-                    hoverColor={stat.hoverColor}
-                  />
-                ))}
+            {/* Collapsible Content with Images */}
+            <div className="flex flex-col lg:flex-row gap-2 sm:gap-3 md:gap-4 lg:gap-5 bg-gray-50 dark:bg-gray-900 rounded-lg sm:rounded-xl p-2 sm:p-3 md:p-4 lg:p-5">
+              {/* Large Image Container - Desktop Left */}
+              <div
+                className="hidden lg:block w-full lg:w-1/2 relative min-h-[350px] lg:min-h-[400px] xl:min-h-[450px] 2xl:min-h-[500px]"
+                aria-hidden="false">
+                {aboutSlides.map((slide, index) => {
+                  const itemId = `item-${index}`;
+                  const isActive = openItem === itemId;
+
+                  return (
+                    <div
+                      key={index}
+                      className={`absolute inset-0 ${
+                        isActive
+                          ? "opacity-100 z-10"
+                          : "opacity-0 z-0 pointer-events-none"
+                      }`}
+                      style={{
+                        transition:
+                          "opacity 400ms cubic-bezier(0.12, 0, 0.38, 0), transform 400ms cubic-bezier(0.12, 0, 0.38, 0)",
+                        transform: isActive ? "scale(1)" : "scale(0.98)",
+                      }}
+                      aria-hidden={!isActive}>
+                      <div className="relative w-full h-full rounded-2xl overflow-hidden">
+                        <Image
+                          src={slide.image}
+                          alt={slide.imageAlt}
+                          fill
+                          priority={index === 0}
+                          className="object-cover rounded-2xl"
+                          quality={90}
+                          sizes="(min-width: 1024px) 50vw, 100vw"
+                        />
+                      </div>
+                    </div>
+                  );
+                })}
               </div>
-            </SectionReveal>
 
-            {/* Why Choose Us Section */}
-            <div className="group relative overflow-hidden rounded-3xl border border-border/40 bg-gray-100 dark:bg-black p-4 shadow-sm sm:p-5 lg:p-6 transition-all duration-500 hover:border-transparent hover:shadow-xl hover:-translate-y-1">
-              <div className="hover-bg bg-indigo-600"></div>
-              <div className="relative z-10 grid grid-cols-1 items-center gap-6 sm:gap-7 lg:grid-cols-2 lg:gap-8">
-                {/* Left Side - Image */}
-                <div className="order-2 lg:order-1">
-                  <div className="relative h-48 sm:h-64 md:h-80 lg:h-96 rounded-xl sm:rounded-2xl overflow-hidden">
-                    <Image
-                      src="/images/Codagam_Img (2).jpg"
-                      alt="Codagam team and technology solutions"
-                      fill
-                      className="object-cover transition-transform duration-700 hover:scale-105"
-                      priority={false}
-                      sizes="(max-width: 1024px) 100vw, 50vw"
-                    />
-                    <div className="absolute inset-0 bg-linear-to-t from-black/20 via-transparent to-transparent"></div>
-                  </div>
-                </div>
+              {/* Image Container - Mobile/Tablet */}
+              <div className="lg:hidden w-full relative h-[200px] sm:h-[240px] md:h-[260px]">
+                {aboutSlides.map((slide, index) => {
+                  const itemId = `item-${index}`;
+                  const isActive = openItem === itemId;
 
-                {/* Right Side - Content */}
-                <div className="order-1 lg:order-2 space-y-3 sm:space-y-4 lg:space-y-5">
-                  <div>
-                    <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold text-foreground mb-2 sm:mb-3 group-hover:text-white transition-colors duration-300">
-                      Why Us?
-                    </h2>
-                    <p className="text-sm sm:text-base lg:text-lg text-muted-foreground leading-relaxed mb-3 sm:mb-4 group-hover:text-white/90 transition-colors duration-300">
-                      At Codagam, we pride ourselves on delivering
-                      transformative technology solutions. Our team of experts
-                      is dedicated to driving positive change and fostering
-                      sustainable growth. With a focus on measurable impact and
-                      differentiation, we lead by example, ensuring your
-                      business not only survives but thrives.
-                    </p>
-                  </div>
-
-                  <div className="space-y-3 sm:space-y-4">
-                    <div>
-                      <h3 className="text-base sm:text-lg font-semibold text-foreground mb-1.5 group-hover:text-white transition-colors duration-300">
-                        AI-Driven Excellence
-                      </h3>
-                      <p className="text-sm sm:text-base text-muted-foreground leading-relaxed group-hover:text-white/90 transition-colors duration-300">
-                        Our AI-driven solutions are designed for sustained best
-                        practices, ensuring ethical standards while delivering
-                        pragmatic results. From predictive analytics to
-                        intelligent automation, we empower businesses with
-                        cutting-edge AI capabilities.
-                      </p>
+                  return (
+                    <div
+                      key={`mobile-${index}`}
+                      className={`absolute inset-0 ${
+                        isActive
+                          ? "opacity-100 z-10"
+                          : "opacity-0 z-0 pointer-events-none"
+                      }`}
+                      style={{
+                        transition:
+                          "opacity 400ms cubic-bezier(0.12, 0, 0.38, 0), transform 400ms cubic-bezier(0.12, 0, 0.38, 0)",
+                        transform: isActive ? "scale(1)" : "scale(0.98)",
+                      }}
+                      aria-hidden={!isActive}>
+                      <div className="relative w-full h-full rounded-2xl overflow-hidden">
+                        <Image
+                          src={slide.image}
+                          alt={slide.imageAlt}
+                          fill
+                          priority={index === 0}
+                          className="object-cover rounded-2xl"
+                          quality={90}
+                          sizes="(max-width: 1024px) 100vw, 50vw"
+                        />
+                      </div>
                     </div>
+                  );
+                })}
+              </div>
 
-                    <div>
-                      <h3 className="text-base sm:text-lg font-semibold text-foreground mb-1.5 group-hover:text-white transition-colors duration-300">
-                        Innovation at the Forefront
-                      </h3>
-                      <p className="text-sm sm:text-base text-muted-foreground leading-relaxed group-hover:text-white/90 transition-colors duration-300">
-                        Our R&D team is at the forefront of technological
-                        innovation, constantly exploring new ways to solve
-                        pressing challenges. We invest in cutting-edge research
-                        to develop products that not only meet current needs but
-                        anticipate future demands, ensuring our clients remain
-                        ahead of the curve.
-                      </p>
-                    </div>
-                  </div>
+              {/* Collapsible Items Section - Right */}
+              <div className="w-full lg:w-1/2 flex flex-col justify-start">
+                <div className="space-y-1.5 sm:space-y-2 md:space-y-2.5">
+                  {aboutSlides.map((slide, index) => {
+                    const itemId = `item-${index}`;
+                    const isOpen = openItem === itemId;
+
+                    return (
+                      <AboutItem
+                        key={index}
+                        slide={slide}
+                        isOpen={isOpen}
+                        onToggle={() =>
+                          setOpenItem(openItem === itemId ? null : itemId)
+                        }
+                      />
+                    );
+                  })}
                 </div>
               </div>
             </div>
