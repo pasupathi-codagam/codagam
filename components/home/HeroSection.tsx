@@ -40,11 +40,20 @@ const HeroSection: React.FC<HeroSectionProps> = memo(() => {
   return (
     <section
       id="hero-section"
-      className="relative overflow-x-hidden bg-background"
+      className="relative overflow-x-hidden -mt-[60px] sm:-mt-[68px] md:-mt-[74px] lg:-mt-[80px] pt-[60px] sm:pt-[68px] md:pt-[74px] lg:pt-[80px]"
+      style={{
+        backgroundImage: "url('/images/launch.jpg')",
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
+        backgroundAttachment: "fixed",
+      }}
       role="region"
       aria-label="Hero section">
+      {/* Background overlay */}
+      <div className="absolute inset-0 bg-blue-950/30 dark:bg-black/30"></div>
       {/* Main Content Container */}
-      <div className="mx-auto w-full max-w-7xl px-4 pt-12 pb-6 sm:px-6 sm:pt-16 sm:pb-8 lg:px-8 lg:pt-20 lg:pb-10">
+      <div className="relative z-10 mx-auto w-full max-w-7xl px-4 pt-12 pb-6 sm:px-6 sm:pt-16 sm:pb-8 lg:px-8 lg:pt-20 lg:pb-10">
         <div className="relative w-full overflow-hidden min-h-[450px] sm:min-h-[500px] lg:min-h-[550px]">
           <AnimatePresence initial={false}>
             <motion.div
@@ -63,14 +72,14 @@ const HeroSection: React.FC<HeroSectionProps> = memo(() => {
                 <div className="order-1 space-y-4 sm:space-y-5 lg:order-1 lg:pr-6 xl:pr-10">
                   {/* Brand */}
                   <div className="text-center lg:text-left">
-                    <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-none text-blue-900 dark:text-blue-900">
+                    <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-none text-white">
                       Codagam
                     </h1>
-                    <p className="inline-flex items-center gap-2 sm:gap-4 mt-1 sm:mt-2 text-sm sm:text-base lg:text-lg text-muted-foreground font-medium">
+                    <p className="inline-flex items-center gap-2 sm:gap-4 mt-1 sm:mt-2 text-sm sm:text-base lg:text-lg text-white font-medium">
                       <span>Consult</span>
-                      <span className="text-primary">|</span>
+                      <span className="text-white">|</span>
                       <span>Code</span>
-                      <span className="text-primary">|</span>
+                      <span className="text-white">|</span>
                       <span>Collaborate</span>
                     </p>
                   </div>
@@ -78,14 +87,14 @@ const HeroSection: React.FC<HeroSectionProps> = memo(() => {
                   {/* Main Headline */}
                   <div className="space-y-2 sm:space-y-3 text-center lg:text-left">
                     <div>
-                      <p className="text-sm sm:text-base text-primary font-semibold mb-2">
+                      <p className="text-sm sm:text-base text-white font-semibold mb-2">
                         {heroContents[currentIndex].subtitle}
                       </p>
-                      <h2 className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-semibold leading-tight">
+                      <h2 className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-semibold leading-tight text-white">
                         {heroContents[currentIndex].title}
                       </h2>
                     </div>
-                    <p className="mx-auto max-w-2xl text-xs sm:text-base text-muted-foreground leading-relaxed lg:mx-0">
+                    <p className="mx-auto max-w-2xl text-xs sm:text-base text-white leading-relaxed lg:mx-0">
                       {heroContents[currentIndex].description}
                     </p>
                   </div>
@@ -97,7 +106,6 @@ const HeroSection: React.FC<HeroSectionProps> = memo(() => {
                       variant="black"
                       className="w-auto min-w-[120px] px-4 py-2 text-xs font-medium shadow-sm transition-all duration-300 hover:scale-[1.02] sm:min-w-[140px] sm:px-5 sm:py-2.5 sm:text-sm md:px-8 md:py-3 md:text-base group relative overflow-hidden"
                       aria-label="Get started with Codagam services">
-                      <div className="hover-bg-career bg-blue-900"></div>
                       <span className="relative z-10 group-hover:text-white transition-colors duration-300">
                         Get Started
                       </span>
@@ -126,7 +134,7 @@ const HeroSection: React.FC<HeroSectionProps> = memo(() => {
       </div>
 
       {/* Client Logo Carousel - Below Hero Content, Full Width */}
-      <div className="w-full pt-6 sm:pt-8 lg:pt-10 pb-10 sm:pb-10 lg:pb-10">
+      <div className="w-full pt-6 sm:pt-8 lg:pt-10 pb-10 sm:pb-10 lg:pb-8">
         <ClientLogoCarousel
           logos={clientContent?.logos || []}
           pauseOnHover={true}
