@@ -104,7 +104,7 @@ const HeroSection: React.FC<HeroSectionProps> = memo(() => {
                     <Button
                       onClick={handleGetStarted}
                       variant="black"
-                      className="w-auto min-w-[120px] px-4 py-2 text-xs font-medium shadow-sm transition-all duration-300 hover:scale-[1.02] sm:min-w-[140px] sm:px-5 sm:py-2.5 sm:text-sm md:px-8 md:py-3 md:text-base group relative overflow-hidden"
+                      className="w-auto min-w-[120px] px-4 py-2 text-xs font-medium shadow-sm transition-all duration-300 border-0 sm:min-w-[140px] sm:px-5 sm:py-2.5 sm:text-sm md:px-8 md:py-3 md:text-base group relative overflow-hidden"
                       aria-label="Get started with Codagam services">
                       <span className="relative z-10 group-hover:text-white transition-colors duration-300">
                         Get Started
