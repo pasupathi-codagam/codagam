@@ -5,6 +5,7 @@ const configDir = path.dirname(fileURLToPath(import.meta.url));
 
 const nextConfig = {
   images: {
+    qualities: [75, 90],
     remotePatterns: [
       {
         protocol: "https",
