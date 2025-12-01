@@ -32,21 +32,21 @@ import { productItemsContent } from "@/lib/content/products";
 // Memoized product card component
 const ProductCard = memo(
   ({ item, onCardClick }: Omit<ProductCardProps, "index" | "currentIndex">) => (
-    <div className="px-4 sm:px-6 lg:px-8 xl:px-16">
+    <div className="w-full px-4 sm:px-6 lg:px-8 xl:px-16">
       <Card
-        className="relative overflow-hidden border-0 bg-[#F6F6F6] dark:bg-black transition-all duration-500 rounded-2xl sm:rounded-3xl cursor-pointer group"
+        className="relative overflow-hidden border-0 bg-[#F6F6F6] dark:bg-black transition-all duration-500 rounded-2xl sm:rounded-3xl cursor-pointer group h-[460px] sm:h-[480px] md:h-[500px] lg:h-[520px] w-full"
         onClick={() => onCardClick(item)}>
-        <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-0 items-stretch min-h-[340px] sm:min-h-[380px] md:min-h-[420px] lg:min-h-[460px]">
+        <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-0 items-stretch h-full">
           {/* Content Section - Left Side */}
           <div className="order-2 lg:order-1 p-4 sm:p-6 lg:p-8 flex flex-col justify-center">
             <div className="flex-1 flex flex-col justify-center">
-              <div className="text-xs sm:text-sm font-medium text-muted-foreground uppercase tracking-wider mb-3 sm:mb-4">
+              <div className="text-[10px] sm:text-xs md:text-sm font-medium text-muted-foreground uppercase tracking-wider mb-2 sm:mb-3 md:mb-4">
                 {item.label}
               </div>
-              <CardTitle className="text-lg sm:text-xl lg:text-2xl font-bold text-foreground leading-tight mb-2 sm:mb-3">
+              <CardTitle className="text-base sm:text-lg md:text-xl lg:text-2xl font-bold text-foreground leading-tight mb-2 sm:mb-3 line-clamp-2 sm:line-clamp-3">
                 {item.headline}.
               </CardTitle>
-              <p className="text-muted-foreground text-xs sm:text-sm lg:text-base leading-relaxed mb-3 sm:mb-4">
+              <p className="text-muted-foreground text-[11px] sm:text-xs md:text-sm lg:text-base leading-relaxed mb-3 sm:mb-4 line-clamp-4 overflow-hidden text-ellipsis">
                 {item.description}
               </p>
 
@@ -68,7 +68,7 @@ const ProductCard = memo(
           </div>
 
           {/* Image Section - Right Side */}
-          <div className="order-1 lg:order-2 relative h-full min-h-[240px] sm:min-h-[300px] md:min-h-[360px] lg:min-h-[460px] flex items-center justify-center p-3 sm:p-4 lg:p-6">
+          <div className="order-1 lg:order-2 relative h-full flex items-center justify-center p-3 sm:p-4 lg:p-6">
             <div className="relative w-4/5 h-4/5 flex items-center justify-center">
               <Image
                 src={item.image}
@@ -100,60 +100,60 @@ const ProductDetailsDialog = memo(
     onVisitWebsite,
   }: ProductDetailsDialogProps) => (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-w-2xl p-8 rounded-3xl">
-        <DialogHeader>
-          <DialogTitle>
+      <DialogContent className="max-w-[95vw] sm:max-w-md md:max-w-lg lg:max-w-2xl xl:max-w-3xl p-4 sm:p-6 md:p-8 rounded-2xl sm:rounded-3xl max-h-[90vh] overflow-y-auto">
+        <DialogHeader className="space-y-2 sm:space-y-3">
+          <DialogTitle className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold leading-tight">
             {selectedProduct ? selectedProduct.headline : "Product overview"}
           </DialogTitle>
-          <DialogDescription>
+          <DialogDescription className="text-xs sm:text-sm md:text-base">
             {selectedProduct
               ? `Key information about ${selectedProduct.label}.`
               : "Review the product details."}
           </DialogDescription>
         </DialogHeader>
         {selectedProduct && (
-          <div className="space-y-8">
+          <div className="space-y-4 sm:space-y-6 md:space-y-8">
             {/* Product Label */}
-            <div className="text-sm font-medium text-muted-foreground uppercase tracking-wider">
+            <div className="text-xs sm:text-sm md:text-base font-medium text-muted-foreground uppercase tracking-wider">
               {selectedProduct.label}
             </div>
 
             {/* Product Headline */}
-            <h3 className="text-2xl font-bold text-foreground leading-tight">
+            <h3 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-foreground leading-tight">
               {selectedProduct.headline}
             </h3>
 
             {/* Product Description */}
-            <p className="text-foreground leading-relaxed text-base">
+            <p className="text-foreground leading-relaxed text-sm sm:text-base md:text-lg">
               {selectedProduct.details}
             </p>
 
             {/* Features List */}
-            <div className="space-y-4">
-              <h4 className="text-lg font-semibold text-foreground">
+            <div className="space-y-3 sm:space-y-4">
+              <h4 className="text-base sm:text-lg md:text-xl font-semibold text-foreground">
                 Key Features:
               </h4>
-              <ul className="grid grid-cols-1 md:grid-cols-2 gap-2">
+              <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3">
                 {selectedProduct.features.map((feature, index) => (
                   <li
                     key={index}
-                    className="flex items-center text-muted-foreground">
-                    <div className="w-2 h-2 bg-muted-foreground rounded-full mr-3 shrink-0"></div>
-                    {feature}
+                    className="flex items-start text-xs sm:text-sm md:text-base text-muted-foreground">
+                    <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-muted-foreground rounded-full mr-2 sm:mr-3 shrink-0 mt-1.5 sm:mt-2"></div>
+                    <span>{feature}</span>
                   </li>
                 ))}
               </ul>
             </div>
 
             {/* Learn More Link */}
-            <div className="pt-4">
+            <div className="pt-2 sm:pt-4">
               <Button
                 variant="black"
                 onClick={() => onVisitWebsite(selectedProduct.website)}
-                className="px-8 py-3 text-base font-medium inline-flex items-center gap-2"
+                className="w-full sm:w-auto px-6 sm:px-8 py-2 sm:py-3 text-sm sm:text-base font-medium inline-flex items-center justify-center gap-2"
                 aria-label={`Visit ${selectedProduct.label} website`}>
                 Learn more
-                <ExternalLink className="w-4 h-4" />
+                <ExternalLink className="w-3 h-3 sm:w-4 sm:h-4" />
               </Button>
             </div>
           </div>
@@ -264,8 +264,8 @@ export default function ProductsSection() {
                   loop: true,
                 }}
                 setApi={setCarouselApi}>
-                {/* Gray background area with top padding only */}
-                <div className="bg-blue-950 dark:bg-muted pt-3 sm:pt-4 lg:pt-6 px-3 sm:px-4 lg:px-6 pb-0">
+                {/* Gray background area with matching top and bottom padding */}
+                <div className="bg-blue-950 dark:bg-muted pt-3 sm:pt-4 lg:pt-6 px-3 sm:px-4 lg:px-6 pb-3 sm:pb-4 lg:pb-6">
                   <div className="max-w-[1920px] mx-auto relative">
                     <CarouselContent className="ml-0 flex! flex-nowrap! items-start gap-3 sm:gap-4 lg:gap-5 xl:gap-6">
                       {productItems.map((item) => (

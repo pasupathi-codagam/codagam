@@ -37,12 +37,12 @@ const ServiceCard = memo(
               <div className="relative z-10 p-4 sm:p-6 lg:p-8 flex flex-col justify-center h-full">
                 <div className="flex-1 flex flex-col justify-center">
                   <CardHeader className="pb-4 sm:pb-6 px-0">
-                    <CardTitle className="text-lg sm:text-xl lg:text-2xl font-bold text-foreground leading-tight">
+                    <CardTitle className="text-base sm:text-lg md:text-xl lg:text-2xl font-bold text-foreground leading-tight">
                       {item.title}.
                     </CardTitle>
                   </CardHeader>
                   <CardContent className="flex-1 px-0">
-                    <p className="text-xs sm:text-sm lg:text-base text-foreground leading-relaxed">
+                    <p className="text-xs sm:text-sm lg:text-base text-foreground leading-relaxed line-clamp-4">
                       {item.description}
                     </p>
                   </CardContent>
